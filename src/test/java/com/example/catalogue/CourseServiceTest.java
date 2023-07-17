@@ -47,11 +47,7 @@ public class CourseServiceTest {
     @Test
     void givenValidCourse_whenSave_thenCourseShouldBePersisted() {
         // Given
-        Course course = new Course(1L, "JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         when(courseRepository.save(course)).thenReturn(course);
 
         // When
@@ -69,11 +65,7 @@ public class CourseServiceTest {
     @Test
     void givenCourseInDatabase_whenFindById_thenReturnCourse() {
         // Given
-        Course course = new Course(1L, "JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
 
         // When
@@ -102,11 +94,7 @@ public class CourseServiceTest {
     @Test
     void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
         // Given
-        Course course = new Course("JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
         when(courseRepository.save(course)).thenReturn(course);
 
@@ -126,11 +114,7 @@ public class CourseServiceTest {
     @Test
     void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
         // Given
-        Course course = new Course(1L, "JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
 
         // When
@@ -147,15 +131,15 @@ public class CourseServiceTest {
         when(courseRepository.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(coursesInDatabase);
 
         // When
-        Iterable<Course> matchingCourses = courseService.searchSimilarCourses("Java", "Programming", 4);
+        Iterable<Course> matchingCourses = courseService.searchSimilarCourses("Spring", "Programming", 5);
 
         // Then
         assertThat(matchingCourses).isNotEmpty();
-        assertThat(matchingCourses).hasSize(7);
+        assertThat(matchingCourses).hasSize(6);
         assertThat(matchingCourses).containsExactlyInAnyOrder(
                 coursesInDatabase.toArray(Course[]::new)
         );
-        verify(courseRepository, times(1)).searchSimilarCourses("Java", "Programming", 4);
+        verify(courseRepository, times(1)).searchSimilarCourses("Spring", "Programming", 5);
     }
 
     @Test
@@ -176,35 +160,37 @@ public class CourseServiceTest {
 
 
     private List<Course> getTestInputData() {
-        return Arrays.asList(
-                new Course("Rapid Spring Boot Application Development",
-                        "Spring",
-                        4,
-                        "John Doe"),
-                new Course("Getting Started with Spring Security DSL",
-                        "Spring",
-                        5,
-                        "John Doe"),
-                new Course("Getting Started with Spring Cloud Kubernetes",
-                        "Spring",
-                        3,
-                        "John Doe"),
-                new Course("Getting Started with Python",
-                        "Python",
-                        5,
-                        "John Doe"),
-                new Course("Game Development with Python",
-                        "Python",
-                        3,
-                        "John Doe"),
-                new Course("JavaScript for All",
-                        "JavaScript",
-                        4,
-                        "John Doe"),
-                new Course("JavaScript Complete Guide",
-                        "JavaScript",
-                        5,
-                        "John Doe")
+        return List.of(
+                Course.builder()
+                        .name("JavaEE for Dummies")
+                        .category("Programming")
+                        .rating(3)
+                        .author("John Doe").build(),
+                Course.builder()
+                        .name("Javascript for Beginners")
+                        .category("Programming")
+                        .rating(3)
+                        .author("John Muller").build(),
+                Course.builder()
+                        .name("What Is This Thing Called Science?")
+                        .category("Science")
+                        .rating(5)
+                        .author("Alan Chalmers").build(),
+                Course.builder()
+                        .name("Suomen mestari")
+                        .category("Languages")
+                        .rating(2)
+                        .author("Sonja Gehring").build(),
+                Course.builder()
+                        .name("Spring in Action")
+                        .category("Programming")
+                        .rating(5)
+                        .author("John Doe").build(),
+                Course.builder()
+                        .name("Spring Security For Beginners")
+                        .category("Programming")
+                        .rating(5)
+                        .author("John Doe").build()
         );
     }
 }

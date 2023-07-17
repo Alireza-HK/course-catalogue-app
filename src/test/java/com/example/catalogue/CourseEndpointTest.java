@@ -33,12 +33,7 @@ public class CourseEndpointTest {
 
     @Test
     public void whenCreateCourse_thenReturnCreatedCourse() throws Exception {
-        Course course = new Course("Rapid Spring Boot Application Development",
-                "Spring",
-                5,
-                "Spring Boot gives all the power of the Spring Framework without all of the complexity",
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
         ObjectMapper objectMapper = new ObjectMapper();
 
         MockHttpServletResponse response = mockMvc.perform(post("/courses/")
@@ -47,9 +42,9 @@ public class CourseEndpointTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("Rapid Spring Boot Application Development"))
-                .andExpect(jsonPath("$.category").value("Spring"))
-                .andExpect(jsonPath("$.rating").value(5))
+                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
+                .andExpect(jsonPath("$.category").value("Programming"))
+                .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.author").value("John Doe"))
                 .andExpect(status().isCreated()).andReturn().getResponse();
 
@@ -60,12 +55,7 @@ public class CourseEndpointTest {
 
     @Test
     public void givenCourseId_whenGetCourse_thenReturnCourse() throws Exception {
-        Course course = new Course("Rapid Spring Boot Application Development",
-                "Spring",
-                5,
-                "Spring Boot gives all the power of the Spring Framework without all of the complexity",
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
         ObjectMapper objectMapper = new ObjectMapper();
 
         MockHttpServletResponse response = mockMvc.perform(post("/courses/")
@@ -74,9 +64,9 @@ public class CourseEndpointTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("Rapid Spring Boot Application Development"))
-                .andExpect(jsonPath("$.category").value("Spring"))
-                .andExpect(jsonPath("$.rating").value(5))
+                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
+                .andExpect(jsonPath("$.category").value("Programming"))
+                .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.author").value("John Doe"))
                 .andExpect(status().isCreated()).andReturn().getResponse();
         Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");
@@ -85,9 +75,9 @@ public class CourseEndpointTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("Rapid Spring Boot Application Development"))
-                .andExpect(jsonPath("$.category").value("Spring"))
-                .andExpect(jsonPath("$.rating").value(5))
+                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
+                .andExpect(jsonPath("$.category").value("Programming"))
+                .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.author").value("John Doe"))
                 .andExpect(status().isOk());
 
@@ -102,12 +92,7 @@ public class CourseEndpointTest {
 
     @Test
     public void givenCourseIdAndUpdatedCourse_whenUpdateCourse_thenReturnUpdatedCourse() throws Exception {
-        Course course = new Course("Rapid Spring Boot Application Development",
-                "Spring",
-                3,
-                "Spring Boot gives all the power of the Spring Framework without all of the complexity",
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
         ObjectMapper objectMapper = new ObjectMapper();
 
         MockHttpServletResponse response = mockMvc.perform(post("/courses/")
@@ -116,19 +101,14 @@ public class CourseEndpointTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("Rapid Spring Boot Application Development"))
-                .andExpect(jsonPath("$.category").value("Spring"))
-                .andExpect(jsonPath("$.rating").value(3))
+                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
+                .andExpect(jsonPath("$.category").value("Programming"))
+                .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.author").value("John Doe"))
                 .andExpect(status().isCreated()).andReturn().getResponse();
         Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");
 
-        Course updatedCourse = new Course("Rapid Spring Boot Application Development",
-                "Spring",
-                5,
-                "Spring Boot gives all the power of the Spring Framework without all of the complexity",
-                "John Doe"
-        );
+        var updatedCourse = Course.builder().name("JavaEE for Dummies - 2nd Edition").category("Programming").rating(5).author("John Doe").build();
 
         mockMvc.perform(put("/courses/{id}", id)
                         .contentType("application/json")
@@ -136,8 +116,8 @@ public class CourseEndpointTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value("Rapid Spring Boot Application Development"))
-                .andExpect(jsonPath("$.category").value("Spring"))
+                .andExpect(jsonPath("$.name").value("JavaEE for Dummies - 2nd Edition"))
+                .andExpect(jsonPath("$.category").value("Programming"))
                 .andExpect(jsonPath("$.rating").value(5))
                 .andExpect(jsonPath("$.author").value("John Doe"))
                 .andExpect(status().isNoContent());
@@ -146,12 +126,8 @@ public class CourseEndpointTest {
 
     @Test
     public void givenCourseId_whenDeleteCourse_thenCourseShouldBeDeleted() throws Exception {
-        Course course = new Course("Rapid Spring Boot Application Development",
-                "Spring",
-                5,
-                "Spring Boot gives all the power of the Spring Framework without all of the complexity",
-                "John Doe"
-        );        ObjectMapper objectMapper = new ObjectMapper();
+        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         MockHttpServletResponse response = mockMvc.perform(post("/courses/")
                         .contentType("application/json")
@@ -159,9 +135,9 @@ public class CourseEndpointTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("Rapid Spring Boot Application Development"))
-                .andExpect(jsonPath("$.category").value("Spring"))
-                .andExpect(jsonPath("$.rating").value(5))
+                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
+                .andExpect(jsonPath("$.category").value("Programming"))
+                .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.author").value("John Doe"))
                 .andExpect(status().isCreated()).andReturn().getResponse();
         Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");

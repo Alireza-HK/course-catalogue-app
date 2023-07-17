@@ -23,11 +23,7 @@ class CourseRepositoryTest {
     @Test
     void givenCourseInDatabase_whenFindById_thenReturnCourse() {
         // Given
-        Course course = new Course("JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         courseRepository.save(course);
 
         // When
@@ -45,11 +41,7 @@ class CourseRepositoryTest {
     @Test
     public void givenCourse_whenSave_thenCourseShouldBePersisted() {
         // Given
-        Course course = new Course("JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
 
         // When
         Course savedCourse = courseRepository.save(course);
@@ -66,11 +58,7 @@ class CourseRepositoryTest {
     @Test
     public void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
         // Given
-        var course = new Course("JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         courseRepository.save(course);
 
         // When
@@ -85,11 +73,7 @@ class CourseRepositoryTest {
     @Test
     public void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
         // Given
-        var course = new Course("JavaEE for Dummies",
-                "JavaEE",
-                4,
-                "John Doe"
-        );
+        var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         course = courseRepository.save(course);
 
         // When
@@ -111,42 +95,44 @@ class CourseRepositoryTest {
     static Stream<Arguments> searchInputData() {
         return Stream.of(
                 Arguments.of("Spring Security", "",  0, 1),  // name, category, rating, expectedSearchResultSize
-                Arguments.of("", "Spring",  0, 3),
-                Arguments.of("", "Python", 5, 1),
-                Arguments.of("", "", 4, 5)
+                Arguments.of("", "Programming",  0, 4),
+                Arguments.of("", "Languages", 2, 1),
+                Arguments.of("", "", 3, 5)
         );
     }
 
     private List<Course> getTestInputData() {
-        return Arrays.asList(
-                new Course("Rapid Spring Boot Application Development",
-                        "Spring",
-                        4,
-                        "John Doe"),
-                new Course("Getting Started with Spring Security DSL",
-                        "Spring",
-                        5,
-                        "John Doe"),
-                new Course("Getting Started with Spring Cloud Kubernetes",
-                        "Spring",
-                        3,
-                        "John Doe"),
-                new Course("Getting Started with Python",
-                        "Python",
-                        5,
-                        "John Doe"),
-                new Course("Game Development with Python",
-                        "Python",
-                        3,
-                        "John Doe"),
-                new Course("JavaScript for All",
-                        "JavaScript",
-                        4,
-                        "John Doe"),
-                new Course("JavaScript Complete Guide",
-                        "JavaScript",
-                        5,
-                        "John Doe")
+        return List.of(
+                Course.builder()
+                        .name("JavaEE for Dummies")
+                        .category("Programming")
+                        .rating(3)
+                        .author("John Doe").build(),
+                Course.builder()
+                        .name("Javascript for Beginners")
+                        .category("Programming")
+                        .rating(3)
+                        .author("John Muller").build(),
+                Course.builder()
+                        .name("What Is This Thing Called Science?")
+                        .category("Science")
+                        .rating(5)
+                        .author("Alan Chalmers").build(),
+                Course.builder()
+                        .name("Suomen mestari")
+                        .category("Languages")
+                        .rating(2)
+                        .author("Sonja Gehring").build(),
+                Course.builder()
+                        .name("Spring in Action")
+                        .category("Programming")
+                        .rating(5)
+                        .author("John Doe").build(),
+                Course.builder()
+                        .name("Spring Security For Beginners")
+                        .category("Programming")
+                        .rating(5)
+                        .author("John Doe").build()
         );
     }
 }

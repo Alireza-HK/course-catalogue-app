@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -24,31 +25,33 @@ class DatabaseInitializerConfig {
     }
 
     private List<Course> getData() {
-        var javaCourse = new Course(
-                "Spring Boot in Action",
-                "Java",
-                4,
-                "Spring Boot gives all the power of the Spring Framework without all of the complexity",
-                "John Doe"
+        return List.of(
+                Course.builder()
+                        .name("JavaEE for Dummies")
+                        .category("Programming")
+                        .rating(3)
+                        .author("John Doe").build(),
+                Course.builder()
+                        .name("Javascript for Beginners")
+                        .category("Programming")
+                        .rating(3)
+                        .author("John Muller").build(),
+                Course.builder()
+                        .name("What Is This Thing Called Science?")
+                        .category("Science")
+                        .rating(5)
+                        .author("Alan Chalmers").build(),
+                Course.builder()
+                        .name("Suomen mestari")
+                        .category("Languages")
+                        .rating(2)
+                        .author("Sonja Gehring").build(),
+                Course.builder()
+                        .name("Spring in Action")
+                        .category("Programming")
+                        .rating(5)
+                        .author("John Doe").build()
         );
-
-        var groovyCourse = new Course(
-                "Getting Started with Groovy",
-                "Groovy",
-                5,
-                "Learn about Groovy",
-                "John Doe"
-        );
-
-        var kubernetesCourse = new Course(
-                "Getting Started with Kubernetes",
-                "Kubernetes",
-                3,
-                "Master application deployment with Kubernetes",
-                "Mikel Muller"
-        );
-
-        return List.of(javaCourse, groovyCourse, kubernetesCourse);
     }
 
 
