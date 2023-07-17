@@ -9,7 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CourseRepository extends CrudRepository<Course, Long> {
 
-    @Query("select c from Course c where c.name like %:name% and c.category like %:category% and c.rating >=:rating")
+    @Query("""
+            select c 
+            from Course c 
+            where c.name like %:name% 
+            and c.category like %:category% 
+            and c.rating >= :rating
+            """)
     Iterable<Course> searchSimilarCourses(@Param("name") String name, @Param("category") String category, @Param("rating") int rating);
 
 }
