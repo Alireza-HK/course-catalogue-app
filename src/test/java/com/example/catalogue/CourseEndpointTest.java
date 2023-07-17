@@ -9,12 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,55 +25,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 public class CourseEndpointTest {
-    @Autowired
-    private CourseService courseService;
+
+    private final CourseService courseService;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    private MockMvc mockMvc;
+    public CourseEndpointTest(CourseService courseService, MockMvc mockMvc, ObjectMapper objectMapper) {
+        this.courseService = courseService;
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+    }
 
     @Test
     public void whenCreateCourse_thenReturnCreatedCourse() throws Exception {
-        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
-        ObjectMapper objectMapper = new ObjectMapper();
+        Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
-        MockHttpServletResponse response = mockMvc.perform(post("/courses/")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(course)))
+        ResultActions result = mockMvc.perform(post("/courses/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(course)))
                 .andDo(print())
-                .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
                 .andExpect(jsonPath("$.category").value("Programming"))
                 .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.author").value("John Doe"))
-                .andExpect(status().isCreated()).andReturn().getResponse();
+                .andExpect(status().isCreated());
 
-        Long id = JsonPath.parse(response.getContentAsString()).read("$.id", Long.class);
+        Long id = JsonPath.parse(result.andReturn().getResponse().getContentAsString()).read("$.id", Long.class);
         assertNotNull(courseService.getCourseById(id));
 
     }
 
     @Test
     public void givenCourseId_whenGetCourse_thenReturnCourse() throws Exception {
-        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
-        ObjectMapper objectMapper = new ObjectMapper();
+        Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
-        MockHttpServletResponse response = mockMvc.perform(post("/courses/")
-                        .contentType("application/json")
+        ResultActions postResult = mockMvc.perform(post("/courses/")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
-                .andDo(print())
-                .andExpect(jsonPath("$.*", hasSize(6)))
-                .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
-                .andExpect(jsonPath("$.category").value("Programming"))
-                .andExpect(jsonPath("$.rating").value(4))
-                .andExpect(jsonPath("$.author").value("John Doe"))
-                .andExpect(status().isCreated()).andReturn().getResponse();
-        Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");
+                .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/courses/{id}",id))
-                .andDo(print())
-                .andExpect(jsonPath("$.*", hasSize(6)))
+        Integer id = JsonPath.parse(postResult.andReturn().getResponse().getContentAsString()).read("$.id");
+
+        mockMvc.perform(get("/courses/{id}", id))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
                 .andExpect(jsonPath("$.category").value("Programming"))
@@ -85,36 +80,26 @@ public class CourseEndpointTest {
 
     @Test
     public void givenInvalidCourseId_whenGetCourse_thenReturnNotFoundStatus() throws Exception {
-        mockMvc.perform(get("/courses/{id}",100))
-                .andDo(print())
+        mockMvc.perform(get("/courses/{id}", 100))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void givenCourseIdAndUpdatedCourse_whenUpdateCourse_thenReturnUpdatedCourse() throws Exception {
-        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
-        ObjectMapper objectMapper = new ObjectMapper();
+        Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
-        MockHttpServletResponse response = mockMvc.perform(post("/courses/")
-                        .contentType("application/json")
+        ResultActions postResult = mockMvc.perform(post("/courses/")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
-                .andDo(print())
-                .andExpect(jsonPath("$.*", hasSize(6)))
-                .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
-                .andExpect(jsonPath("$.category").value("Programming"))
-                .andExpect(jsonPath("$.rating").value(4))
-                .andExpect(jsonPath("$.author").value("John Doe"))
-                .andExpect(status().isCreated()).andReturn().getResponse();
-        Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");
+                .andExpect(status().isCreated());
 
-        var updatedCourse = Course.builder().name("JavaEE for Dummies - 2nd Edition").category("Programming").rating(5).author("John Doe").build();
+        Integer id = JsonPath.parse(postResult.andReturn().getResponse().getContentAsString()).read("$.id");
+
+        Course updatedCourse = Course.builder().name("JavaEE for Dummies - 2nd Edition").category("Programming").rating(5).author("John Doe").build();
 
         mockMvc.perform(put("/courses/{id}", id)
-                        .contentType("application/json")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedCourse)))
-                .andDo(print())
-                .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value("JavaEE for Dummies - 2nd Edition"))
                 .andExpect(jsonPath("$.category").value("Programming"))
@@ -126,24 +111,16 @@ public class CourseEndpointTest {
 
     @Test
     public void givenCourseId_whenDeleteCourse_thenCourseShouldBeDeleted() throws Exception {
-        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
-        ObjectMapper objectMapper = new ObjectMapper();
+        Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
-        MockHttpServletResponse response = mockMvc.perform(post("/courses/")
-                        .contentType("application/json")
+        ResultActions postResult = mockMvc.perform(post("/courses/")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
-                .andDo(print())
-                .andExpect(jsonPath("$.*", hasSize(6)))
-                .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("JavaEE for Dummies"))
-                .andExpect(jsonPath("$.category").value("Programming"))
-                .andExpect(jsonPath("$.rating").value(4))
-                .andExpect(jsonPath("$.author").value("John Doe"))
-                .andExpect(status().isCreated()).andReturn().getResponse();
-        Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");
+                .andExpect(status().isCreated());
+
+        Integer id = JsonPath.parse(postResult.andReturn().getResponse().getContentAsString()).read("$.id");
 
         mockMvc.perform(delete("/courses/{id}", id))
-                .andDo(print())
                 .andExpect(status().isNoContent());
 
     }

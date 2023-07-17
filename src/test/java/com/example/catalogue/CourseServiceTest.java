@@ -5,13 +5,13 @@ import com.example.catalogue.model.Course;
 import com.example.catalogue.repository.CourseRepository;
 import com.example.catalogue.service.CourseService;
 import com.example.catalogue.service.CourseServiceImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,7 @@ public class CourseServiceTest {
     private CourseService courseService = new CourseServiceImpl(courseRepository);
 
     @Test
+    @DisplayName("Given courses in database, when findAll, then return all courses")
     void givenCoursesInDatabase_whenFindAll_thenReturnAllCourses() {
         // Given
         List<Course> coursesInDatabase = getTestInputData();
@@ -45,6 +46,7 @@ public class CourseServiceTest {
     }
 
     @Test
+    @DisplayName("Given valid course, when save, then course should be persisted")
     void givenValidCourse_whenSave_thenCourseShouldBePersisted() {
         // Given
         var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
@@ -55,14 +57,12 @@ public class CourseServiceTest {
 
         // Then
         assertThat(savedCourse.getId()).isNotNull();
-        assertThat(savedCourse.getName()).isEqualTo("JavaEE for Dummies");
-        assertThat(savedCourse.getCategory()).isEqualTo("JavaEE");
-        assertThat(savedCourse.getRating()).isEqualTo(4);
-        assertThat(savedCourse.getAuthor()).isEqualTo("John Doe");
+        assertThat(savedCourse).isEqualTo(course);
         verify(courseRepository, times(1)).save(course);
     }
 
     @Test
+    @DisplayName("Given course in database, when findById, then return course")
     void givenCourseInDatabase_whenFindById_thenReturnCourse() {
         // Given
         var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
@@ -72,16 +72,12 @@ public class CourseServiceTest {
         Course foundCourse = courseService.getCourseById(course.getId());
 
         // Then
-        assertThat(foundCourse).isNotNull();
-        assertThat(foundCourse.getId()).isNotNull();
-        assertThat(foundCourse.getName()).isEqualTo("JavaEE for Dummies");
-        assertThat(foundCourse.getCategory()).isEqualTo("JavaEE");
-        assertThat(foundCourse.getRating()).isEqualTo(4);
-        assertThat(foundCourse.getAuthor()).isEqualTo("John Doe");
+        assertThat(foundCourse).isNotNull().isEqualTo(course);
         verify(courseRepository, times(1)).findById(course.getId());
     }
 
     @Test
+    @DisplayName("Given invalid courseId, when getCourseById, then throw CourseNotFoundException")
     void givenInvalidCourseId_whenGetCourseById_thenThrowCourseNotFoundException() {
         // Given
         Long invalidCourseId = 999L;
@@ -92,6 +88,7 @@ public class CourseServiceTest {
     }
 
     @Test
+    @DisplayName("Given course in database, when update, then course should be updated")
     void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
@@ -103,15 +100,12 @@ public class CourseServiceTest {
         Course updatedCourse = courseService.updateCourse(1L, course);
 
         // Then
-        assertThat(updatedCourse.getId()).isEqualTo(course.getId());
-        assertThat(updatedCourse.getName()).isEqualTo("JavaEE for Dummies - 2nd Edition");
-        assertThat(updatedCourse.getCategory()).isEqualTo("JavaEE");
-        assertThat(updatedCourse.getRating()).isEqualTo(4);
-        assertThat(updatedCourse.getAuthor()).isEqualTo("John Doe");
+        assertThat(updatedCourse).isEqualTo(course);
         verify(courseRepository, times(1)).save(course);
     }
 
     @Test
+    @DisplayName("Given course in database, when delete, then course should be deleted")
     void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
         // Given
         var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
@@ -125,6 +119,7 @@ public class CourseServiceTest {
     }
 
     @Test
+    @DisplayName("Given courses in database, when searchSimilarCourses, then return matching courses")
     void givenCoursesInDatabase_whenSearchSimilarCourses_thenReturnMatchingCourses() {
         // Given
         List<Course> coursesInDatabase = getTestInputData();
@@ -143,6 +138,7 @@ public class CourseServiceTest {
     }
 
     @Test
+    @DisplayName("Given no matching courses, when searchSimilarCourses, then return empty list")
     void givenNoMatchingCourses_whenSearchSimilarCourses_thenReturnEmptyList() {
         // Given
         when(courseRepository.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(Collections.emptyList());
@@ -156,7 +152,6 @@ public class CourseServiceTest {
     }
 
     //ToDo: Test CourseNotFoundException
-
 
 
     private List<Course> getTestInputData() {

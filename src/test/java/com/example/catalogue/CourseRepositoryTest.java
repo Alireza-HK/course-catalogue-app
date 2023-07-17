@@ -1,18 +1,19 @@
 package com.example.catalogue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
+import com.example.catalogue.model.Course;
+import com.example.catalogue.repository.CourseRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import com.example.catalogue.model.*;
-import com.example.catalogue.repository.CourseRepository;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class CourseRepositoryTest {
@@ -21,6 +22,7 @@ class CourseRepositoryTest {
     private CourseRepository courseRepository;
 
     @Test
+    @DisplayName("Given course in database, when findById, then return course")
     void givenCourseInDatabase_whenFindById_thenReturnCourse() {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
@@ -39,7 +41,8 @@ class CourseRepositoryTest {
     }
 
     @Test
-    public void givenCourse_whenSave_thenCourseShouldBePersisted() {
+    @DisplayName("Given course, when save, then course should be persisted")
+    void givenCourse_whenSave_thenCourseShouldBePersisted() {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
 
@@ -47,7 +50,7 @@ class CourseRepositoryTest {
         Course savedCourse = courseRepository.save(course);
 
         // Then
-        assertThat(Arrays.asList(courseRepository.findAll()).size()).isEqualTo(1);
+        assertThat(courseRepository.findAll()).hasSize(1);
         assertThat(savedCourse.getId()).isNotNull();
         assertThat(savedCourse.getName()).isEqualTo("JavaEE for Dummies");
         assertThat(savedCourse.getCategory()).isEqualTo("JavaEE");
@@ -56,7 +59,8 @@ class CourseRepositoryTest {
     }
 
     @Test
-    public void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
+    @DisplayName("Given course in database, when update, then course should be updated")
+    void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         courseRepository.save(course);
@@ -71,7 +75,8 @@ class CourseRepositoryTest {
     }
 
     @Test
-    public void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
+    @DisplayName("Given course in database, when delete, then course should be deleted")
+    void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         course = courseRepository.save(course);
@@ -86,16 +91,17 @@ class CourseRepositoryTest {
 
     @ParameterizedTest
     @MethodSource("searchInputData")
+    @DisplayName("Given courses in database, when searchByParameters, then return expected number of courses")
     public void givenCoursesInDatabase_whenSearchByParameters_thenExpectedNumberOfCoursesAreReturned(String name, String category, int rating, int expectedSearchResultSize) {
         courseRepository.saveAll(getTestInputData());
-        assertThat(courseRepository.searchSimilarCourses(name, category,  rating))
+        assertThat(courseRepository.searchSimilarCourses(name, category, rating))
                 .hasSize(expectedSearchResultSize);
     }
 
     static Stream<Arguments> searchInputData() {
         return Stream.of(
-                Arguments.of("Spring Security", "",  0, 1),  // name, category, rating, expectedSearchResultSize
-                Arguments.of("", "Programming",  0, 4),
+                Arguments.of("Spring Security", "", 0, 1),  // name, category, rating, expectedSearchResultSize
+                Arguments.of("", "Programming", 0, 4),
                 Arguments.of("", "Languages", 2, 1),
                 Arguments.of("", "", 3, 5)
         );
