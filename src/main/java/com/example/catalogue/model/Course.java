@@ -32,7 +32,7 @@ public class Course {
     private String category;
 
     @Min(value = 1, message = "Minimum rating value is 1")
-    @Max(value = 5, message = "maximum rating value is 5")
+    @Max(value = 5, message = "Maximum rating value is 5")
     @Column(name = "RATING")
     private int rating;
 

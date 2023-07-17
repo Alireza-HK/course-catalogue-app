@@ -69,7 +69,7 @@ public class CourseServiceTest {
         when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
 
         // When
-        Course foundCourse = courseService.getCourseById(course.getId()).orElse(null);
+        Course foundCourse = courseService.getCourseById(course.getId());
 
         // Then
         assertThat(foundCourse).isNotNull();

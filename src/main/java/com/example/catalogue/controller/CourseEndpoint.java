@@ -13,10 +13,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/courses/")
-@Tag(name = "Course Catalogue Controller", description = "This REST controller provide services to manage courses in the course catalogue application")
+@Tag(name = "Course Catalogue Controller", description = "This REST controller provides services to manage courses in the course catalogue application")
 public class CourseEndpoint {
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     @Autowired
     public CourseEndpoint(CourseService courseService) {
@@ -33,7 +33,7 @@ public class CourseEndpoint {
     @GetMapping("{id}")
     @ResponseStatus(code = HttpStatus.OK)
     @Operation(summary = "Provides course details for the supplied course id from the course catalogue application")
-    public Optional<Course> getCourseById(@PathVariable("id") long courseId) {
+    public Course getCourseById(@PathVariable("id") long courseId) {
         return courseService.getCourseById(courseId);
     }
 

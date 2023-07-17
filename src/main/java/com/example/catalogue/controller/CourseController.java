@@ -30,8 +30,7 @@ public class CourseController {
 
     @GetMapping("/index")
     public String index(Model model) {
-        List<Course> courseList = (List<Course>) courseService.getAllCourses();
-        model.addAttribute("courses", courseList.isEmpty() ? Collections.EMPTY_LIST : courseList);
+        model.addAttribute("courses", courseService.getAllCourses());
         model.addAttribute("searchModel", new Course());
         return "index";
     }
@@ -47,13 +46,12 @@ public class CourseController {
             return "add-course";
         }
         courseService.createCourse(course);
-        model.addAttribute("courses", courseService.getAllCourses());
         return "redirect:/index";
     }
 
     @GetMapping("/update/{id}")
     public String showUpdateCourseForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("course", courseService.getCourseById(id).get());
+        model.addAttribute("course", courseService.getCourseById(id));
         return "update-course";
     }
 
@@ -64,14 +62,12 @@ public class CourseController {
             return "update-course";
         }
         courseService.updateCourse(id, course);
-        model.addAttribute("courses", courseService.getAllCourses());
         return "redirect:/index";
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteCourse(@PathVariable("id") Long id, Model model) {
+    public String deleteCourse(@PathVariable("id") Long id) {
         courseService.deleteCourseById(id);
-        model.addAttribute("courses", courseService.getAllCourses());
         return "redirect:/index";
     }
 

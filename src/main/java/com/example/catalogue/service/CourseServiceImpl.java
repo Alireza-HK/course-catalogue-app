@@ -3,10 +3,9 @@ package com.example.catalogue.service;
 import com.example.catalogue.exception.CourseNotFoundException;
 import com.example.catalogue.model.Course;
 import com.example.catalogue.repository.CourseRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -24,9 +23,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<Course> getCourseById(Long courseId) {
-        return Optional.ofNullable(courseRepository.findById(courseId)
-                .orElseThrow(() -> new CourseNotFoundException(String.format("No course with id %s is available", courseId))));
+    public Course getCourseById(Long courseId) {
+        return courseRepository.findById(courseId)
+                .orElseThrow(() -> new CourseNotFoundException(String.format("No course with id %s is available", courseId)));
     }
 
     @Override
@@ -43,18 +42,16 @@ public class CourseServiceImpl implements CourseService {
     public Course updateCourse(Long courseId, Course course) {
         Course existingCourse = courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException(String.format("No course with id %s is available", courseId)));
-        existingCourse.setName(course.getName());
-        existingCourse.setCategory(course.getCategory());
-        existingCourse.setDescription(course.getDescription());
-        existingCourse.setRating(course.getRating());
-        existingCourse.setAuthor(course.getAuthor());
+        BeanUtils.copyProperties(course, existingCourse, "id");
         return courseRepository.save(existingCourse);
     }
 
     @Override
     public void deleteCourseById(Long courseId) {
-        courseRepository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(String.format("No course with id %s is available", courseId)));
-        courseRepository.deleteById(courseId);
+        courseRepository.findById(courseId).ifPresentOrElse(course -> courseRepository.deleteById(course.getId()),
+                () -> {
+                    throw new CourseNotFoundException(String.format("No course with id %s is available", courseId));
+                });
     }
 
     @Override
