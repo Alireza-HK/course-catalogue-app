@@ -81,7 +81,7 @@ public class CourseController {
     @GetMapping("/search")
     public String search(Model model) {
         model.addAttribute("searchModel", new Course());
-        return "search";
+        return "search-course";
     }
 
 }

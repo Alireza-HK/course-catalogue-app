@@ -215,7 +215,7 @@ class CourseControllerIntegrationTest {
         // Then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(view().name("search"))
+                .andExpect(view().name("search-course"))
                 .andExpect(model().attributeExists("searchModel"))
                 .andExpect(model().attribute("searchModel", equalToObject(new Course())));
     }
