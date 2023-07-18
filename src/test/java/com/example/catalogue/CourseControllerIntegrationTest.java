@@ -47,8 +47,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /index should return index template with courses")
-    void getIndexPage() throws Exception {
+    @DisplayName("GET /index returns index template with courses when courses are available")
+    void getIndexPage_ReturnsIndexTemplateWithCourses() throws Exception {
         // When
         ResultActions resultActions = mockMvc.perform(get("/index"));
 
@@ -63,8 +63,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /addcourse should return add-course template")
-    void getAddCourseForm() throws Exception {
+    @DisplayName("GET /addcourse returns add-course template")
+    void getAddCourseForm_ReturnsAddCourseTemplate() throws Exception {
         // When
         ResultActions resultActions = mockMvc.perform(get("/addcourse"));
 
@@ -75,8 +75,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /addcourse with valid course should redirect to /index")
-    void addValidCourse() throws Exception {
+    @DisplayName("POST /addcourse redirects to /index when a valid course is provided")
+    void addValidCourse_RedirectsToIndex() throws Exception {
         // Given
         Course validCourse = Course.builder()
                 .name("Testing for Dummies")
@@ -98,8 +98,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /addcourse with invalid course should return add-course template")
-    void addInvalidCourse() throws Exception {
+    @DisplayName("POST /addcourse returns add-course template with errors when an invalid course is provided")
+    void addInvalidCourse_ReturnsAddCourseTemplateWithErrors() throws Exception {
         // Given
         Course course = new Course();
 
@@ -118,8 +118,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /update/{id} should return update-course template with course")
-    void getUpdateCourseForm() throws Exception {
+    @DisplayName("GET /update/{id} returns update-course template with the selected course")
+    void getUpdateCourseForm_ReturnsUpdateCourseTemplateWithSelectedCourse() throws Exception{
         // Given
         when(courseService.getCourseById(anyLong())).thenReturn(TEST_DATA.get(0));
 
@@ -136,8 +136,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("PUT /update/{id} with valid course should redirect to /index")
-    void updateValidCourse() throws Exception {
+    @DisplayName("PUT /update/{id} redirects to /index when a valid course is provided")
+    void updateValidCourse_RedirectsToIndex() throws Exception {
         // Given
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(3).author("John Doe").build();
 
@@ -154,8 +154,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("PUT /update/{id} with invalid course should return update-course template")
-    void updateInvalidCourse() throws Exception {
+    @DisplayName("PUT /update/{id} returns update-course template with errors when an invalid course is provided")
+    void updateInvalidCourse_ReturnsUpdateCourseTemplateWithErrors() throws Exception {
         // Given
         Course invalidCourse = new Course();
 
@@ -174,8 +174,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("DELETE /delete/{id} should redirect to /index")
-    void deleteCourse() throws Exception {
+    @DisplayName("DELETE /delete/{id} redirects to /index")
+    void deleteCourse_RedirectsToIndex() throws Exception {
         // When
         ResultActions resultActions = mockMvc.perform(delete("/delete/{id}", 1L));
 
@@ -187,8 +187,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /search should return index template with matching courses")
-    void searchCourses() throws Exception {
+    @DisplayName("POST /search returns index template with matching courses when search criteria is provided")
+    void searchCourses_ReturnsIndexTemplateWithMatchingCourses() throws Exception {
         // Given
         Course searchModel = Course.builder().category("Programming").build();
         when(courseService.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(Collections.emptyList());
@@ -207,8 +207,8 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /search should return search template")
-    void getSearchPage() throws Exception {
+    @DisplayName("GET /search returns search template")
+    void getSearchPage_ReturnsSearchTemplate() throws Exception {
         // When
         ResultActions resultActions = mockMvc.perform(get("/search"));
 
