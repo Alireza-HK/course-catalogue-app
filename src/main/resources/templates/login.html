@@ -10,31 +10,28 @@
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h2 class="mb-1 text-center">Login</h2>
-			</div>
-			<div class="col-md-3"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-3"></div>
-			<div class="col-md-6">
-				<div th:if="${param.error}" class="alert alert-danger">
+				<div th:if="${param.error}" class="form-group col-md-9 alert alert-danger">
 					Invalid username and password.
 				</div>
-				<div th:if="${param.logout}" class="alert alert-success">
+				<div th:if="${param.logout}" class="form-group col-md-9 alert alert-success">
 					You have been logged out.
 				</div>
 
 				<form th:action="@{/login}" method="post">
-					<div class="form-group">
-						<label>Username</label>
+					<div class="form-group col-md-9">
+						<label class="col-form-label">Username</label>
 						<input type="text" class="form-control" name="username" placeholder="Enter Username" required autofocus>
 					</div>
-					<div class="form-group">
-						<label>Password</label>
+					<div class="form-group col-md-9">
+						<label class="col-form-label">Password</label>
 						<input type="password" class="form-control" name="password" placeholder="Enter Password" required autofocus>
 					</div>
 					</br>
-					<button type="submit" class="btn btn-dark">Submit</button>
+					<div class="row">
+						<div class="col-md-6 mt-2">
+							<button type="submit" class="btn btn-dark">Submit</button>
+						</div>
+					</div>
 				</form>
 			</div>
 			<div class="col-md-3"></div>
