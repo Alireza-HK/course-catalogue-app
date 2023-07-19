@@ -53,7 +53,7 @@ class CourseControllerIntegrationTest {
     @DisplayName("GET /index returns index template with courses when courses are available")
     void getIndexPage_ReturnsIndexTemplateWithCourses() throws Exception {
         // When
-        ResultActions resultActions = mockMvc.perform(get("/index"));
+        var resultActions = mockMvc.perform(get("/index"));
 
         // Then
         resultActions
@@ -69,7 +69,7 @@ class CourseControllerIntegrationTest {
     @DisplayName("GET /addcourse returns add-course template")
     void getAddCourseForm_ReturnsAddCourseTemplate() throws Exception {
         // When
-        ResultActions resultActions = mockMvc.perform(get("/addcourse"));
+        var resultActions = mockMvc.perform(get("/addcourse"));
 
         // Then
         resultActions
@@ -81,7 +81,7 @@ class CourseControllerIntegrationTest {
     @DisplayName("POST /addcourse redirects to /index when a valid course is provided")
     void addValidCourse_RedirectsToIndex() throws Exception {
         // Given
-        Course validCourse = Course.builder()
+        var validCourse = Course.builder()
                 .name("Testing for Dummies")
                 .category("Programming")
                 .rating(4)
@@ -89,7 +89,7 @@ class CourseControllerIntegrationTest {
                 .build();
 
         // When
-        ResultActions resultActions = mockMvc.perform(post("/addcourse")
+        var resultActions = mockMvc.perform(post("/addcourse")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", validCourse));
@@ -105,10 +105,10 @@ class CourseControllerIntegrationTest {
     @DisplayName("POST /addcourse returns add-course template with errors when an invalid course is provided")
     void addInvalidCourse_ReturnsAddCourseTemplateWithErrors() throws Exception {
         // Given
-        Course course = new Course();
+        var course = new Course();
 
         // When
-        ResultActions resultActions = mockMvc.perform(post("/addcourse")
+        var resultActions = mockMvc.perform(post("/addcourse")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", course));
@@ -129,7 +129,7 @@ class CourseControllerIntegrationTest {
         when(courseService.getCourseById(anyLong())).thenReturn(TEST_DATA.get(0));
 
         // When
-        ResultActions resultActions = mockMvc.perform(get("/update/{id}", 1L));
+        var resultActions = mockMvc.perform(get("/update/{id}", 1L));
 
         // Then
         resultActions
@@ -145,10 +145,10 @@ class CourseControllerIntegrationTest {
     @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
     void updateValidCourse_RedirectsToIndex() throws Exception {
         // Given
-        Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(3).author("John Doe").build();
+        var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(3).author("John Doe").build();
 
         // When
-        ResultActions resultActions = mockMvc.perform(put("/update/{id}", 1L)
+        var resultActions = mockMvc.perform(put("/update/{id}", 1L)
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", course));
@@ -164,10 +164,10 @@ class CourseControllerIntegrationTest {
     @DisplayName("PUT /update/{id} returns update-course template with errors when an invalid course is provided")
     void updateInvalidCourse_ReturnsUpdateCourseTemplateWithErrors() throws Exception {
         // Given
-        Course invalidCourse = new Course();
+        var invalidCourse = new Course();
 
         // When
-        ResultActions resultActions = mockMvc.perform(put("/update/{id}", 1L)
+        var resultActions = mockMvc.perform(put("/update/{id}", 1L)
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", invalidCourse));
@@ -186,7 +186,7 @@ class CourseControllerIntegrationTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void deleteCourseWithAdminRole_RedirectsToIndex() throws Exception {
         // When
-        ResultActions resultActions = mockMvc.perform(delete("/delete/{id}", 1L)
+        var resultActions = mockMvc.perform(delete("/delete/{id}", 1L)
                 .with(csrf()));
 
         // Then
@@ -200,7 +200,7 @@ class CourseControllerIntegrationTest {
     @DisplayName("DELETE /delete/{id} with USER role redirects to /accessDenied")
     void deleteCourseWithUserRole_RedirectsToAccessDenied() throws Exception {
         // When
-        ResultActions resultActions = mockMvc.perform(delete("/delete/{id}", 1L)
+        var resultActions = mockMvc.perform(delete("/delete/{id}", 1L)
                 .with(csrf()));
 
         // Then
@@ -217,11 +217,11 @@ class CourseControllerIntegrationTest {
     @DisplayName("POST /search returns index template with matching courses when search criteria is provided")
     void searchCourses_ReturnsIndexTemplateWithMatchingCourses() throws Exception {
         // Given
-        Course searchModel = Course.builder().category("Programming").build();
+        var searchModel = Course.builder().category("Programming").build();
         when(courseService.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(Collections.emptyList());
 
         // When
-        ResultActions resultActions = mockMvc.perform(post("/search")
+        var resultActions = mockMvc.perform(post("/search")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", searchModel));
@@ -238,7 +238,7 @@ class CourseControllerIntegrationTest {
     @DisplayName("GET /search returns search template")
     void getSearchPage_ReturnsSearchTemplate() throws Exception {
         // When
-        ResultActions resultActions = mockMvc.perform(get("/search"));
+        var resultActions = mockMvc.perform(get("/search"));
 
         // Then
         resultActions

@@ -19,9 +19,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Autowired
-    private AccessDeniedHandler customAccessDeniedHandler;
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
@@ -31,7 +28,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //todo write test
-        http
+        return http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/delete/**").hasRole("ADMIN")
@@ -44,20 +41,20 @@ public class SecurityConfiguration {
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .exceptionHandling((exceptionHandling) ->
-                        exceptionHandling.accessDeniedHandler(customAccessDeniedHandler)
-                );
-        return http.build();
+                        exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler())
+                )
+                .build();
     }
 
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
         var user = User.withUsername("user")
-                .password(passwordEncoder().encode("user"))
+                .password(passwordEncoder.encode("user"))
                 .roles("USER")
                 .build();
         var admin = User.withUsername("admin")
-                .password(passwordEncoder().encode("admin"))
+                .password(passwordEncoder.encode("admin"))
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
