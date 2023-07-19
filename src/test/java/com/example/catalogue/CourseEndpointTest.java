@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@WithMockUser(username = "user", roles = {"USER"})
 public class CourseEndpointTest {
 
     private final CourseService courseService;
@@ -42,6 +45,7 @@ public class CourseEndpointTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions result = mockMvc.perform(post("/courses/")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andDo(print())
@@ -62,6 +66,7 @@ public class CourseEndpointTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions postResult = mockMvc.perform(post("/courses/")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isCreated());
@@ -80,7 +85,7 @@ public class CourseEndpointTest {
 
     @Test
     public void givenInvalidCourseId_whenGetCourse_thenReturnNotFoundStatus() throws Exception {
-        mockMvc.perform(get("/courses/{id}", 100))
+        mockMvc.perform(get("/courses/{id}", 100).with(csrf()))
                 .andExpect(status().isNotFound());
     }
 
@@ -89,6 +94,7 @@ public class CourseEndpointTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions postResult = mockMvc.perform(post("/courses/")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isCreated());
@@ -99,6 +105,7 @@ public class CourseEndpointTest {
 
         mockMvc.perform(put("/courses/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf())
                         .content(objectMapper.writeValueAsString(updatedCourse)))
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value("JavaEE for Dummies - 2nd Edition"))
@@ -110,18 +117,22 @@ public class CourseEndpointTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void givenCourseId_whenDeleteCourse_thenCourseShouldBeDeleted() throws Exception {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions postResult = mockMvc.perform(post("/courses/")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isCreated());
 
         Integer id = JsonPath.parse(postResult.andReturn().getResponse().getContentAsString()).read("$.id");
 
-        mockMvc.perform(delete("/courses/{id}", id))
+        mockMvc.perform(delete("/courses/{id}", id).with(csrf()))
                 .andExpect(status().isNoContent());
 
     }
+
+    //todo: test not admin
 }

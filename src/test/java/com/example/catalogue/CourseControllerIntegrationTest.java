@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -20,11 +21,13 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(username = "user", roles = {"USER"})
 class CourseControllerIntegrationTest {
 
     @Autowired
@@ -87,6 +90,7 @@ class CourseControllerIntegrationTest {
 
         // When
         ResultActions resultActions = mockMvc.perform(post("/addcourse")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", validCourse));
 
@@ -105,6 +109,7 @@ class CourseControllerIntegrationTest {
 
         // When
         ResultActions resultActions = mockMvc.perform(post("/addcourse")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", course));
 
@@ -119,7 +124,7 @@ class CourseControllerIntegrationTest {
 
     @Test
     @DisplayName("GET /update/{id} returns update-course template with the selected course")
-    void getUpdateCourseForm_ReturnsUpdateCourseTemplateWithSelectedCourse() throws Exception{
+    void getUpdateCourseForm_ReturnsUpdateCourseTemplateWithSelectedCourse() throws Exception {
         // Given
         when(courseService.getCourseById(anyLong())).thenReturn(TEST_DATA.get(0));
 
@@ -137,12 +142,14 @@ class CourseControllerIntegrationTest {
 
     @Test
     @DisplayName("PUT /update/{id} redirects to /index when a valid course is provided")
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
     void updateValidCourse_RedirectsToIndex() throws Exception {
         // Given
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(3).author("John Doe").build();
 
         // When
         ResultActions resultActions = mockMvc.perform(put("/update/{id}", 1L)
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", course));
 
@@ -161,6 +168,7 @@ class CourseControllerIntegrationTest {
 
         // When
         ResultActions resultActions = mockMvc.perform(put("/update/{id}", 1L)
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", invalidCourse));
 
@@ -174,10 +182,12 @@ class CourseControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("DELETE /delete/{id} redirects to /index")
-    void deleteCourse_RedirectsToIndex() throws Exception {
+    @DisplayName("DELETE /delete/{id} with ADMIN role redirects to /index")
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void deleteCourseWithAdminRole_RedirectsToIndex() throws Exception {
         // When
-        ResultActions resultActions = mockMvc.perform(delete("/delete/{id}", 1L));
+        ResultActions resultActions = mockMvc.perform(delete("/delete/{id}", 1L)
+                .with(csrf()));
 
         // Then
         resultActions
@@ -185,6 +195,23 @@ class CourseControllerIntegrationTest {
                 .andExpect(redirectedUrl("/index"));
         verify(courseService, times(1)).deleteCourseById(1L);
     }
+
+    @Test
+    @DisplayName("DELETE /delete/{id} with USER role redirects to /accessDenied")
+    void deleteCourseWithUserRole_RedirectsToAccessDenied() throws Exception {
+        // When
+        ResultActions resultActions = mockMvc.perform(delete("/delete/{id}", 1L)
+                .with(csrf()));
+
+        // Then
+        resultActions
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/accessDenied"));
+        verify(courseService, times(0)).deleteCourseById(1L);
+    }
+
+    //todo: test not admin
+    //todo: access with annonymous
 
     @Test
     @DisplayName("POST /search returns index template with matching courses when search criteria is provided")
@@ -195,6 +222,7 @@ class CourseControllerIntegrationTest {
 
         // When
         ResultActions resultActions = mockMvc.perform(post("/search")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", searchModel));
 

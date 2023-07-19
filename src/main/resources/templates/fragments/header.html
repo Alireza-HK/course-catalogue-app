@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <div th:fragment="header-css">
         <meta charset="utf-8">
@@ -6,11 +6,15 @@
         <title>Courses</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-        <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     </div>
 </head>
 <body>
@@ -20,27 +24,34 @@
         <a class="navbar-brand brand-text" href="#">
             Course Catalogue
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-between" id="navbar-list">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{/addcourse}">Add Course</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{/search}">Search Course</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank" th:href="@{/v3/api-docs}">API Docs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank" th:href="@{/swagger-ui/index.html}">Swagger</a>
-                </li>
-            </ul>
+        <div sec:authorize="isAuthenticated()">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbar-list">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/addcourse}">Add Course</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/search}">Search Course</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" target="_blank" th:href="@{/v3/api-docs}">API Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" target="_blank" th:href="@{/swagger-ui/index.html}">Swagger</a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" id="logoutForm"></form>
+                        <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit();">Logout (Authenticated as <span sec:authentication="name"/>)</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
