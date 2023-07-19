@@ -22,7 +22,7 @@ public class SecurityConfiguration {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/webjars/**", "/images/**", "/css/**", "/h2-console/**");
+                .requestMatchers("/webjars/**", "/images/**", "/css/**");
     }
 
     @Bean
@@ -30,6 +30,7 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .requestMatchers("/delete/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/courses/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

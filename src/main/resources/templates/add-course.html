@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group col-md-9">
                         <label for="author" class="col-form-label">Author</label>
-                        <textarea th:field="*{author}" class="form-control" id="author" placeholder="Course Author"></textarea>
+                        <input th:field="*{author}" class="form-control" id="author" placeholder="Course Author"></input>
                         <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text-danger"></span>
                     </div>
                 </div>

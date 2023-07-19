@@ -26,14 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "user", roles = {"USER"})
-public class CourseEndpointTest {
+public class CourseRestControllerTest {
 
     private final CourseService courseService;
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public CourseEndpointTest(CourseService courseService, MockMvc mockMvc, ObjectMapper objectMapper) {
+    public CourseRestControllerTest(CourseService courseService, MockMvc mockMvc, ObjectMapper objectMapper) {
         this.courseService = courseService;
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;

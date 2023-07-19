@@ -9,17 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/courses/")
 @Tag(name = "Course Catalogue Controller", description = "This REST controller provides services to manage courses in the course catalogue application")
-public class CourseEndpoint {
+public class CourseRestController {
 
     private final CourseService courseService;
 
     @Autowired
-    public CourseEndpoint(CourseService courseService) {
+    public CourseRestController(CourseService courseService) {
         this.courseService = courseService;
     }
 
