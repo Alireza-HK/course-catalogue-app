@@ -27,7 +27,6 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //todo write test
         return http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
@@ -41,11 +40,15 @@ public class SecurityConfiguration {
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .exceptionHandling((exceptionHandling) ->
-                        exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler())
+                        exceptionHandling.accessDeniedHandler(accessDeniedHandler())
                 )
                 .build();
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {

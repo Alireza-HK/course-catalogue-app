@@ -142,7 +142,7 @@ class CourseControllerIntegrationTest {
 
     @Test
     @DisplayName("PUT /update/{id} redirects to /index when a valid course is provided")
-    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void updateValidCourse_RedirectsToIndex() throws Exception {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(3).author("John Doe").build();
