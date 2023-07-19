@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-9">
-            <form action="#" th:action="@{/update/{id}(id=${course.id})}" th:object="${course}" method="post" th:method="put">
+            <form action="#" th:action="@{/update/{id}(id=${course.id})}" th:object="${course}" th:method="post">
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <label for="name" class="col-form-label">Name</label>
