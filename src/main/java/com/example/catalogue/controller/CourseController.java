@@ -55,7 +55,7 @@ public class CourseController {
         return "update-course";
     }
 
-    @PutMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateCourse(@PathVariable("id") Long id, @Valid Course course, BindingResult result, Model model) {
         if (result.hasErrors()) {
             course.setId(id);
@@ -65,7 +65,7 @@ public class CourseController {
         return "redirect:/index";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
         courseService.deleteCourseById(id);
         return "redirect:/index";
