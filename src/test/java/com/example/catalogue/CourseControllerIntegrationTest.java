@@ -1,9 +1,8 @@
 package com.example.catalogue;
 
+import com.example.catalogue.client.CourseFeignClient;
 import com.example.catalogue.model.Course;
-import com.example.catalogue.service.CourseService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,8 +19,8 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -34,7 +32,7 @@ class CourseControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CourseService courseService;
+    private CourseFeignClient restClient;
 
     private static final List<Course> TEST_DATA = List.of(
             Course.builder().name("JavaEE for Dummies").category("Programming").rating(3).author("John Doe").build(),
@@ -46,7 +44,7 @@ class CourseControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        when(courseService.getAllCourses()).thenReturn(TEST_DATA);
+        when(restClient.getAllCourses()).thenReturn(TEST_DATA);
     }
 
     @Test
@@ -61,7 +59,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(model().attribute("courses", hasSize(TEST_DATA.size())))
                 .andExpect(model().attribute("courses", containsInAnyOrder(TEST_DATA.toArray())))
                 .andExpect(model().attributeExists("searchModel"));
-        verify(courseService, times(1)).getAllCourses();
+        verify(restClient, times(1)).getAllCourses();
     }
 
     @Test
@@ -94,7 +92,7 @@ class CourseControllerIntegrationTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/index"));
-        verify(courseService, times(1)).createCourse(validCourse);
+        verify(restClient, times(1)).createCourse(validCourse);
     }
 
     @Test
@@ -113,13 +111,13 @@ class CourseControllerIntegrationTest {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("course", "name", "category", "author"))
                 .andExpect(view().name("add-course"));
-        verify(courseService, times(0)).createCourse(any());
+        verify(restClient, times(0)).createCourse(any());
     }
 
     @Test
     void getUpdateCourseForm_ReturnsUpdateCourseTemplateWithSelectedCourse() throws Exception {
         // Given
-        when(courseService.getCourseById(anyLong())).thenReturn(TEST_DATA.get(0));
+        when(restClient.getCourseById(anyLong())).thenReturn(TEST_DATA.get(0));
 
         // When
         var resultActions = mockMvc.perform(get("/update/{id}", 1L));
@@ -130,7 +128,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(view().name("update-course"))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(model().attribute("course", equalToObject(TEST_DATA.get(0))));
-        verify(courseService, times(1)).getCourseById(1L);
+        verify(restClient, times(1)).getCourseById(1L);
     }
 
     @Test
@@ -148,7 +146,7 @@ class CourseControllerIntegrationTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/index"));
-        verify(courseService, times(1)).updateCourse(1L, course);
+        verify(restClient, times(1)).updateCourse(1L, course);
     }
 
     @Test
@@ -167,7 +165,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("course", "name", "category", "author"))
                 .andExpect(view().name("update-course"));
-        verify(courseService, times(0)).updateCourse(any(), any());
+        verify(restClient, times(0)).updateCourse(any(), any());
     }
 
     @Test
@@ -180,7 +178,7 @@ class CourseControllerIntegrationTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/index"));
-        verify(courseService, times(1)).deleteCourseById(1L);
+        verify(restClient, times(1)).deleteCourseById(1L);
     }
 
     @Test
@@ -192,7 +190,7 @@ class CourseControllerIntegrationTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/accessDenied"));
-        verify(courseService, times(0)).deleteCourseById(1L);
+        verify(restClient, times(0)).deleteCourseById(1L);
     }
 
     //todo: test not admin
@@ -202,7 +200,7 @@ class CourseControllerIntegrationTest {
     void searchCourses_ReturnsIndexTemplateWithMatchingCourses() throws Exception {
         // Given
         var searchModel = Course.builder().category("Programming").build();
-        when(courseService.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(Collections.emptyList());
+        when(restClient.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(Collections.emptyList());
 
         // When
         var resultActions = mockMvc.perform(post("/search")
@@ -214,7 +212,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
                 .andExpect(model().attributeExists("courses"));
-        verify(courseService, times(1)).searchSimilarCourses(searchModel.getName(), searchModel.getCategory(), searchModel.getRating());
+        verify(restClient, times(1)).searchSimilarCourses(searchModel.getName(), searchModel.getCategory(), searchModel.getRating());
     }
 
     @Test

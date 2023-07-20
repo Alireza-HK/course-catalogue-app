@@ -1,26 +1,25 @@
 package com.example.catalogue.controller;
 
+import com.example.catalogue.client.CourseFeignClient;
 import com.example.catalogue.model.Course;
-import com.example.catalogue.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
 public class CourseController {
 
-    private final CourseService courseService;
+    private final CourseFeignClient courseFeignClient;
 
     @Autowired
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
+    public CourseController(CourseFeignClient courseFeignClient) {
+        this.courseFeignClient = courseFeignClient;
     }
 
     @GetMapping("/")
@@ -30,7 +29,7 @@ public class CourseController {
 
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("courses", courseService.getAllCourses());
+        model.addAttribute("courses", courseFeignClient.getAllCourses());
         model.addAttribute("searchModel", new Course());
         return "index";
     }
@@ -41,17 +40,17 @@ public class CourseController {
     }
 
     @PostMapping("/addcourse")
-    public String addCourse(@Valid Course course, BindingResult result, Model model){
+    public String addCourse(@Valid Course course, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-course";
         }
-        courseService.createCourse(course);
+        courseFeignClient.createCourse(course);
         return "redirect:/index";
     }
 
     @GetMapping("/update/{id}")
     public String showUpdateCourseForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("course", courseService.getCourseById(id));
+        model.addAttribute("course", courseFeignClient.getCourseById(id));
         return "update-course";
     }
 
@@ -61,19 +60,19 @@ public class CourseController {
             course.setId(id);
             return "update-course";
         }
-        courseService.updateCourse(id, course);
+        courseFeignClient.updateCourse(id, course);
         return "redirect:/index";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
-        courseService.deleteCourseById(id);
-        return "redirect:/index";
+        courseFeignClient.deleteCourseById(id);
+        return "redirect:/index";//todo forward?
     }
 
     @PostMapping("/search")
     public String search(Model model, Course course) {
-        var result = courseService.searchSimilarCourses(course.getName(), course.getCategory(), course.getRating());
+        var result = courseFeignClient.searchSimilarCourses(course.getName(), course.getCategory(), course.getRating());
         model.addAttribute("courses", result);
         return "index";
     }

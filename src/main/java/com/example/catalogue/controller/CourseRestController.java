@@ -31,7 +31,7 @@ public class CourseRestController {
     @GetMapping("{id}")
     @ResponseStatus(code = HttpStatus.OK)
     @Operation(summary = "Provides course details for the supplied course id from the course catalogue application")
-    public Course getCourseById(@PathVariable("id") long courseId) {
+    public Course getCourseById(@PathVariable("id") Long courseId) {
         return courseService.getCourseById(courseId);
     }
 
@@ -45,14 +45,14 @@ public class CourseRestController {
     @PutMapping("{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @Operation(summary = "Updates the course details in the course catalogue application for the supplied course id")
-    public Course updateCourse(@PathVariable("id") long courseId, @Valid @RequestBody Course course) {
+    public Course updateCourse(@PathVariable("id") Long courseId, @Valid @RequestBody Course course) {
         return courseService.updateCourse(courseId, course);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @Operation(summary = "Deletes the course details for the supplied course id from the course catalogue application")
-    public void deleteCourseById(@PathVariable("id") long courseId) {
+    public void deleteCourseById(@PathVariable("id") Long courseId) {
         courseService.deleteCourseById(courseId);
     }
 
@@ -61,6 +61,15 @@ public class CourseRestController {
     @Operation(summary = "Deletes all courses from the course catalogue application")
     public void deleteCourses() {
         courseService.deleteCourses();
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(code = HttpStatus.OK)
+    @Operation(summary = "Search similar courses based on provided parameters from the course catalogue application")
+    public Iterable<Course> searchCourses(@RequestParam(required = false, defaultValue = "") String name,
+                                          @RequestParam(required = false, defaultValue = "") String category,
+                                          @RequestParam(required = false, defaultValue = "0") Integer rating) {
+        return courseService.searchSimilarCourses(name, category, rating);
     }
 
 }
