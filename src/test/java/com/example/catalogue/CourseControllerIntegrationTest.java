@@ -87,7 +87,6 @@ class CourseControllerIntegrationTest {
 
         // When
         var resultActions = mockMvc.perform(post("/addcourse")
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", validCourse));
 
@@ -105,7 +104,6 @@ class CourseControllerIntegrationTest {
 
         // When
         var resultActions = mockMvc.perform(post("/addcourse")
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", course));
 
@@ -143,7 +141,6 @@ class CourseControllerIntegrationTest {
 
         // When
         var resultActions = mockMvc.perform(post("/update/{id}", 1L)
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", course));
 
@@ -161,7 +158,6 @@ class CourseControllerIntegrationTest {
 
         // When
         var resultActions = mockMvc.perform(post("/update/{id}", 1L)
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", invalidCourse));
 
@@ -178,8 +174,7 @@ class CourseControllerIntegrationTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void deleteCourseWithAdminRole_RedirectsToIndex() throws Exception {
         // When
-        var resultActions = mockMvc.perform(get("/delete/{id}", 1L)
-                .with(csrf()));
+        var resultActions = mockMvc.perform(get("/delete/{id}", 1L));
 
         // Then
         resultActions
@@ -191,8 +186,7 @@ class CourseControllerIntegrationTest {
     @Test
     void deleteCourseWithUserRole_RedirectsToAccessDenied() throws Exception {
         // When
-        var resultActions = mockMvc.perform(get("/delete/{id}", 1L)
-                .with(csrf()));
+        var resultActions = mockMvc.perform(get("/delete/{id}", 1L));
 
         // Then
         resultActions
@@ -212,7 +206,6 @@ class CourseControllerIntegrationTest {
 
         // When
         var resultActions = mockMvc.perform(post("/search")
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", searchModel));
 

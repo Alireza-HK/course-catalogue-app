@@ -44,7 +44,6 @@ public class CourseRestControllerTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions result = mockMvc.perform(post("/courses/")
-                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andDo(print())
@@ -65,7 +64,6 @@ public class CourseRestControllerTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions postResult = mockMvc.perform(post("/courses/")
-                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isCreated());
@@ -93,7 +91,6 @@ public class CourseRestControllerTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions postResult = mockMvc.perform(post("/courses/")
-                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isCreated());
@@ -104,7 +101,6 @@ public class CourseRestControllerTest {
 
         mockMvc.perform(put("/courses/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .with(csrf())
                         .content(objectMapper.writeValueAsString(updatedCourse)))
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value("JavaEE for Dummies - 2nd Edition"))
@@ -121,7 +117,6 @@ public class CourseRestControllerTest {
         Course course = Course.builder().name("JavaEE for Dummies").category("Programming").rating(4).author("John Doe").build();
 
         ResultActions postResult = mockMvc.perform(post("/courses/")
-                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
                 .andExpect(status().isCreated());
