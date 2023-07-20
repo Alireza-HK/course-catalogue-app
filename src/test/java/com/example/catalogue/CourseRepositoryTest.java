@@ -75,14 +75,14 @@ class CourseRepositoryTest {
     }
 
     @Test
-    @DisplayName("Given course in database, when delete, then course should be deleted")
-    void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
+    @DisplayName("Given course in database, when deleteById, then course should be deleted")
+    void givenCourseInDatabase_whenDeleteById_thenCourseShouldBeDeleted() {
         // Given
         var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
         course = courseRepository.save(course);
 
         // When
-        courseRepository.delete(course);
+        courseRepository.deleteById(course.getId());
         Course deletedCourse = courseRepository.findById(course.getId()).orElse(null);
 
         // Then
@@ -103,7 +103,8 @@ class CourseRepositoryTest {
                 Arguments.of("Spring Security", "", 0, 1),  // name, category, rating, expectedSearchResultSize
                 Arguments.of("", "Programming", 0, 4),
                 Arguments.of("", "Languages", 2, 1),
-                Arguments.of("", "", 3, 5)
+                Arguments.of("", "", 3, 5),
+                Arguments.of("NonExistentCourse", "NonExistentCategory", 0, 0)
         );
     }
 
