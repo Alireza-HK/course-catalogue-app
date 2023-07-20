@@ -5,9 +5,13 @@ import com.example.catalogue.model.Course;
 import com.example.catalogue.repository.CourseRepository;
 import com.example.catalogue.service.CourseService;
 import com.example.catalogue.service.CourseServiceImpl;
+import com.example.catalogue.testutil.CourseTestDataFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -15,8 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -32,58 +39,30 @@ public class CourseServiceTest {
     @DisplayName("Given courses in database, when findAll, then return all courses")
     void givenCoursesInDatabase_whenFindAll_thenReturnAllCourses() {
         // Given
-        List<Course> coursesInDatabase = getTestInputData();
+        List<Course> coursesInDatabase = CourseTestDataFactory.DATA;
         when(courseRepository.findAll()).thenReturn(coursesInDatabase);
 
         // When
         Iterable<Course> allCourses = courseService.getAllCourses();
 
         // Then
-        assertThat(allCourses).isNotEmpty();
-        assertThat(allCourses).hasSize(coursesInDatabase.size());
-        assertThat(allCourses).containsExactlyElementsOf(coursesInDatabase);
+        assertThat(allCourses).isNotEmpty()
+                .hasSize(coursesInDatabase.size())
+                .containsExactlyElementsOf(coursesInDatabase);
+
+        // Verify that the courseRepository.findAll() method was called once
         verify(courseRepository, times(1)).findAll();
-    }
 
-    @Test
-    @DisplayName("Given valid course, when save, then course should be persisted")
-    void givenValidCourse_whenSave_thenCourseShouldBePersisted() {
-        // Given
-    var courseToSave = Course.builder()
-            .name("JavaEE for Dummies")
-            .category("JavaEE")
-            .rating(4)
-            .author("John Doe")
-            .build();
-
-    var savedCourse = Course.builder()
-            .id(1L)
-            .name("JavaEE for Dummies")
-            .category("JavaEE")
-            .rating(4)
-            .author("John Doe")
-            .build();
-
-    when(courseRepository.save(courseToSave)).thenReturn(savedCourse);
-
-        // When
-    Course result = courseService.createCourse(courseToSave);
-
-        // Then
-    assertThat(result.getId()).isNotNull();
-    assertThat(result.getName()).isEqualTo("JavaEE for Dummies");
-    assertThat(result.getCategory()).isEqualTo("JavaEE");
-    assertThat(result.getRating()).isEqualTo(4);
-    assertThat(result.getAuthor()).isEqualTo("John Doe");
-    verify(courseRepository, times(1)).save(courseToSave);
+        // Verify that no other interactions were made with the courseRepository
+        verifyNoMoreInteractions(courseRepository);
     }
 
     @Test
     @DisplayName("Given course in database, when findById, then return course")
     void givenCourseInDatabase_whenFindById_thenReturnCourse() {
         // Given
-        var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
-        when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
+        var course = CourseTestDataFactory.generateTestSavedCourse();
+        when(courseRepository.findById(anyLong())).thenReturn(Optional.of(course));
 
         // When
         Course foundCourse = courseService.getCourseById(course.getId());
@@ -102,23 +81,57 @@ public class CourseServiceTest {
 
         // When and Then
         assertThrows(CourseNotFoundException.class, () -> courseService.getCourseById(invalidCourseId));
+        verify(courseRepository, times(1)).findById(invalidCourseId);
+    verifyNoMoreInteractions(courseRepository);
+    }
+
+    @Test
+    @DisplayName("Given valid course, when createCourse, then course should be persisted")
+    void givenValidCourse_whenCreateCourse_thenCourseShouldBePersisted() {
+        // Given
+        Course courseToSave = CourseTestDataFactory.generateTestCourseToSave();
+        Course savedCourse = CourseTestDataFactory.generateTestSavedCourse();
+
+        when(courseRepository.save(courseToSave)).thenReturn(savedCourse);
+
+        // When
+        Course result = courseService.createCourse(courseToSave);
+
+        // Then
+        assertThat(result).isNotNull()
+                .hasFieldOrPropertyWithValue("name", courseToSave.getName())
+                .hasFieldOrPropertyWithValue("category", courseToSave.getCategory())
+                .hasFieldOrPropertyWithValue("rating", courseToSave.getRating())
+                .hasFieldOrPropertyWithValue("author", courseToSave.getAuthor());
+
+        verify(courseRepository, times(1)).save(courseToSave);
+        verifyNoMoreInteractions(courseRepository);
     }
 
     @Test
     @DisplayName("Given course in database, when update, then course should be updated")
     void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
         // Given
-        var course = Course.builder().name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
-        when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
-        when(courseRepository.save(course)).thenReturn(course);
+        var existingCourse = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
+        when(courseRepository.findById(1L)).thenReturn(Optional.of(existingCourse));
+
+        var updatedCourse = Course.builder().id(1L).name("JavaEE for Dummies - 2nd Edition").category("JavaEE").rating(4).author("John Doe").build();
+        when(courseRepository.save(existingCourse)).thenReturn(updatedCourse);
 
         // When
-        course.setName("JavaEE for Dummies - 2nd Edition");
-        Course updatedCourse = courseService.updateCourse(1L, course);
+        Course result = courseService.updateCourse(1L, updatedCourse);
 
         // Then
-        assertThat(updatedCourse).isEqualTo(course);
-        verify(courseRepository, times(1)).save(course);
+        assertAll("Course should be updated",
+                () -> assertThat(result).isNotNull(),
+                () -> assertThat(result.getId()).isEqualTo(1L),
+                () -> assertThat(result.getName()).isEqualTo("JavaEE for Dummies - 2nd Edition"),
+                () -> assertThat(result.getCategory()).isEqualTo("JavaEE"),
+                () -> assertThat(result.getRating()).isEqualTo(4),
+                () -> assertThat(result.getAuthor()).isEqualTo("John Doe")
+        );
+        verify(courseRepository, times(1)).findById(1L);
+        verify(courseRepository, times(1)).save(existingCourse);
     }
 
     @Test
@@ -154,79 +167,57 @@ public class CourseServiceTest {
 
         // When and Then
         assertThrows(CourseNotFoundException.class, () -> courseService.deleteCourseById(nonExistingCourseId));
+
+        verify(courseRepository, times(1)).findById(nonExistingCourseId);
         verify(courseRepository, never()).deleteById(anyLong());
     }
 
-
-
-    @Test
+    @ParameterizedTest(name = "Search courses with name: {0}, category: {1}, and rating: {2}")
+    @MethodSource("searchParameters")
     @DisplayName("Given courses in database, when searchSimilarCourses, then return matching courses")
-    void givenCoursesInDatabase_whenSearchSimilarCourses_thenReturnMatchingCourses() {
+    void givenCoursesInDatabase_whenSearchSimilarCourses_thenReturnMatchingCourses(
+            String name, String category, int rating, List<Course> expectedCourses) {
+
         // Given
-        List<Course> coursesInDatabase = getTestInputData();
-        when(courseRepository.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(coursesInDatabase);
+        when(courseRepository.searchSimilarCourses(name, category, rating)).thenReturn(expectedCourses);
 
         // When
-        Iterable<Course> matchingCourses = courseService.searchSimilarCourses("Spring", "Programming", 5);
+        Iterable<Course> matchingCourses = courseService.searchSimilarCourses(name, category, rating);
 
         // Then
-        assertThat(matchingCourses).isNotEmpty();
-        assertThat(matchingCourses).hasSize(6);
-        assertThat(matchingCourses).containsExactlyInAnyOrder(
-                coursesInDatabase.toArray(Course[]::new)
-        );
-        verify(courseRepository, times(1)).searchSimilarCourses("Spring", "Programming", 5);
+        assertThat(matchingCourses).hasSize(expectedCourses.size());
+        assertThat(matchingCourses).containsExactlyInAnyOrderElementsOf(expectedCourses);
+        verify(courseRepository, times(1)).searchSimilarCourses(name, category, rating);
     }
 
-    @Test
-    @DisplayName("Given no matching courses, when searchSimilarCourses, then return empty list")
-    void givenNoMatchingCourses_whenSearchSimilarCourses_thenReturnEmptyList() {
-        // Given
-        when(courseRepository.searchSimilarCourses(anyString(), anyString(), anyInt())).thenReturn(Collections.emptyList());
-
-        // When
-        Iterable<Course> matchingCourses = courseService.searchSimilarCourses("Chemistry", "Science", 4);
-
-        // Then
-        assertThat(matchingCourses).isEmpty();
-        verify(courseRepository, times(1)).searchSimilarCourses("Chemistry", "Science", 4);
-    }
-
-    //ToDo: Test CourseNotFoundException
-
-
-    private List<Course> getTestInputData() {
-        return List.of(
-                Course.builder()
-                        .name("JavaEE for Dummies")
-                        .category("Programming")
-                        .rating(3)
-                        .author("John Doe").build(),
-                Course.builder()
-                        .name("Javascript for Beginners")
-                        .category("Programming")
-                        .rating(3)
-                        .author("John Muller").build(),
-                Course.builder()
-                        .name("What Is This Thing Called Science?")
-                        .category("Science")
-                        .rating(5)
-                        .author("Alan Chalmers").build(),
-                Course.builder()
-                        .name("Suomen mestari")
-                        .category("Languages")
-                        .rating(2)
-                        .author("Sonja Gehring").build(),
-                Course.builder()
-                        .name("Spring in Action")
-                        .category("Programming")
-                        .rating(5)
-                        .author("John Doe").build(),
-                Course.builder()
-                        .name("Spring Security For Beginners")
-                        .category("Programming")
-                        .rating(5)
-                        .author("John Doe").build()
+    static Stream<Arguments> searchParameters() {
+        List<Course> testData = CourseTestDataFactory.DATA;
+        return Stream.of(
+                Arguments.of("Web", "", 0,
+                        testData.stream()
+                                .filter(c -> c.getName().contains("Web Development Bootcamp"))
+                                .collect(Collectors.toList())
+                ),
+                Arguments.of("", "Programming", 0,
+                        testData.stream()
+                                .filter(c -> c.getName().contains("Java Programming 101") || c.getName().equals("Java Advanced Topics"))
+                                .collect(Collectors.toList())
+                ),
+                Arguments.of("", "Languages", 2,
+                        testData.stream()
+                                .filter(c -> c.getName().contains("Spanish for Beginners"))
+                                .collect(Collectors.toList())
+                ),
+                Arguments.of("", "", 5,
+                        testData.stream()
+                                .filter(c -> c.getRating() >= 5)
+                                .collect(Collectors.toList())
+                ),
+                Arguments.of("", "", 0,
+                        testData
+                ),
+                Arguments.of("NonExistentCourse", "NonExistentCourse", 0,
+                        Collections.emptyList())
         );
     }
 }

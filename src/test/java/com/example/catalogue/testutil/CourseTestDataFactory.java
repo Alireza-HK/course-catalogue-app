@@ -70,4 +70,24 @@ public class CourseTestDataFactory {
                     .description("Advanced Java programming concepts.")
                     .author("John Doe")
                     .build());
+
+
+    public static Course generateTestCourseToSave() {
+        return Course.builder()
+                .name("JavaEE for Dummies")
+                .category("JavaEE")
+                .rating(4)
+                .author("John Doe")
+                .build();
+    }
+
+    public static Course generateTestSavedCourse() {
+        return Course.builder()
+                .id(1L)
+                .name("JavaEE for Dummies")
+                .category("JavaEE")
+                .rating(4)
+                .author("John Doe")
+                .build();
+    }
 }
