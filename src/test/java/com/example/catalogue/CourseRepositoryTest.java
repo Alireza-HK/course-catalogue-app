@@ -2,6 +2,7 @@ package com.example.catalogue;
 
 import com.example.catalogue.model.Course;
 import com.example.catalogue.repository.CourseRepository;
+import com.example.catalogue.testutil.CourseTestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class CourseRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        courseRepository.saveAll(generateTestData());
+        courseRepository.saveAll(CourseTestDataFactory.DATA);
     }
 
     @Test
@@ -147,78 +148,11 @@ class CourseRepositoryTest {
                 Arguments.of("", "Languages", 2, List.of("Spanish for Beginners")),
                 Arguments.of("", "", 5, List.of("Web Development Bootcamp")),
                 Arguments.of("", "", 0,
-                        generateTestData().stream()
+                        CourseTestDataFactory.DATA
+                                .stream()
                                 .map(Course::getName)
                                 .collect(Collectors.toList())),
                 Arguments.of("NonExistentCourse", "NonExistentCategory", 0, Collections.emptyList())
-        );
-    }
-
-    private static List<Course> generateTestData() {
-        return List.of(
-                Course.builder()
-                        .name("Machine Learning Fundamentals")
-                        .category("Data Science")
-                        .rating(4)
-                        .description("Introduction to Machine Learning concepts.")
-                        .author("Jane Smith")
-                        .build(),
-
-                Course.builder()
-                        .name("Web Development Bootcamp")
-                        .category("Web Development")
-                        .rating(5)
-                        .description("Learn full-stack web development.")
-                        .author("Mike Johnson")
-                        .build(),
-
-                Course.builder()
-                        .name("Artificial Intelligence Foundations")
-                        .category("Artificial Intelligence")
-                        .rating(4)
-                        .description("Foundational concepts of Artificial Intelligence.")
-                        .author("Alex Lee")
-                        .build(),
-
-                Course.builder()
-                        .name("Spanish for Beginners")
-                        .category("Languages")
-                        .rating(3)
-                        .description("Beginner's course in learning Spanish.")
-                        .author("Maria Rodriguez")
-                        .build(),
-
-                Course.builder()
-                        .name("React.js Crash Course")
-                        .category("Web Development")
-                        .rating(4)
-                        .description("Quick overview of React.js fundamentals.")
-                        .author("Chris Brown")
-                        .build(),
-
-                Course.builder()
-                        .name("Python for Data Analysis")
-                        .category("Data Science")
-                        .rating(4)
-                        .description("Using Python for data analysis.")
-                        .author("Emily Wang")
-                        .build(),
-
-                Course.builder()
-                        .name("Java Programming 101")
-                        .category("Programming")
-                        .rating(3)
-                        .description("Introduction to Java programming.")
-                        .author("John Doe")
-                        .build(),
-
-                Course.builder()
-                        .name("Java Advanced Topics")
-                        .category("Programming")
-                        .rating(4)
-                        .description("Advanced Java programming concepts.")
-                        .author("John Doe")
-                        .build()
         );
     }
 }
