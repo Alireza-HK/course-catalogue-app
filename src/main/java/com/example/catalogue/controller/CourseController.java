@@ -67,7 +67,7 @@ public class CourseController {
     @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
         courseFeignClient.deleteCourseById(id);
-        return "redirect:/index";//todo forward?
+        return "redirect:/index";
     }
 
     @PostMapping("/search")
