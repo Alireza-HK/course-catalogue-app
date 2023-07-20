@@ -49,16 +49,33 @@ public class CourseServiceTest {
     @DisplayName("Given valid course, when save, then course should be persisted")
     void givenValidCourse_whenSave_thenCourseShouldBePersisted() {
         // Given
-        var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
-        when(courseRepository.save(course)).thenReturn(course);
+    var courseToSave = Course.builder()
+            .name("JavaEE for Dummies")
+            .category("JavaEE")
+            .rating(4)
+            .author("John Doe")
+            .build();
+
+    var savedCourse = Course.builder()
+            .id(1L)
+            .name("JavaEE for Dummies")
+            .category("JavaEE")
+            .rating(4)
+            .author("John Doe")
+            .build();
+
+    when(courseRepository.save(courseToSave)).thenReturn(savedCourse);
 
         // When
-        Course savedCourse = courseService.createCourse(course);
+    Course result = courseService.createCourse(courseToSave);
 
         // Then
-        assertThat(savedCourse.getId()).isNotNull();
-        assertThat(savedCourse).isEqualTo(course);
-        verify(courseRepository, times(1)).save(course);
+    assertThat(result.getId()).isNotNull();
+    assertThat(result.getName()).isEqualTo("JavaEE for Dummies");
+    assertThat(result.getCategory()).isEqualTo("JavaEE");
+    assertThat(result.getRating()).isEqualTo(4);
+    assertThat(result.getAuthor()).isEqualTo("John Doe");
+    verify(courseRepository, times(1)).save(courseToSave);
     }
 
     @Test
@@ -117,6 +134,30 @@ public class CourseServiceTest {
         // Then
         verify(courseRepository, times(1)).deleteById(1L);
     }
+
+    @Test
+    @DisplayName("Given courses in database, when delete all, then all courses should be deleted")
+    void givenCoursesInDatabase_whenDeleteAll_thenAllCoursesShouldBeDeleted() {
+        // Given
+        courseService.deleteCourses();
+
+        // Then
+        verify(courseRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    @DisplayName("Given non-existing courseId, when deleteCourseById, then throw CourseNotFoundException")
+    void givenNonExistingCourseId_whenDeleteCourseById_thenThrowCourseNotFoundException() {
+        // Given
+        Long nonExistingCourseId = 999L;
+        when(courseRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // When and Then
+        assertThrows(CourseNotFoundException.class, () -> courseService.deleteCourseById(nonExistingCourseId));
+        verify(courseRepository, never()).deleteById(anyLong());
+    }
+
+
 
     @Test
     @DisplayName("Given courses in database, when searchSimilarCourses, then return matching courses")

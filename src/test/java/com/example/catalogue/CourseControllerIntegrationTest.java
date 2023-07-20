@@ -111,7 +111,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("course", "name", "category", "author"))
                 .andExpect(view().name("add-course"));
-        verify(restClient, times(0)).createCourse(any());
+        verify(restClient, never()).createCourse(any());
     }
 
     @Test
@@ -165,7 +165,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("course", "name", "category", "author"))
                 .andExpect(view().name("update-course"));
-        verify(restClient, times(0)).updateCourse(any(), any());
+        verify(restClient, never()).updateCourse(any(), any());
     }
 
     @Test
@@ -190,7 +190,7 @@ class CourseControllerIntegrationTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/accessDenied"));
-        verify(restClient, times(0)).deleteCourseById(1L);
+        verify(restClient, never()).deleteCourseById(1L);
     }
 
     //todo: test not admin
