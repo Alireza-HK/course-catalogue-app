@@ -59,8 +59,6 @@ class CourseControllerIntegrationTest {
                 .andExpect(model().attributeExists("searchModel"))
                 .andExpect(model().attribute("courses", hasSize(CourseTestDataFactory.DATA.size())))
                 .andExpect(model().attribute("courses", containsInAnyOrder(CourseTestDataFactory.DATA.toArray())))
-
-                // And: Verify that there are no errors in the model
                 .andExpect(model().attributeHasNoErrors());
 
         // And: Verify that the getAllCourses method of the restClient is called exactly once
@@ -79,7 +77,11 @@ class CourseControllerIntegrationTest {
         // Then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(view().name("add-course"));
+                .andExpect(view().name("add-course"))
+                .andExpect(model().attributeExists("course"))
+                .andExpect(model().attribute("course", instanceOf(Course.class)))
+                .andExpect(model().attributeDoesNotExist("errorMessage"))
+                .andExpect(model().attributeDoesNotExist("successMessage"));
     }
 
     @Test
@@ -104,12 +106,12 @@ class CourseControllerIntegrationTest {
     @DisplayName("POST /addcourse - Returns Add Course Template with Errors on Invalid Course")
     void addInvalidCourse_ReturnsAddCourseTemplateWithErrors() throws Exception {
         // Given
-        var course = new Course();
+        var invalidCourse = new Course();
 
         // When
         var resultActions = mockMvc.perform(post("/addcourse")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .flashAttr("course", course));
+                .flashAttr("course", invalidCourse));
 
         // Then
         resultActions
@@ -119,7 +121,7 @@ class CourseControllerIntegrationTest {
                 .andExpect(view().name("add-course"));
 
         // Verify that restClient.createCourse() is never called with an invalid course
-        verify(restClient, never()).createCourse(eq(course));
+        verify(restClient, never()).createCourse(eq(invalidCourse));
     }
 
     @Test
@@ -205,11 +207,8 @@ class CourseControllerIntegrationTest {
         verify(restClient, never()).deleteCourseById(1L);
     }
 
-    //todo: test not admin
-    //todo: access with annonymous
-
     @DisplayName("POST /search - Returns Index Template with Matching Courses")
-    @ParameterizedTest
+    @ParameterizedTest(name = "Search courses with name: {0}, category: {1}, and rating: {2}")
     @MethodSource("searchTestParameters")
     void searchCourses_ReturnsIndexTemplateWithMatchingCourses(String name, String category, int rating) throws Exception {
         // Given
@@ -254,7 +253,7 @@ class CourseControllerIntegrationTest {
     }
 
     @DisplayName("Authenticated URLs - Access Denied for Anonymous User")
-    @ParameterizedTest
+    @ParameterizedTest(name = "URL: {0}")
     @ValueSource(strings = {"/index", "/addcourse", "/update/1", "/search"})
     @WithAnonymousUser
     void authenticatedURLs_AccessDeniedForAnonymous(String url) throws Exception {
