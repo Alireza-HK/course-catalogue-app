@@ -23,8 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +45,9 @@ public class CourseServiceTest {
         Iterable<Course> allCourses = courseService.getAllCourses();
 
         // Then
-        assertThat(allCourses).isNotEmpty()
+        assertThat(allCourses)
+                .as("All courses should not be empty")
+                .isNotEmpty()
                 .hasSize(coursesInDatabase.size())
                 .containsExactlyElementsOf(coursesInDatabase);
 
@@ -68,7 +69,12 @@ public class CourseServiceTest {
         Course foundCourse = courseService.getCourseById(course.getId());
 
         // Then
-        assertThat(foundCourse).isNotNull().isEqualTo(course);
+        assertThat(foundCourse)
+                .as("Found course should not be null")
+                .isNotNull()
+                .isEqualTo(course);
+
+        // Verify that the courseRepository.findById() method was called once with the correct ID argument
         verify(courseRepository, times(1)).findById(course.getId());
     }
 
@@ -77,11 +83,15 @@ public class CourseServiceTest {
     void givenInvalidCourseId_whenGetCourseById_thenThrowCourseNotFoundException() {
         // Given
         Long invalidCourseId = 999L;
-        when(courseRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(courseRepository.findById(eq(invalidCourseId))).thenReturn(Optional.empty());
 
         // When and Then
-        assertThrows(CourseNotFoundException.class, () -> courseService.getCourseById(invalidCourseId));
-        verify(courseRepository, times(1)).findById(invalidCourseId);
+        String expectedErrorMessage = "Course not found with ID: " + invalidCourseId;
+        assertThrows(CourseNotFoundException.class,
+                () -> courseService.getCourseById(invalidCourseId),
+                expectedErrorMessage);
+
+        verify(courseRepository, times(1)).findById(eq(invalidCourseId));
         verifyNoMoreInteractions(courseRepository);
     }
 
@@ -98,11 +108,14 @@ public class CourseServiceTest {
         Course result = courseService.createCourse(courseToSave);
 
         // Then
-        assertThat(result).isNotNull()
-                .hasFieldOrPropertyWithValue("name", courseToSave.getName())
-                .hasFieldOrPropertyWithValue("category", courseToSave.getCategory())
-                .hasFieldOrPropertyWithValue("rating", courseToSave.getRating())
-                .hasFieldOrPropertyWithValue("author", courseToSave.getAuthor());
+        assertAll("Course should be saved",
+                () -> assertThat(result).isNotNull(),
+                () -> assertThat(result.getId()).isNotNull(),
+                () -> assertThat(result.getName()).isEqualTo("JavaEE for Dummies"),
+                () -> assertThat(result.getCategory()).isEqualTo("JavaEE"),
+                () -> assertThat(result.getRating()).isEqualTo(4),
+                () -> assertThat(result.getAuthor()).isEqualTo("John Doe")
+        );
 
         verify(courseRepository, times(1)).save(courseToSave);
         verifyNoMoreInteractions(courseRepository);
@@ -112,7 +125,7 @@ public class CourseServiceTest {
     @DisplayName("Given course in database, when update, then course should be updated")
     void givenCourseInDatabase_whenUpdate_thenCourseShouldBeUpdated() {
         // Given
-        var existingCourse = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
+        var existingCourse = CourseTestDataFactory.generateTestSavedCourse();
         when(courseRepository.findById(1L)).thenReturn(Optional.of(existingCourse));
 
         var updatedCourse = Course.builder().id(1L).name("JavaEE for Dummies - 2nd Edition").category("JavaEE").rating(4).author("John Doe").build();
@@ -138,11 +151,11 @@ public class CourseServiceTest {
     @DisplayName("Given course in database, when delete, then course should be deleted")
     void givenCourseInDatabase_whenDelete_thenCourseShouldBeDeleted() {
         // Given
-        var course = Course.builder().id(1L).name("JavaEE for Dummies").category("JavaEE").rating(4).author("John Doe").build();
+        var course = CourseTestDataFactory.generateTestSavedCourse();
         when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
 
-        // When
-        courseService.deleteCourseById(course.getId());
+        // When and Then
+        assertDoesNotThrow(() -> courseService.deleteCourseById(course.getId()));
 
         // Then
         verify(courseRepository, times(1)).deleteById(course.getId());
@@ -153,9 +166,10 @@ public class CourseServiceTest {
     @DisplayName("Given courses in database, when delete all, then all courses should be deleted")
     void givenCoursesInDatabase_whenDeleteAll_thenAllCoursesShouldBeDeleted() {
         // Given
-        courseService.deleteCourses();
+        assertDoesNotThrow(() -> courseService.deleteCourses());
 
         // Then
+        assertThat(courseService.getAllCourses()).isEmpty();
         verify(courseRepository, times(1)).deleteAll();
     }
 
@@ -164,13 +178,14 @@ public class CourseServiceTest {
     void givenNonExistingCourseId_whenDeleteCourseById_thenThrowCourseNotFoundException() {
         // Given
         Long nonExistingCourseId = 999L;
-        when(courseRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(courseRepository.findById(eq(nonExistingCourseId))).thenReturn(Optional.empty());
 
         // When and Then
-        assertThrows(CourseNotFoundException.class, () -> courseService.deleteCourseById(nonExistingCourseId));
+        CourseNotFoundException exception = assertThrows(CourseNotFoundException.class,
+                () -> courseService.deleteCourseById(nonExistingCourseId));
 
-        verify(courseRepository, times(1)).findById(nonExistingCourseId);
-        verify(courseRepository, never()).deleteById(anyLong());
+        assertThat(exception).hasMessage(String.format("No course with id %s is available", nonExistingCourseId));
+        verify(courseRepository, times(1)).findById(eq(nonExistingCourseId));
     }
 
     @ParameterizedTest(name = "Search courses with name: {0}, category: {1}, and rating: {2}")
