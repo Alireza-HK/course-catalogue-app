@@ -114,10 +114,14 @@ class CourseRepositoryTest {
     @ValueSource(longs = {-1, 100, 9999})
     @DisplayName("Given course in database, when deleteById with non-existing course ID, then no course should be deleted")
     void givenCourseInDatabase_whenDeleteByIdWithNonExistingId_thenNoCourseShouldBeDeleted(Long courseId) {
+        // Given a count of courses in the database before attempting to delete
+        Long initialCount = courseRepository.count();
+
         // When
         courseRepository.deleteById(courseId);
 
         // Then
+        assertThat(courseRepository.count()).isEqualTo(initialCount);
         assertThat(courseRepository.findById(courseId)).isEmpty();
     }
 

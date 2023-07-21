@@ -82,7 +82,7 @@ public class CourseServiceTest {
         // When and Then
         assertThrows(CourseNotFoundException.class, () -> courseService.getCourseById(invalidCourseId));
         verify(courseRepository, times(1)).findById(invalidCourseId);
-    verifyNoMoreInteractions(courseRepository);
+        verifyNoMoreInteractions(courseRepository);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class CourseServiceTest {
         when(courseRepository.findById(1L)).thenReturn(Optional.of(existingCourse));
 
         var updatedCourse = Course.builder().id(1L).name("JavaEE for Dummies - 2nd Edition").category("JavaEE").rating(4).author("John Doe").build();
-        when(courseRepository.save(existingCourse)).thenReturn(updatedCourse);
+        doReturn(updatedCourse).when(courseRepository).save(existingCourse);
 
         // When
         Course result = courseService.updateCourse(1L, updatedCourse);
@@ -145,7 +145,8 @@ public class CourseServiceTest {
         courseService.deleteCourseById(course.getId());
 
         // Then
-        verify(courseRepository, times(1)).deleteById(1L);
+        verify(courseRepository, times(1)).deleteById(course.getId());
+
     }
 
     @Test
