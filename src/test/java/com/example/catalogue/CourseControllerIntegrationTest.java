@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser(username = "user", roles = {"USER"})
+@WithMockUser(roles = {"USER"})
 class CourseControllerIntegrationTest {
 
     @Autowired
@@ -180,7 +180,7 @@ class CourseControllerIntegrationTest {
 
     @Test
     @DisplayName("GET /delete/{id} - Redirects to Index for Admin Role")
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(roles = {"ADMIN"})
     void deleteCourseWithAdminRole_RedirectsToIndex() throws Exception {
         // When
         var resultActions = mockMvc.perform(get("/delete/{id}", 1L));

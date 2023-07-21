@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser(username = "user", roles = {"USER"})
+@WithMockUser(roles = {"USER"})
 @Transactional
 public class CourseRestControllerTest {
 
@@ -169,7 +169,7 @@ public class CourseRestControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(roles = {"ADMIN"})
     void givenCourseId_whenDeleteCourse_thenCourseShouldBeDeleted() throws Exception {
         // Given: Create a new course using the POST request and expect a 201 Created status
         Course course = CourseTestDataFactory.generateTestCourseToSave();
