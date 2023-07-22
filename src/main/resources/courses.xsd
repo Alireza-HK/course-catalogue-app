@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.example.com/catalogue"
+           xmlns:tns="http://www.example.com/catalogue"
+           elementFormDefault="qualified">
+
+    <xs:element name="getAllCoursesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getAllCoursesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="courses" type="tns:CourseXml" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCourseByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="courseId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCourseByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="course" type="tns:CourseXml"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createCourseRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="course" type="tns:CourseXml"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createCourseResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="course" type="tns:CourseXml"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="CourseXml">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="tns:notEmptyString"/>
+            <xs:element name="category" type="tns:notEmptyString"/>
+            <xs:element name="rating" type="tns:ratingType"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="author" type="tns:notEmptyString"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ratingType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="notEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

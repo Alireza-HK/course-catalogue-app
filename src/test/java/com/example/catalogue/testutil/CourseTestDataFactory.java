@@ -8,6 +8,7 @@ public class CourseTestDataFactory {
 
     public static final List<Course> DATA = List.of(
             Course.builder()
+                    .id(1L)
                     .name("Machine Learning Fundamentals")
                     .category("Data Science")
                     .rating(4)
@@ -16,6 +17,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(2L)
                     .name("Web Development Bootcamp")
                     .category("Web Development")
                     .rating(5)
@@ -24,6 +26,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(3L)
                     .name("Artificial Intelligence Foundations")
                     .category("Artificial Intelligence")
                     .rating(4)
@@ -32,6 +35,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(4L)
                     .name("Spanish for Beginners")
                     .category("Languages")
                     .rating(3)
@@ -40,6 +44,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(5L)
                     .name("React.js Crash Course")
                     .category("Web Development")
                     .rating(4)
@@ -48,6 +53,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(6L)
                     .name("Python for Data Analysis")
                     .category("Data Science")
                     .rating(4)
@@ -56,6 +62,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(7L)
                     .name("Java Programming 101")
                     .category("Programming")
                     .rating(3)
@@ -64,6 +71,7 @@ public class CourseTestDataFactory {
                     .build(),
 
             Course.builder()
+                    .id(8L)
                     .name("Java Advanced Topics")
                     .category("Programming")
                     .rating(4)
