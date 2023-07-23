@@ -1,8 +1,8 @@
-package com.example.catalogue.webservice;
+package com.example.catalogue.api.webservice;
 
+import com.example.catalogue.api.webservice.autogen.*;
 import com.example.catalogue.model.Course;
 import com.example.catalogue.service.CourseService;
-import com.example.catalogue.webservice.autogen.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -15,7 +15,7 @@ import java.util.stream.StreamSupport;
 
 
 @Endpoint
-public class CourseEndpoint {//todo interface
+public class CourseEndpoint {
 
     private CourseService courseService;
 

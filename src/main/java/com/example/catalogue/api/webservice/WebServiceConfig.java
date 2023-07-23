@@ -1,4 +1,4 @@
-package com.example.catalogue.webservice;
+package com.example.catalogue.api.webservice;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -37,7 +37,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    public XsdSchema coursesSchema() {//todo sub-directory
+    public XsdSchema coursesSchema() {
         return new SimpleXsdSchema(new ClassPathResource("courses.xsd"));
     }
 }

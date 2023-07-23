@@ -1,10 +1,10 @@
 package com.example.catalogue;
 
+import com.example.catalogue.api.webservice.autogen.*;
 import com.example.catalogue.exception.CourseNotFoundException;
 import com.example.catalogue.model.Course;
 import com.example.catalogue.service.CourseService;
 import com.example.catalogue.testutil.CourseTestDataFactory;
-import com.example.catalogue.webservice.autogen.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class CourseEndpointTest {
     @BeforeEach
     public void setUp() {
         marshaller = new Jaxb2Marshaller();
-        marshaller.setPackagesToScan("com.example.catalogue.webservice.autogen");
+        marshaller.setPackagesToScan("com.example.catalogue.api.webservice.autogen");
     }
 
     @Test

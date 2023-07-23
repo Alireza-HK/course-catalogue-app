@@ -1,4 +1,4 @@
-package com.example.catalogue.controller;
+package com.example.catalogue.api.rest;
 
 import com.example.catalogue.model.Course;
 import com.example.catalogue.service.CourseService;

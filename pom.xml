@@ -139,7 +139,7 @@
 						<source>${project.basedir}/src/main/resources/courses.xsd</source>
 					</sources>
 					<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-					<packageName>com.example.catalogue.webservice.autogen</packageName>
+					<packageName>com.example.catalogue.api.webservice.autogen</packageName>
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
 			</plugin>
