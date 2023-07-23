@@ -47,6 +47,9 @@
                         <a class="nav-link" href="#" target="_blank" th:href="@{/swagger-ui/index.html}">Swagger</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#" target="_blank" th:href="@{/soapui-doc}">SOAPUI-Doc</a>
+                    </li>
+                    <li class="nav-item">
                         <form th:action="@{/logout}" method="post" id="logoutForm"></form>
                         <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit();">Logout (Authenticated as <span sec:authentication="name"/>)</a>
                     </li>

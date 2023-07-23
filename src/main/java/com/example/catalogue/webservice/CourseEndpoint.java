@@ -3,6 +3,7 @@ package com.example.catalogue.webservice;
 import com.example.catalogue.model.Course;
 import com.example.catalogue.service.CourseService;
 import com.example.catalogue.webservice.autogen.*;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -25,6 +26,7 @@ public class CourseEndpoint {//todo interface
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "getAllCoursesRequest")
     @ResponsePayload
+    @Operation(summary = "Get all courses", description = "Get a list of all courses.")
     public GetAllCoursesResponse getAlCourses(@RequestPayload GetAllCoursesRequest request) {
         Iterable<Course> courses = courseService.getAllCourses();
         List<CourseXml> courseXmlList = StreamSupport.stream(courses.spliterator(), false)
@@ -38,6 +40,7 @@ public class CourseEndpoint {//todo interface
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "getCourseByIdRequest")
     @ResponsePayload
+    @Operation(summary = "Get course by ID", description = "Get a course by its ID.")
     public GetCourseByIdResponse getCourseById(@RequestPayload GetCourseByIdRequest request) {
         Course course = courseService.getCourseById(request.getCourseId());
 
@@ -48,6 +51,7 @@ public class CourseEndpoint {//todo interface
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "createCourseRequest")
     @ResponsePayload
+    @Operation(summary = "Create course", description = "Create a new course.")
     public CreateCourseResponse createCourse(@RequestPayload CreateCourseRequest request) {
         Course course = convertCourseXmlToCourse(request.getCourse());
 
