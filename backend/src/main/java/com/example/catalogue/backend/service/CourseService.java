@@ -1,18 +1,18 @@
 package com.example.catalogue.backend.service;
 
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 
 public interface CourseService {
 
-    Iterable<Course> getAllCourses();
+    Iterable<CourseEntity> getAllCourses();
 
-    Course getCourseById(Long courseId);
+    CourseEntity getCourseById(Long courseId);
 
-    Iterable<Course> searchSimilarCourses(String name, String category, int rating);
+    Iterable<CourseEntity> searchSimilarCourses(String name, String category, int rating);
 
-    Course createCourse(Course course);
+    CourseEntity createCourse(CourseEntity course);
 
-	Course updateCourse(Long courseId, Course course);
+	CourseEntity updateCourse(Long courseId, CourseEntity course);
 
     void deleteCourseById(Long courseId);
 

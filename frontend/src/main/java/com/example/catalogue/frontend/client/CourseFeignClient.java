@@ -1,6 +1,6 @@
 package com.example.catalogue.frontend.client;
 
-import com.example.catalogue.frontend.model.Course;
+import com.example.catalogue.common.model.Course;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

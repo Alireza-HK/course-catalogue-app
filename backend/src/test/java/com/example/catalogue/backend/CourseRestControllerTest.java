@@ -1,9 +1,10 @@
 package com.example.catalogue.backend;
 
 import com.example.catalogue.backend.exception.CourseNotFoundException;
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.service.CourseService;
 import com.example.catalogue.backend.testutil.CourseTestDataFactory;
+import com.example.catalogue.common.model.Course;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -69,7 +70,7 @@ public class CourseRestControllerTest {
     @DisplayName("Get Course By ID - Return Course")
     void givenCourseId_whenGetCourse_thenReturnCourse() throws Exception {
         // Given
-        Course course = CourseTestDataFactory.generateTestCourseToSave();
+        CourseEntity course = CourseTestDataFactory.generateTestCourseToSave();
 
         // When: Perform POST request to create the course
         ResultActions postResult = mockMvc.perform(post("/courses/")
@@ -102,7 +103,7 @@ public class CourseRestControllerTest {
     @DisplayName("Create Course - Return Created Course and Verify in Database (Given Valid Course Data)")
     void givenValidCourseData_whenCreateCourse_thenReturnCreatedCourseAndVerifyInDatabase() throws Exception {
         // Given
-        Course courseToSave = CourseTestDataFactory.generateTestCourseToSave();
+        CourseEntity courseToSave = CourseTestDataFactory.generateTestCourseToSave();
 
         // When
         ResultActions result = mockMvc.perform(post("/courses/")
@@ -122,12 +123,12 @@ public class CourseRestControllerTest {
         assertCourseDetails(result, id, courseToSave);
 
         // And: Verify the course in the database using the service
-        Course retrievedCourse = courseService.getCourseById(id);
+        CourseEntity retrievedCourse = courseService.getCourseById(id);
         courseToSave.setId(id); // Set the generated ID for comparison
         Assertions.assertThat(retrievedCourse).usingRecursiveComparison().isEqualTo(courseToSave);
     }
 
-    private void assertCourseDetails(ResultActions result, Long id, Course course) throws Exception {
+    private void assertCourseDetails(ResultActions result, Long id, CourseEntity course) throws Exception {
         result.andExpect(jsonPath("$.name").value(course.getName()))
                 .andExpect(jsonPath("$.category").value(course.getCategory()))
                 .andExpect(jsonPath("$.rating").value(course.getRating()))
@@ -139,7 +140,7 @@ public class CourseRestControllerTest {
     @DisplayName("Update Course - Return Updated Course and Verify in Database")
     void givenValidCourseIdAndUpdatedCourse_whenUpdateCourse_thenReturnUpdatedCourseAndVerifyInDatabase() throws Exception {
         // Given
-        Course course = CourseTestDataFactory.generateTestCourseToSave();
+        CourseEntity course = CourseTestDataFactory.generateTestCourseToSave();
 
         // Create a new course using the POST request and expect a 201 Created status
         ResultActions postResult = mockMvc.perform(post("/courses/")
@@ -150,7 +151,7 @@ public class CourseRestControllerTest {
         Long id = JsonPath.parse(postResult.andReturn().getResponse().getContentAsString()).read("$.id", Long.class);
 
         // Update the course details
-        Course updatedCourse = Course.builder().id(id).name("JavaEE for Dummies - 2nd Edition").category("Programming").rating(5).author("Mark Doe").build();
+        CourseEntity updatedCourse = CourseEntity.builder().id(id).name("JavaEE for Dummies - 2nd Edition").category("Programming").rating(5).author("Mark Doe").build();
 
         // When: Perform a PUT request to update the course with the given ID
         ResultActions putResult = mockMvc.perform(put("/courses/{id}", id)
@@ -164,7 +165,7 @@ public class CourseRestControllerTest {
         assertCourseDetails(putResult, id, updatedCourse);
 
         // And: Verify the updated course in the database using the service
-        Course retrievedCourse = courseService.getCourseById(id);
+        CourseEntity retrievedCourse = courseService.getCourseById(id);
         Assertions.assertThat(retrievedCourse).usingRecursiveComparison().isEqualTo(updatedCourse);
     }
 
@@ -172,7 +173,7 @@ public class CourseRestControllerTest {
     @WithMockUser(roles = {"ADMIN"})
     void givenCourseId_whenDeleteCourse_thenCourseShouldBeDeleted() throws Exception {
         // Given: Create a new course using the POST request and expect a 201 Created status
-        Course course = CourseTestDataFactory.generateTestCourseToSave();
+        CourseEntity course = CourseTestDataFactory.generateTestCourseToSave();//todo Course model not Entity
         ResultActions postResult = mockMvc.perform(post("/courses/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(course)))
@@ -204,7 +205,7 @@ public class CourseRestControllerTest {
     @ParameterizedTest
     @MethodSource("searchParameters")
     @DisplayName("Search Courses - Return List of Matching Courses")
-    void whenSearchCourses_thenReturnListOfMatchingCourses(String name, String category, int rating, List<Course> expectedCourses) throws Exception {
+    void whenSearchCourses_thenReturnListOfMatchingCourses(String name, String category, int rating, List<CourseEntity> expectedCourses) throws Exception {
         // Perform GET request to /search with the search parameters
         ResultActions result = mockMvc.perform(get("/courses/search")
                 .param("name", name)
@@ -228,7 +229,7 @@ public class CourseRestControllerTest {
     }
 
     static Stream<Arguments> searchParameters() {
-        List<Course> testData = CourseTestDataFactory.DATA;
+        List<CourseEntity> testData = CourseTestDataFactory.DATA;
         return Stream.of(
                 Arguments.of("Web", "", 0,
                         testData.stream()

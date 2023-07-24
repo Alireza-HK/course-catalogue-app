@@ -1,9 +1,10 @@
 package com.example.catalogue.backend.api.webservice;
 
 import com.example.catalogue.backend.api.webservice.autogen.*;
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -28,9 +29,9 @@ public class CourseEndpoint {
     @ResponsePayload
     @Operation(summary = "Get all courses", description = "Get a list of all courses.")
     public GetAllCoursesResponse getAlCourses(@RequestPayload GetAllCoursesRequest request) {
-        Iterable<Course> courses = courseService.getAllCourses();
+        Iterable<CourseEntity> courses = courseService.getAllCourses();
         List<CourseXml> courseXmlList = StreamSupport.stream(courses.spliterator(), false)
-                .map(this::convertCourseToCourseXml)
+                .map(this::convertCourseEntityToCourseXml)
                 .toList();
 
         GetAllCoursesResponse response = new GetAllCoursesResponse();
@@ -42,10 +43,10 @@ public class CourseEndpoint {
     @ResponsePayload
     @Operation(summary = "Get course by ID", description = "Get a course by its ID.")
     public GetCourseByIdResponse getCourseById(@RequestPayload GetCourseByIdRequest request) {
-        Course course = courseService.getCourseById(request.getCourseId());
+        CourseEntity course = courseService.getCourseById(request.getCourseId());
 
         GetCourseByIdResponse response = new GetCourseByIdResponse();
-        response.setCourse(convertCourseToCourseXml(course));
+        response.setCourse(convertCourseEntityToCourseXml(course));
         return response;
     }
 
@@ -53,34 +54,24 @@ public class CourseEndpoint {
     @ResponsePayload
     @Operation(summary = "Create course", description = "Create a new course.")
     public CreateCourseResponse createCourse(@RequestPayload CreateCourseRequest request) {
-        Course course = convertCourseXmlToCourse(request.getCourse());
+        CourseEntity course = convertCourseXmlToCourseEntity(request.getCourse());
 
-        Course createdCourse = courseService.createCourse(course);
+        CourseEntity createdCourse = courseService.createCourse(course);
 
         CreateCourseResponse response = new CreateCourseResponse();
-        response.setCourse(convertCourseToCourseXml(createdCourse));
+        response.setCourse(convertCourseEntityToCourseXml(createdCourse));
         return response;
     }
 
-    private CourseXml convertCourseToCourseXml(Course course) {
+    private CourseXml convertCourseEntityToCourseXml(CourseEntity course) {
         CourseXml courseXml = new CourseXml();
-        courseXml.setId(course.getId());
-        courseXml.setName(course.getName());
-        courseXml.setCategory(course.getCategory());
-        courseXml.setRating(course.getRating());
-        courseXml.setDescription(course.getDescription());
-        courseXml.setAuthor(course.getAuthor());
+        BeanUtils.copyProperties(course, courseXml);
         return courseXml;
     }
 
-    private Course convertCourseXmlToCourse(CourseXml courseXml) {
-        Course course = new Course();
-        course.setId(courseXml.getId());
-        course.setName(courseXml.getName());
-        course.setCategory(courseXml.getCategory());
-        course.setRating(courseXml.getRating());
-        course.setDescription(courseXml.getDescription());
-        course.setAuthor(courseXml.getAuthor());
+    private CourseEntity convertCourseXmlToCourseEntity(CourseXml courseXml) {
+        CourseEntity course = new CourseEntity();
+        BeanUtils.copyProperties(courseXml, course);
         return course;
     }
 }

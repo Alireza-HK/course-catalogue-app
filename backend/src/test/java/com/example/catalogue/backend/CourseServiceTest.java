@@ -1,7 +1,7 @@
 package com.example.catalogue.backend;
 
 import com.example.catalogue.backend.exception.CourseNotFoundException;
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.repository.CourseRepository;
 import com.example.catalogue.backend.service.CourseService;
 import com.example.catalogue.backend.service.CourseServiceImpl;
@@ -38,11 +38,11 @@ public class CourseServiceTest {
     @DisplayName("Given courses in database, when findAll, then return all courses")
     void givenCoursesInDatabase_whenFindAll_thenReturnAllCourses() {
         // Given
-        List<Course> coursesInDatabase = CourseTestDataFactory.DATA;
+        List<CourseEntity> coursesInDatabase = CourseTestDataFactory.DATA;
         when(courseRepository.findAll()).thenReturn(coursesInDatabase);
 
         // When
-        Iterable<Course> allCourses = courseService.getAllCourses();
+        Iterable<CourseEntity> allCourses = courseService.getAllCourses();
 
         // Then
         assertThat(allCourses)
@@ -66,7 +66,7 @@ public class CourseServiceTest {
         when(courseRepository.findById(anyLong())).thenReturn(Optional.of(course));
 
         // When
-        Course foundCourse = courseService.getCourseById(course.getId());
+        CourseEntity foundCourse = courseService.getCourseById(course.getId());
 
         // Then
         assertThat(foundCourse)
@@ -99,13 +99,13 @@ public class CourseServiceTest {
     @DisplayName("Given valid course, when createCourse, then course should be persisted")
     void givenValidCourse_whenCreateCourse_thenCourseShouldBePersisted() {
         // Given
-        Course courseToSave = CourseTestDataFactory.generateTestCourseToSave();
-        Course savedCourse = CourseTestDataFactory.generateTestSavedCourse();
+        CourseEntity courseToSave = CourseTestDataFactory.generateTestCourseToSave();
+        CourseEntity savedCourse = CourseTestDataFactory.generateTestSavedCourse();
 
         when(courseRepository.save(courseToSave)).thenReturn(savedCourse);
 
         // When
-        Course result = courseService.createCourse(courseToSave);
+        CourseEntity result = courseService.createCourse(courseToSave);
 
         // Then
         assertAll("Course should be saved",
@@ -128,11 +128,11 @@ public class CourseServiceTest {
         var existingCourse = CourseTestDataFactory.generateTestSavedCourse();
         when(courseRepository.findById(1L)).thenReturn(Optional.of(existingCourse));
 
-        var updatedCourse = Course.builder().id(1L).name("JavaEE for Dummies - 2nd Edition").category("JavaEE").rating(4).author("John Doe").build();
+        var updatedCourse = CourseEntity.builder().id(1L).name("JavaEE for Dummies - 2nd Edition").category("JavaEE").rating(4).author("John Doe").build();
         doReturn(updatedCourse).when(courseRepository).save(existingCourse);
 
         // When
-        Course result = courseService.updateCourse(1L, updatedCourse);
+        CourseEntity result = courseService.updateCourse(1L, updatedCourse);
 
         // Then
         assertAll("Course should be updated",
@@ -192,13 +192,13 @@ public class CourseServiceTest {
     @MethodSource("searchParameters")
     @DisplayName("Given courses in database, when searchSimilarCourses, then return matching courses")
     void givenCoursesInDatabase_whenSearchSimilarCourses_thenReturnMatchingCourses(
-            String name, String category, int rating, List<Course> expectedCourses) {
+            String name, String category, int rating, List<CourseEntity> expectedCourses) {
 
         // Given
         when(courseRepository.searchSimilarCourses(name, category, rating)).thenReturn(expectedCourses);
 
         // When
-        Iterable<Course> matchingCourses = courseService.searchSimilarCourses(name, category, rating);
+        Iterable<CourseEntity> matchingCourses = courseService.searchSimilarCourses(name, category, rating);
 
         // Then
         assertThat(matchingCourses).hasSize(expectedCourses.size());
@@ -207,7 +207,7 @@ public class CourseServiceTest {
     }
 
     static Stream<Arguments> searchParameters() {
-        List<Course> testData = CourseTestDataFactory.DATA;
+        List<CourseEntity> testData = CourseTestDataFactory.DATA;
         return Stream.of(
                 Arguments.of("Web", "", 0,
                         testData.stream()

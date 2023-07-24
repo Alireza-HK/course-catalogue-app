@@ -1,6 +1,6 @@
 package com.example.catalogue.backend.config;
 
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.repository.CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,8 @@ class DatabaseInitializerConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseInitializerConfig.class);
 
-    private static final List<Course> TEST_DATA = List.of(
-            Course.builder()
+    private static final List<CourseEntity> TEST_DATA = List.of(
+            CourseEntity.builder()
                     .name("Machine Learning Fundamentals")
                     .category("Data Science")
                     .rating(4)
@@ -24,7 +24,7 @@ class DatabaseInitializerConfig {
                     .author("Jane Smith")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("Web Development Bootcamp")
                     .category("Web Development")
                     .rating(5)
@@ -32,7 +32,7 @@ class DatabaseInitializerConfig {
                     .author("Mike Johnson")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("Artificial Intelligence Foundations")
                     .category("Artificial Intelligence")
                     .rating(4)
@@ -40,7 +40,7 @@ class DatabaseInitializerConfig {
                     .author("Alex Lee")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("Spanish for Beginners")
                     .category("Languages")
                     .rating(3)
@@ -48,7 +48,7 @@ class DatabaseInitializerConfig {
                     .author("Maria Rodriguez")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("React.js Crash Course")
                     .category("Web Development")
                     .rating(4)
@@ -56,7 +56,7 @@ class DatabaseInitializerConfig {
                     .author("Chris Brown")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("Python for Data Analysis")
                     .category("Data Science")
                     .rating(4)
@@ -64,7 +64,7 @@ class DatabaseInitializerConfig {
                     .author("Emily Wang")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("Java Programming 101")
                     .category("Programming")
                     .rating(3)
@@ -72,7 +72,7 @@ class DatabaseInitializerConfig {
                     .author("John Doe")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .name("Java Advanced Topics")
                     .category("Programming")
                     .rating(4)

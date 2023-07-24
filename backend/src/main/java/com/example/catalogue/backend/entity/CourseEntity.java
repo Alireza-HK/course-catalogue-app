@@ -1,4 +1,4 @@
-package com.example.catalogue.backend.model;
+package com.example.catalogue.backend.entity;
 
 
 import jakarta.persistence.*;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Course {
+public class CourseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -2,7 +2,6 @@ package com.example.catalogue.frontend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -32,9 +31,7 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .requestMatchers("/delete/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/courses/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -45,8 +42,8 @@ public class SecurityConfiguration {
                 .exceptionHandling((exceptionHandling) ->
                         exceptionHandling.accessDeniedHandler(accessDeniedHandler())
                 )
-                .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)//todo?
+                .httpBasic(withDefaults())//todo?
                 .build();
     }
 

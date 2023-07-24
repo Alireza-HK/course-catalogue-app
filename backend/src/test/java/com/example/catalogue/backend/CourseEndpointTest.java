@@ -2,7 +2,7 @@ package com.example.catalogue.backend;
 
 import com.example.catalogue.backend.api.webservice.autogen.*;
 import com.example.catalogue.backend.exception.CourseNotFoundException;
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.service.CourseService;
 import com.example.catalogue.backend.testutil.CourseTestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +78,7 @@ public class CourseEndpointTest {
         GetCourseByIdRequest request = new GetCourseByIdRequest();
         request.setCourseId(1L);
 
-        Course foundCourse = CourseTestDataFactory.generateTestSavedCourse();
+        CourseEntity foundCourse = CourseTestDataFactory.generateTestSavedCourse();
         when(courseService.getCourseById(1L)).thenReturn(foundCourse);
 
         GetCourseByIdResponse expectedResponse = new GetCourseByIdResponse();
@@ -121,7 +121,7 @@ public class CourseEndpointTest {
     @DisplayName("Given a CreateCourseRequest, when the request is sent, then verify the response contains the newly created course details")
     public void givenCreateCourseRequest_whenRequestSent_thenVerifyResponseContainsNewlyCreatedCourseDetails() {
         // Given
-        when(courseService.createCourse(any(Course.class))).thenReturn(CourseTestDataFactory.generateTestSavedCourse());
+        when(courseService.createCourse(any(CourseEntity.class))).thenReturn(CourseTestDataFactory.generateTestSavedCourse());
 
         CreateCourseRequest request = new CreateCourseRequest();
         request.setCourse(convertCourseToCourseXml(CourseTestDataFactory.generateTestCourseToSave()));
@@ -139,7 +139,7 @@ public class CourseEndpointTest {
                 .andExpect(noFault())
                 .andExpect(payload(expectedResponsePayload));
 
-        verify(courseService, times(1)).createCourse(any(Course.class));
+        verify(courseService, times(1)).createCourse(any(CourseEntity.class));
         verifyNoMoreInteractions(courseService);
     }
 
@@ -153,7 +153,7 @@ public class CourseEndpointTest {
         }
     }
 
-    private CourseXml convertCourseToCourseXml(Course course) {
+    private CourseXml convertCourseToCourseXml(CourseEntity course) {
         CourseXml courseXml = new CourseXml();
         if (course.getId() != null) {
             courseXml.setId(course.getId());

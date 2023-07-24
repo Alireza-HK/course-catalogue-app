@@ -1,7 +1,7 @@
 package com.example.catalogue.backend.service;
 
 import com.example.catalogue.backend.exception.CourseNotFoundException;
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.repository.CourseRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,29 +18,29 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Iterable<Course> getAllCourses() {
+    public Iterable<CourseEntity> getAllCourses() {
         return courseRepository.findAll();
     }
 
     @Override
-    public Course getCourseById(Long courseId) {
+    public CourseEntity getCourseById(Long courseId) {
         return courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException(String.format("No course with id %s is available", courseId)));
     }
 
     @Override
-    public Iterable<Course> searchSimilarCourses(String name, String category, int rating) {
+    public Iterable<CourseEntity> searchSimilarCourses(String name, String category, int rating) {
         return courseRepository.searchSimilarCourses(name, category, rating);
     }
 
     @Override
-    public Course createCourse(Course course) {
+    public CourseEntity createCourse(CourseEntity course) {
         return courseRepository.save(course);
     }
 
     @Override
-    public Course updateCourse(Long courseId, Course course) {
-        Course existingCourse = courseRepository.findById(courseId)
+    public CourseEntity updateCourse(Long courseId, CourseEntity course) {
+        CourseEntity existingCourse = courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException(String.format("No course with id %s is available", courseId)));
         BeanUtils.copyProperties(course, existingCourse, "id");
         return courseRepository.save(existingCourse);

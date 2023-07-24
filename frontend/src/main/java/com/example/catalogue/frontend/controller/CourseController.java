@@ -1,7 +1,7 @@
 package com.example.catalogue.frontend.controller;
 
 import com.example.catalogue.frontend.client.CourseFeignClient;
-import com.example.catalogue.frontend.model.Course;
+import com.example.catalogue.common.model.Course;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

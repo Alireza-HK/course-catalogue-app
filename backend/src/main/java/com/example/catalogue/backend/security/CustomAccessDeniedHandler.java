@@ -28,16 +28,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                 auth.getName(), request.getRequestURI(), request.getMethod()));
 
 
-        if (isRestApiRequest(request)) {
-            writeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, "Access denied");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/accessDenied");
-        }
-    }
+        writeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, "Access denied");
 
-    private boolean isRestApiRequest(HttpServletRequest request) {
-        String acceptHeader = request.getHeader("Accept");
-        return acceptHeader != null && acceptHeader.contains("application/json");
     }
 
     private void writeJsonResponse(HttpServletResponse response, int status, String message) throws IOException {

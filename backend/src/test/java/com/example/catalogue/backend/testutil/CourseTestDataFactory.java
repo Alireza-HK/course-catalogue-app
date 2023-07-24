@@ -1,13 +1,13 @@
 package com.example.catalogue.backend.testutil;
 
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 
 import java.util.List;
 
 public class CourseTestDataFactory {
 
-    public static final List<Course> DATA = List.of(
-            Course.builder()
+    public static final List<CourseEntity> DATA = List.of(
+            CourseEntity.builder()
                     .id(1L)
                     .name("Machine Learning Fundamentals")
                     .category("Data Science")
@@ -16,7 +16,7 @@ public class CourseTestDataFactory {
                     .author("Jane Smith")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(2L)
                     .name("Web Development Bootcamp")
                     .category("Web Development")
@@ -25,7 +25,7 @@ public class CourseTestDataFactory {
                     .author("Mike Johnson")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(3L)
                     .name("Artificial Intelligence Foundations")
                     .category("Artificial Intelligence")
@@ -34,7 +34,7 @@ public class CourseTestDataFactory {
                     .author("Alex Lee")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(4L)
                     .name("Spanish for Beginners")
                     .category("Languages")
@@ -43,7 +43,7 @@ public class CourseTestDataFactory {
                     .author("Maria Rodriguez")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(5L)
                     .name("React.js Crash Course")
                     .category("Web Development")
@@ -52,7 +52,7 @@ public class CourseTestDataFactory {
                     .author("Chris Brown")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(6L)
                     .name("Python for Data Analysis")
                     .category("Data Science")
@@ -61,7 +61,7 @@ public class CourseTestDataFactory {
                     .author("Emily Wang")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(7L)
                     .name("Java Programming 101")
                     .category("Programming")
@@ -70,7 +70,7 @@ public class CourseTestDataFactory {
                     .author("John Doe")
                     .build(),
 
-            Course.builder()
+            CourseEntity.builder()
                     .id(8L)
                     .name("Java Advanced Topics")
                     .category("Programming")
@@ -80,8 +80,8 @@ public class CourseTestDataFactory {
                     .build());
 
 
-    public static Course generateTestCourseToSave() {
-        return Course.builder()
+    public static CourseEntity generateTestCourseToSave() {
+        return CourseEntity.builder()
                 .name("JavaEE for Dummies")
                 .category("JavaEE")
                 .rating(4)
@@ -89,8 +89,8 @@ public class CourseTestDataFactory {
                 .build();
     }
 
-    public static Course generateTestSavedCourse() {
-        return Course.builder()
+    public static CourseEntity generateTestSavedCourse() {
+        return CourseEntity.builder()
                 .id(1L)
                 .name("JavaEE for Dummies")
                 .category("JavaEE")

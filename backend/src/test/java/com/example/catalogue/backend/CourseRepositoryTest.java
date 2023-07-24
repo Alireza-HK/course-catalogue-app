@@ -1,6 +1,6 @@
 package com.example.catalogue.backend;
 
-import com.example.catalogue.backend.model.Course;
+import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.repository.CourseRepository;
 import com.example.catalogue.backend.testutil.CourseTestDataFactory;
 import org.assertj.core.api.Assertions;
@@ -43,7 +43,7 @@ class CourseRepositoryTest {
         courseRepository.save(course);
 
         // When
-        Course foundCourse = courseRepository.findById(course.getId()).orElse(null);
+        CourseEntity foundCourse = courseRepository.findById(course.getId()).orElse(null);
 
         // Then
         assertAll("Course details",
@@ -61,7 +61,7 @@ class CourseRepositoryTest {
     @DisplayName("Given course in database, when findById with non-existing course ID, then return empty optional")
     void givenCourseInDatabase_whenFindByIdWithNonExistingId_thenReturnEmptyOptional(Long courseId) {
         // When
-        Optional<Course> foundCourse = courseRepository.findById(courseId);
+        Optional<CourseEntity> foundCourse = courseRepository.findById(courseId);
 
         // Then
         assertThat(foundCourse).isEmpty();
@@ -75,7 +75,7 @@ class CourseRepositoryTest {
         long initialCount = courseRepository.count();
 
         // When
-        Course savedCourse = courseRepository.save(course);
+        CourseEntity savedCourse = courseRepository.save(course);
 
         // Then
         assertThat(courseRepository.count()).isEqualTo(initialCount + 1);
@@ -101,7 +101,7 @@ class CourseRepositoryTest {
         course.setCategory("Programming");
         course.setRating(1);
         course.setAuthor("Mark Doe");
-        Course updatedCourse = courseRepository.save(course);
+        CourseEntity updatedCourse = courseRepository.save(course);
 
         //Then
         assertThat(updatedCourse).usingRecursiveComparison().isEqualTo(course);
@@ -137,10 +137,10 @@ class CourseRepositoryTest {
     @MethodSource("searchParameters")
     @DisplayName("Given courses in database, when searchSimilarCourses, then return matching courses")
     void givenCoursesInDatabase_whenSearchSimilarCourses_thenReturnMatchingCourses(
-            String name, String category, int rating, List<Course> expectedCourses) {
+            String name, String category, int rating, List<CourseEntity> expectedCourses) {
 
         // When
-        Iterable<Course> matchingCourses = courseRepository.searchSimilarCourses(name, category, rating);
+        Iterable<CourseEntity> matchingCourses = courseRepository.searchSimilarCourses(name, category, rating);
 
         // Then
         assertThat(matchingCourses).isNotNull();
@@ -153,7 +153,7 @@ class CourseRepositoryTest {
     }
 
     static Stream<Arguments> searchParameters() {
-        List<Course> testData = CourseTestDataFactory.DATA;
+        List<CourseEntity> testData = CourseTestDataFactory.DATA;
         return Stream.of(
                 Arguments.of("Web", "", 0,
                         testData.stream()

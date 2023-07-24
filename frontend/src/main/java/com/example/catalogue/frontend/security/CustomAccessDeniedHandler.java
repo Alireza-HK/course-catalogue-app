@@ -27,28 +27,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         authentication.ifPresent(auth -> log.warn("User: {} attempted to access the protected URL: {} [Method: {}]",
                 auth.getName(), request.getRequestURI(), request.getMethod()));
 
-
-        if (isRestApiRequest(request)) {
-            writeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, "Access denied");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/accessDenied");
-        }
+        response.sendRedirect(request.getContextPath() + "/accessDenied");
     }
 
-    private boolean isRestApiRequest(HttpServletRequest request) {
-        String acceptHeader = request.getHeader("Accept");
-        return acceptHeader != null && acceptHeader.contains("application/json");
-    }
-
-    private void writeJsonResponse(HttpServletResponse response, int status, String message) throws IOException {
-        response.setContentType("application/json");
-        response.setStatus(status);
-        String jsonResponse = """
-                {
-                    "error": "Forbidden",
-                    "message": "%s"
-                }
-                """.formatted(message);
-        response.getWriter().write(jsonResponse);
-    }
 }

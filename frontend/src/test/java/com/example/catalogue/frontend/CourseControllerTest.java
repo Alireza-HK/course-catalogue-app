@@ -1,8 +1,7 @@
 package com.example.catalogue.frontend;
 
 import com.example.catalogue.frontend.client.CourseFeignClient;
-import com.example.catalogue.frontend.model.Course;
-import com.example.catalogue.frontend.testutil.CourseTestDataFactory;
+import com.example.catalogue.common.model.Course;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.*;
@@ -43,7 +43,7 @@ class CourseControllerTest {
 
     @BeforeEach
     void setUp() {
-        when(restClient.getAllCourses()).thenReturn(CourseTestDataFactory.DATA);
+        when(restClient.getAllCourses()).thenReturn(getTestData());
     }
 
     @Test
@@ -57,8 +57,8 @@ class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
                 .andExpect(model().attributeExists("searchModel"))
-                .andExpect(model().attribute("courses", hasSize(CourseTestDataFactory.DATA.size())))
-                .andExpect(model().attribute("courses", containsInAnyOrder(CourseTestDataFactory.DATA.toArray())))
+                .andExpect(model().attribute("courses", hasSize(getTestData().size())))
+                .andExpect(model().attribute("courses", containsInAnyOrder(getTestData().toArray())))
                 .andExpect(model().attributeHasNoErrors());
 
         // And: Verify that the getAllCourses method of the restClient is called exactly once
@@ -88,7 +88,7 @@ class CourseControllerTest {
     @DisplayName("POST /addcourse - Redirects to Index on Valid Course")
     void addValidCourse_RedirectsToIndex() throws Exception {
         // Given
-        var validCourse = CourseTestDataFactory.generateTestCourseToSave();
+        var validCourse = generateTestCourseToSave();
 
         // When
         var resultActions = mockMvc.perform(post("/addcourse")
@@ -128,7 +128,7 @@ class CourseControllerTest {
     @DisplayName("GET /update/{id} - Returns Update Course Template with Selected Course")
     void getUpdateCourseForm_ReturnsUpdateCourseTemplateWithSelectedCourse() throws Exception {
         // Given
-        var course = CourseTestDataFactory.generateTestSavedCourse();
+        var course = generateTestSavedCourse();
         when(restClient.getCourseById(course.getId())).thenReturn(course);
 
         // When
@@ -146,7 +146,7 @@ class CourseControllerTest {
     @DisplayName("POST /update/{id} - Redirects to Index on Valid Course Update")
     void updateValidCourse_RedirectsToIndex() throws Exception {
         // Given
-        var courseToUpdate = CourseTestDataFactory.generateTestSavedCourse();
+        var courseToUpdate = generateTestSavedCourse();
 
         // When
         var resultActions = mockMvc.perform(post("/update/{id}", courseToUpdate.getId())
@@ -266,4 +266,97 @@ class CourseControllerTest {
         verifyNoInteractions(restClient);
     }
 
+    private static List<Course> getTestData(){
+        return List.of(
+                Course.builder()
+                        .id(1L)
+                        .name("Machine Learning Fundamentals")
+                        .category("Data Science")
+                        .rating(4)
+                        .description("Introduction to Machine Learning concepts.")
+                        .author("Jane Smith")
+                        .build(),
+
+                Course.builder()
+                        .id(2L)
+                        .name("Web Development Bootcamp")
+                        .category("Web Development")
+                        .rating(5)
+                        .description("Learn full-stack web development.")
+                        .author("Mike Johnson")
+                        .build(),
+
+                Course.builder()
+                        .id(3L)
+                        .name("Artificial Intelligence Foundations")
+                        .category("Artificial Intelligence")
+                        .rating(4)
+                        .description("Foundational concepts of Artificial Intelligence.")
+                        .author("Alex Lee")
+                        .build(),
+
+                Course.builder()
+                        .id(4L)
+                        .name("Spanish for Beginners")
+                        .category("Languages")
+                        .rating(3)
+                        .description("Beginner's course in learning Spanish.")
+                        .author("Maria Rodriguez")
+                        .build(),
+
+                Course.builder()
+                        .id(5L)
+                        .name("React.js Crash Course")
+                        .category("Web Development")
+                        .rating(4)
+                        .description("Quick overview of React.js fundamentals.")
+                        .author("Chris Brown")
+                        .build(),
+
+                Course.builder()
+                        .id(6L)
+                        .name("Python for Data Analysis")
+                        .category("Data Science")
+                        .rating(4)
+                        .description("Using Python for data analysis.")
+                        .author("Emily Wang")
+                        .build(),
+
+                Course.builder()
+                        .id(7L)
+                        .name("Java Programming 101")
+                        .category("Programming")
+                        .rating(3)
+                        .description("Introduction to Java programming.")
+                        .author("John Doe")
+                        .build(),
+
+                Course.builder()
+                        .id(8L)
+                        .name("Java Advanced Topics")
+                        .category("Programming")
+                        .rating(4)
+                        .description("Advanced Java programming concepts.")
+                        .author("John Doe")
+                        .build());
+    }
+
+    private static Course generateTestCourseToSave() {
+        return Course.builder()
+                .name("JavaEE for Dummies")
+                .category("JavaEE")
+                .rating(4)
+                .author("John Doe")
+                .build();
+    }
+
+    private static Course generateTestSavedCourse() {
+        return Course.builder()
+                .id(1L)
+                .name("JavaEE for Dummies")
+                .category("JavaEE")
+                .rating(4)
+                .author("John Doe")
+                .build();
+    }
 }
