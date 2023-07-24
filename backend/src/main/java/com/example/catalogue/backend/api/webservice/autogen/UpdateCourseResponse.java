@@ -38,8 +38,8 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "course"
 })
-@XmlRootElement(name = "createCourseResponse")
-public class CreateCourseResponse {
+@XmlRootElement(name = "updateCourseResponse")
+public class UpdateCourseResponse {
 
     @XmlElement(required = true)
     protected CourseXml course;

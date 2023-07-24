@@ -17,6 +17,7 @@ import java.util.stream.StreamSupport;
 
 @Endpoint
 public class CourseEndpoint {
+    //ToDo: WS Security
 
     private CourseService courseService;
 
@@ -60,6 +61,54 @@ public class CourseEndpoint {
 
         CreateCourseResponse response = new CreateCourseResponse();
         response.setCourse(convertCourseEntityToCourseXml(createdCourse));
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "updateCourseRequest")
+    @ResponsePayload
+    @Operation(summary = "Update course", description = "Update an existing course.")
+    public UpdateCourseResponse updateCourse(@RequestPayload UpdateCourseRequest request) {
+        var course = convertCourseXmlToCourseEntity(request.getCourse());
+        var updatedCourse = courseService.updateCourse(request.getCourseId(), course);
+
+        UpdateCourseResponse response = new UpdateCourseResponse();
+        response.setCourse(convertCourseEntityToCourseXml(updatedCourse));
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "deleteCourseByIdRequest")
+    @ResponsePayload
+    @Operation(summary = "Delete course by ID", description = "Delete a course by its ID.")
+    public DeleteCourseByIdResponse deleteCourseById(@RequestPayload DeleteCourseByIdRequest request) {
+        courseService.deleteCourseById(request.getCourseId());
+
+        DeleteCourseByIdResponse response = new DeleteCourseByIdResponse();
+        response.setMessage("Course with ID " + request.getCourseId() + " has been deleted successfully.");
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "deleteCoursesRequest")
+    @ResponsePayload
+    @Operation(summary = "Delete all courses", description = "Delete all courses from the course catalogue application.")
+    public DeleteCoursesResponse deleteCourses(@RequestPayload DeleteCoursesRequest request) {
+        courseService.deleteCourses();
+
+        DeleteCoursesResponse response = new DeleteCoursesResponse();
+        response.setMessage("All courses have been deleted successfully.");
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "searchCoursesRequest")
+    @ResponsePayload
+    @Operation(summary = "Search similar courses", description = "Search similar courses based on provided parameters.")
+    public SearchCoursesResponse searchCourses(@RequestPayload SearchCoursesRequest request) {
+        Iterable<CourseEntity> result = courseService.searchSimilarCourses(request.getName(), request.getCategory(), request.getRating());
+        List<CourseXml> courseXmlList = StreamSupport.stream(result.spliterator(), false)
+                .map(this::convertCourseEntityToCourseXml)
+                .toList();
+
+        SearchCoursesResponse response = new SearchCoursesResponse();
+        response.getCourses().addAll(courseXmlList);
         return response;
     }
 

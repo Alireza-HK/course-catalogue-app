@@ -538,8 +538,8 @@
                     <div class="label">Target Namespace:</div>
                     <div class="value">http://www.example.com/catalogue</div>
                     <h3>Port
-                        <b>CoursesPortSoap11</b> <span><a class="local" href="#port.d108e53">Port type</a><a
-                                class="local" href="#src.d108e84">Source code</a></span></h3>
+                        <b>CoursesPortSoap11</b> <span><a class="local" href="#port.d215e104">Port type</a><a
+                                class="local" href="#src.d215e171">Source code</a></span></h3>
                     <div class="label">Location:</div>
                     <div class="value">http://localhost:8080/ws</div>
                     <div class="label">Protocol:</div>
@@ -551,32 +551,40 @@
                     <div class="label">Operations:</div>
                     <div class="value">
                         <ol style="line-height: 180%;">
-                            <li><big><i>createCourse</i></big><a class="local" href="#op.d108e54">Detail</a><a
-                                    class="local" href="#src.d108e54">Source code</a></li>
-                            <li><big><i>getAllCourses</i></big><a class="local" href="#op.d108e60">Detail</a><a
-                                    class="local" href="#src.d108e60">Source code</a></li>
-                            <li><big><i>getCourseById</i></big><a class="local" href="#op.d108e57">Detail</a><a
-                                    class="local" href="#src.d108e57">Source code</a></li>
+                            <li><big><i>createCourse</i></big><a class="local" href="#op.d215e105">Detail</a><a
+                                    class="local" href="#src.d215e105">Source code</a></li>
+                            <li><big><i>deleteCourseById</i></big><a class="local" href="#op.d215e120">Detail</a><a
+                                    class="local" href="#src.d215e120">Source code</a></li>
+                            <li><big><i>deleteCourses</i></big><a class="local" href="#op.d215e108">Detail</a><a
+                                    class="local" href="#src.d215e108">Source code</a></li>
+                            <li><big><i>getAllCourses</i></big><a class="local" href="#op.d215e123">Detail</a><a
+                                    class="local" href="#src.d215e123">Source code</a></li>
+                            <li><big><i>getCourseById</i></big><a class="local" href="#op.d215e111">Detail</a><a
+                                    class="local" href="#src.d215e111">Source code</a></li>
+                            <li><big><i>searchCourses</i></big><a class="local" href="#op.d215e114">Detail</a><a
+                                    class="local" href="#src.d215e114">Source code</a></li>
+                            <li><big><i>updateCourse</i></big><a class="local" href="#op.d215e117">Detail</a><a
+                                    class="local" href="#src.d215e117">Source code</a></li>
                         </ol>
                     </div>
                 </div>
             </div>
             <div class="page"><a class="target" name="page.operations"><h2>Operations</h2></a>
                 <ul>
-                    <div><h3><a name="port.d108e53">Port type
-                        <b>CoursesPort</b></a><a class="local" href="#src.d108e53">Source code</a></h3>
+                    <div><h3><a name="port.d215e104">Port type
+                        <b>CoursesPort</b></a><a class="local" href="#src.d215e104">Source code</a></h3>
                         <ol>
-                            <li class="operation"><big><b><a name="op.d108e54">createCourse</a></b></big>
+                            <li class="operation"><big><b><a name="op.d215e105">createCourse</a></b></big>
                                 <div class="value">
 
-                                    <a class="local" href="#src.d108e54">Source code</a></div>
+                                    <a class="local" href="#src.d215e105">Source code</a></div>
                                 <div class="label">Operation type:</div>
                                 <div class="value"><i>Request-response.</i>
                                     The endpoint receives a message, and sends a correlated message.
                                 </div>
                                 <div class="label">Input:</div>
                                 <div class="value">createCourseRequest (soap:body, use = literal)<a class="local"
-                                                                                                    href="#src.d108e45">Source
+                                                                                                    href="#src.d215e81">Source
                                     code</a></div>
                                 <div class="value box" style="margin-bottom: 3px"><b>createCourseRequest</b><span
                                         style="color:blue"> type <big><i>createCourseRequest</i></big></span><span
@@ -603,7 +611,7 @@
                                 </div>
                                 <div class="label">Output:</div>
                                 <div class="value">createCourseResponse (soap:body, use = literal)<a class="local"
-                                                                                                     href="#src.d108e41">Source
+                                                                                                     href="#src.d215e75">Source
                                     code</a></div>
                                 <div class="value box" style="margin-bottom: 3px"><b>createCourseResponse</b><span
                                         style="color:blue"> type <big><i>createCourseResponse</i></big></span><span
@@ -629,24 +637,82 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="operation"><big><b><a name="op.d108e60">getAllCourses</a></b></big>
+                            <li class="operation"><big><b><a name="op.d215e120">deleteCourseById</a></b></big>
                                 <div class="value">
 
-                                    <a class="local" href="#src.d108e60">Source code</a></div>
+                                    <a class="local" href="#src.d215e120">Source code</a></div>
+                                <div class="label">Operation type:</div>
+                                <div class="value"><i>Request-response.</i>
+                                    The endpoint receives a message, and sends a correlated message.
+                                </div>
+                                <div class="label">Input:</div>
+                                <div class="value">deleteCourseByIdRequest (soap:body, use = literal)<a class="local"
+                                                                                                        href="#src.d215e91">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>deleteCourseByIdRequest</b><span
+                                        style="color:blue"> type <big><i>deleteCourseByIdRequest</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>courseId<span style="color:blue"> type <big><i>long</i></big></span></li>
+                                    </ul>
+                                </div>
+                                <div class="label">Output:</div>
+                                <div class="value">deleteCourseByIdResponse (soap:body, use = literal)<a class="local"
+                                                                                                         href="#src.d215e93">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>deleteCourseByIdResponse</b><span
+                                        style="color:blue"> type <big><i>deleteCourseByIdResponse</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>message<span style="color:blue"> type <big><i>string</i></big></span></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="operation"><big><b><a name="op.d215e108">deleteCourses</a></b></big>
+                                <div class="value">
+
+                                    <a class="local" href="#src.d215e108">Source code</a></div>
+                                <div class="label">Operation type:</div>
+                                <div class="value"><i>Request-response.</i>
+                                    The endpoint receives a message, and sends a correlated message.
+                                </div>
+                                <div class="label">Input:</div>
+                                <div class="value">deleteCoursesRequest (soap:body, use = literal)<a class="local"
+                                                                                                     href="#src.d215e102">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>deleteCoursesRequest</b><span
+                                        style="color:blue"> type <big><i>deleteCoursesRequest</i></big></span><span
+                                        style="color:blue"/></div>
+                                <div class="label">Output:</div>
+                                <div class="value">deleteCoursesResponse (soap:body, use = literal)<a class="local"
+                                                                                                      href="#src.d215e77">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>deleteCoursesResponse</b><span
+                                        style="color:blue"> type <big><i>deleteCoursesResponse</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>message<span style="color:blue"> type <big><i>string</i></big></span></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="operation"><big><b><a name="op.d215e123">getAllCourses</a></b></big>
+                                <div class="value">
+
+                                    <a class="local" href="#src.d215e123">Source code</a></div>
                                 <div class="label">Operation type:</div>
                                 <div class="value"><i>Request-response.</i>
                                     The endpoint receives a message, and sends a correlated message.
                                 </div>
                                 <div class="label">Input:</div>
                                 <div class="value">getAllCoursesRequest (soap:body, use = literal)<a class="local"
-                                                                                                     href="#src.d108e49">Source
+                                                                                                     href="#src.d215e98">Source
                                     code</a></div>
                                 <div class="value box" style="margin-bottom: 3px"><b>getAllCoursesRequest</b><span
                                         style="color:blue"> type <big><i>getAllCoursesRequest</i></big></span><span
                                         style="color:blue"/></div>
                                 <div class="label">Output:</div>
                                 <div class="value">getAllCoursesResponse (soap:body, use = literal)<a class="local"
-                                                                                                      href="#src.d108e51">Source
+                                                                                                      href="#src.d215e100">Source
                                     code</a></div>
                                 <div class="value box" style="margin-bottom: 3px"><b>getAllCoursesResponse</b><span
                                         style="color:blue"> type <big><i>getAllCoursesResponse</i></big></span><span
@@ -672,17 +738,17 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li><big><b><a name="op.d108e57">getCourseById</a></b></big>
+                            <li class="operation"><big><b><a name="op.d215e111">getCourseById</a></b></big>
                                 <div class="value">
 
-                                    <a class="local" href="#src.d108e57">Source code</a></div>
+                                    <a class="local" href="#src.d215e111">Source code</a></div>
                                 <div class="label">Operation type:</div>
                                 <div class="value"><i>Request-response.</i>
                                     The endpoint receives a message, and sends a correlated message.
                                 </div>
                                 <div class="label">Input:</div>
                                 <div class="value">getCourseByIdRequest (soap:body, use = literal)<a class="local"
-                                                                                                     href="#src.d108e47">Source
+                                                                                                     href="#src.d215e83">Source
                                     code</a></div>
                                 <div class="value box" style="margin-bottom: 3px"><b>getCourseByIdRequest</b><span
                                         style="color:blue"> type <big><i>getCourseByIdRequest</i></big></span><span
@@ -693,10 +759,123 @@
                                 </div>
                                 <div class="label">Output:</div>
                                 <div class="value">getCourseByIdResponse (soap:body, use = literal)<a class="local"
-                                                                                                      href="#src.d108e43">Source
+                                                                                                      href="#src.d215e79">Source
                                     code</a></div>
                                 <div class="value box" style="margin-bottom: 3px"><b>getCourseByIdResponse</b><span
                                         style="color:blue"> type <big><i>getCourseByIdResponse</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>course<span style="color:blue"> type <big><i>CourseXml</i></big></span>
+                                            <ul type="square">
+                                                <li>id<span style="color:blue"> type <big><i>long</i></big></span></li>
+                                                <li>name<span style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                                <li>category<span
+                                                        style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                                <li>rating<span style="color:blue"> type <big><i>ratingType</i></big> -  type <big><i>int</i></big> with restriction minInclusive(1) maxInclusive(5)</span>
+                                                </li>
+                                                <li>description<span style="color:blue"> - optional;  type <big><i>string</i></big></span>
+                                                </li>
+                                                <li>author<span
+                                                        style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="operation"><big><b><a name="op.d215e114">searchCourses</a></b></big>
+                                <div class="value">
+
+                                    <a class="local" href="#src.d215e114">Source code</a></div>
+                                <div class="label">Operation type:</div>
+                                <div class="value"><i>Request-response.</i>
+                                    The endpoint receives a message, and sends a correlated message.
+                                </div>
+                                <div class="label">Input:</div>
+                                <div class="value">searchCoursesRequest (soap:body, use = literal)<a class="local"
+                                                                                                     href="#src.d215e85">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>searchCoursesRequest</b><span
+                                        style="color:blue"> type <big><i>searchCoursesRequest</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>name<span style="color:blue"> type <big><i>string</i></big></span></li>
+                                        <li>category<span style="color:blue"> type <big><i>string</i></big></span></li>
+                                        <li>rating<span style="color:blue"> type <big><i>int</i></big></span></li>
+                                    </ul>
+                                </div>
+                                <div class="label">Output:</div>
+                                <div class="value">searchCoursesResponse (soap:body, use = literal)<a class="local"
+                                                                                                      href="#src.d215e96">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>searchCoursesResponse</b><span
+                                        style="color:blue"> type <big><i>searchCoursesResponse</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>courses<span style="color:blue"> - optional, unbounded;  type <big><i>CourseXml</i></big></span>
+                                            <ul type="square">
+                                                <li>id<span style="color:blue"> type <big><i>long</i></big></span></li>
+                                                <li>name<span style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                                <li>category<span
+                                                        style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                                <li>rating<span style="color:blue"> type <big><i>ratingType</i></big> -  type <big><i>int</i></big> with restriction minInclusive(1) maxInclusive(5)</span>
+                                                </li>
+                                                <li>description<span style="color:blue"> - optional;  type <big><i>string</i></big></span>
+                                                </li>
+                                                <li>author<span
+                                                        style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><big><b><a name="op.d215e117">updateCourse</a></b></big>
+                                <div class="value">
+
+                                    <a class="local" href="#src.d215e117">Source code</a></div>
+                                <div class="label">Operation type:</div>
+                                <div class="value"><i>Request-response.</i>
+                                    The endpoint receives a message, and sends a correlated message.
+                                </div>
+                                <div class="label">Input:</div>
+                                <div class="value">updateCourseRequest (soap:body, use = literal)<a class="local"
+                                                                                                    href="#src.d215e87">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>updateCourseRequest</b><span
+                                        style="color:blue"> type <big><i>updateCourseRequest</i></big></span><span
+                                        style="color:blue"/>
+                                    <ul type="square">
+                                        <li>courseId<span style="color:blue"> type <big><i>long</i></big></span></li>
+                                        <li>course<span style="color:blue"> type <big><i>CourseXml</i></big></span>
+                                            <ul type="square">
+                                                <li>id<span style="color:blue"> type <big><i>long</i></big></span></li>
+                                                <li>name<span style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                                <li>category<span
+                                                        style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                                <li>rating<span style="color:blue"> type <big><i>ratingType</i></big> -  type <big><i>int</i></big> with restriction minInclusive(1) maxInclusive(5)</span>
+                                                </li>
+                                                <li>description<span style="color:blue"> - optional;  type <big><i>string</i></big></span>
+                                                </li>
+                                                <li>author<span
+                                                        style="color:blue"> type <big><i>notEmptyString</i></big> -  type <big><i>string</i></big> with restriction minLength(1)</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="label">Output:</div>
+                                <div class="value">updateCourseResponse (soap:body, use = literal)<a class="local"
+                                                                                                     href="#src.d215e89">Source
+                                    code</a></div>
+                                <div class="value box" style="margin-bottom: 3px"><b>updateCourseResponse</b><span
+                                        style="color:blue"> type <big><i>updateCourseResponse</i></big></span><span
                                         style="color:blue"/>
                                     <ul type="square">
                                         <li>course<span style="color:blue"> type <big><i>CourseXml</i></big></span>
@@ -726,7 +905,7 @@
             <div class="page"><a class="target" name="page.src"><h2>WSDL source code</h2></a>
                 <div class="box">
                     <div class="xml-proc">&lt;?xml version="1.0"?&gt;</div>
-                    <div class="xml-element"><a name="src.d108e1">&lt;wsdl:definitions <span class="xml-att">targetNamespace=<span
+                    <div class="xml-element"><a name="src.d215e1">&lt;wsdl:definitions <span class="xml-att">targetNamespace=<span
                             class="xml-att-val">"http://www.example.com/catalogue"</span></span>
                         <div class="xml-att"> xmlns:sch=<span
                                 class="xml-att-val">"http://www.example.com/catalogue"</span></div>
@@ -736,21 +915,21 @@
                         </div>
                         <div class="xml-att"> xmlns:tns=<span
                                 class="xml-att-val">"http://www.example.com/catalogue"</span></div>&gt;</a>
-                        <div class="xml-element"><a name="src.d108e2">&lt;wsdl:types&gt;</a>
-                            <div class="xml-element"><a name="src.d108e3">&lt;xs:schema <span class="xml-att">elementFormDefault=<span
+                        <div class="xml-element"><a name="src.d215e2">&lt;wsdl:types&gt;</a>
+                            <div class="xml-element"><a name="src.d215e3">&lt;xs:schema <span class="xml-att">elementFormDefault=<span
                                     class="xml-att-val">"qualified"</span></span> <span class="xml-att">targetNamespace=<span
                                     class="xml-att-val">"http://www.example.com/catalogue"</span></span>
                                 <div class="xml-att"> xmlns:xs=<span class="xml-att-val">"http://www.w3.org/2001/XMLSchema"</span>
                                 </div>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e4">&lt;xs:element <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e4">&lt;xs:element <span class="xml-att">name=<span
                                         class="xml-att-val">"getAllCoursesRequest"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e5">&lt;xs:complexType/&gt;</a></div>&lt;/xs:element&gt;
+                                    <div class="xml-element"><a name="src.d215e5">&lt;xs:complexType/&gt;</a></div>&lt;/xs:element&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e6">&lt;xs:element <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e6">&lt;xs:element <span class="xml-att">name=<span
                                         class="xml-att-val">"getAllCoursesResponse"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e7">&lt;xs:complexType&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e8">&lt;xs:sequence&gt;</a>
-                                            <div class="xml-element"><a name="src.d108e9" href="#src.d108e26">&lt;xs:element
+                                    <div class="xml-element"><a name="src.d215e7">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e8">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e9" href="#src.d215e60">&lt;xs:element
                                                 <span class="xml-att">maxOccurs=<span
                                                         class="xml-att-val">"unbounded"</span></span> <span
                                                         class="xml-att">minOccurs=<span
@@ -761,22 +940,22 @@
                                         </div>&lt;/xs:complexType&gt;
                                     </div>&lt;/xs:element&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e10">&lt;xs:element <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e10">&lt;xs:element <span class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdRequest"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e11">&lt;xs:complexType&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e12">&lt;xs:sequence&gt;</a>
-                                            <div class="xml-element"><a name="src.d108e13">&lt;xs:element <span
+                                    <div class="xml-element"><a name="src.d215e11">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e12">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e13">&lt;xs:element <span
                                                     class="xml-att">name=<span
                                                     class="xml-att-val">"courseId"</span></span> <span class="xml-att">type=<span
                                                     class="xml-att-val">"xs:long"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
                                         </div>&lt;/xs:complexType&gt;
                                     </div>&lt;/xs:element&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e14">&lt;xs:element <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e14">&lt;xs:element <span class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdResponse"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e15">&lt;xs:complexType&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e16">&lt;xs:sequence&gt;</a>
-                                            <div class="xml-element"><a name="src.d108e17" href="#src.d108e26">&lt;xs:element
+                                    <div class="xml-element"><a name="src.d215e15">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e16">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e17" href="#src.d215e60">&lt;xs:element
                                                 <span class="xml-att">name=<span
                                                         class="xml-att-val">"course"</span></span> <span
                                                         class="xml-att">type=<span
@@ -784,11 +963,11 @@
                                         </div>&lt;/xs:complexType&gt;
                                     </div>&lt;/xs:element&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e18">&lt;xs:element <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e18">&lt;xs:element <span class="xml-att">name=<span
                                         class="xml-att-val">"createCourseRequest"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e19">&lt;xs:complexType&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e20">&lt;xs:sequence&gt;</a>
-                                            <div class="xml-element"><a name="src.d108e21" href="#src.d108e26">&lt;xs:element
+                                    <div class="xml-element"><a name="src.d215e19">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e20">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e21" href="#src.d215e60">&lt;xs:element
                                                 <span class="xml-att">name=<span
                                                         class="xml-att-val">"course"</span></span> <span
                                                         class="xml-att">type=<span
@@ -796,11 +975,11 @@
                                         </div>&lt;/xs:complexType&gt;
                                     </div>&lt;/xs:element&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e22">&lt;xs:element <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e22">&lt;xs:element <span class="xml-att">name=<span
                                         class="xml-att-val">"createCourseResponse"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e23">&lt;xs:complexType&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e24">&lt;xs:sequence&gt;</a>
-                                            <div class="xml-element"><a name="src.d108e25" href="#src.d108e26">&lt;xs:element
+                                    <div class="xml-element"><a name="src.d215e23">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e24">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e25" href="#src.d215e60">&lt;xs:element
                                                 <span class="xml-att">name=<span
                                                         class="xml-att-val">"course"</span></span> <span
                                                         class="xml-att">type=<span
@@ -808,208 +987,490 @@
                                         </div>&lt;/xs:complexType&gt;
                                     </div>&lt;/xs:element&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e26">&lt;xs:complexType <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e26">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourseRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e27">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e28">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e29">&lt;xs:element <span
+                                                    class="xml-att">name=<span
+                                                    class="xml-att-val">"courseId"</span></span> <span class="xml-att">type=<span
+                                                    class="xml-att-val">"xs:long"</span></span>/&gt;</a></div>
+                                            <div class="xml-element"><a name="src.d215e30" href="#src.d215e60">&lt;xs:element
+                                                <span class="xml-att">name=<span
+                                                        class="xml-att-val">"course"</span></span> <span
+                                                        class="xml-att">type=<span
+                                                        class="xml-att-val">"tns:CourseXml"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e31">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourseResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e32">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e33">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e34" href="#src.d215e60">&lt;xs:element
+                                                <span class="xml-att">name=<span
+                                                        class="xml-att-val">"course"</span></span> <span
+                                                        class="xml-att">type=<span
+                                                        class="xml-att-val">"tns:CourseXml"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e35">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCourseByIdRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e36">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e37">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e38">&lt;xs:element <span
+                                                    class="xml-att">name=<span
+                                                    class="xml-att-val">"courseId"</span></span> <span class="xml-att">type=<span
+                                                    class="xml-att-val">"xs:long"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e39">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCourseByIdResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e40">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e41">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e42">&lt;xs:element <span
+                                                    class="xml-att">name=<span
+                                                    class="xml-att-val">"message"</span></span> <span class="xml-att">type=<span
+                                                    class="xml-att-val">"xs:string"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e43">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCoursesRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e44">&lt;xs:complexType/&gt;</a></div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e46">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCoursesResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e47">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e48">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e49">&lt;xs:element <span
+                                                    class="xml-att">name=<span
+                                                    class="xml-att-val">"message"</span></span> <span class="xml-att">type=<span
+                                                    class="xml-att-val">"xs:string"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e50">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e51">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e52">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e53">&lt;xs:element <span
+                                                    class="xml-att">name=<span class="xml-att-val">"name"</span></span>
+                                                <span class="xml-att">type=<span class="xml-att-val">"xs:string"</span></span>/&gt;</a>
+                                            </div>
+                                            <div class="xml-element"><a name="src.d215e54">&lt;xs:element <span
+                                                    class="xml-att">name=<span
+                                                    class="xml-att-val">"category"</span></span> <span class="xml-att">type=<span
+                                                    class="xml-att-val">"xs:string"</span></span>/&gt;</a></div>
+                                            <div class="xml-element"><a name="src.d215e55">&lt;xs:element <span
+                                                    class="xml-att">name=<span
+                                                    class="xml-att-val">"rating"</span></span> <span class="xml-att">type=<span
+                                                    class="xml-att-val">"xs:int"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e56">&lt;xs:element <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e57">&lt;xs:complexType&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e58">&lt;xs:sequence&gt;</a>
+                                            <div class="xml-element"><a name="src.d215e59" href="#src.d215e60">&lt;xs:element
+                                                <span class="xml-att">maxOccurs=<span
+                                                        class="xml-att-val">"unbounded"</span></span> <span
+                                                        class="xml-att">minOccurs=<span
+                                                        class="xml-att-val">"0"</span></span> <span class="xml-att">name=<span
+                                                        class="xml-att-val">"courses"</span></span> <span
+                                                        class="xml-att">type=<span
+                                                        class="xml-att-val">"tns:CourseXml"</span></span>/&gt;</a></div>&lt;/xs:sequence&gt;
+                                        </div>&lt;/xs:complexType&gt;
+                                    </div>&lt;/xs:element&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e60">&lt;xs:complexType <span class="xml-att">name=<span
                                         class="xml-att-val">"CourseXml"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e27">&lt;xs:sequence&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e28">&lt;xs:element <span
+                                    <div class="xml-element"><a name="src.d215e61">&lt;xs:sequence&gt;</a>
+                                        <div class="xml-element"><a name="src.d215e62">&lt;xs:element <span
                                                 class="xml-att">name=<span class="xml-att-val">"id"</span></span> <span
                                                 class="xml-att">type=<span class="xml-att-val">"xs:long"</span></span>/&gt;</a>
                                         </div>
-                                        <div class="xml-element"><a name="src.d108e29" href="#src.d108e38">&lt;xs:element
+                                        <div class="xml-element"><a name="src.d215e63" href="#src.d215e72">&lt;xs:element
                                             <span class="xml-att">name=<span class="xml-att-val">"name"</span></span>
                                             <span class="xml-att">type=<span
                                                     class="xml-att-val">"tns:notEmptyString"</span></span>/&gt;</a>
                                         </div>
-                                        <div class="xml-element"><a name="src.d108e30" href="#src.d108e38">&lt;xs:element
+                                        <div class="xml-element"><a name="src.d215e64" href="#src.d215e72">&lt;xs:element
                                             <span class="xml-att">name=<span
                                                     class="xml-att-val">"category"</span></span> <span class="xml-att">type=<span
                                                     class="xml-att-val">"tns:notEmptyString"</span></span>/&gt;</a>
                                         </div>
-                                        <div class="xml-element"><a name="src.d108e31" href="#src.d108e34">&lt;xs:element
+                                        <div class="xml-element"><a name="src.d215e65" href="#src.d215e68">&lt;xs:element
                                             <span class="xml-att">name=<span class="xml-att-val">"rating"</span></span>
                                             <span class="xml-att">type=<span class="xml-att-val">"tns:ratingType"</span></span>/&gt;</a>
                                         </div>
-                                        <div class="xml-element"><a name="src.d108e32">&lt;xs:element <span
+                                        <div class="xml-element"><a name="src.d215e66">&lt;xs:element <span
                                                 class="xml-att">minOccurs=<span class="xml-att-val">"0"</span></span>
                                             <span class="xml-att">name=<span
                                                     class="xml-att-val">"description"</span></span> <span
                                                     class="xml-att">type=<span
                                                     class="xml-att-val">"xs:string"</span></span>/&gt;</a></div>
-                                        <div class="xml-element"><a name="src.d108e33" href="#src.d108e38">&lt;xs:element
+                                        <div class="xml-element"><a name="src.d215e67" href="#src.d215e72">&lt;xs:element
                                             <span class="xml-att">name=<span class="xml-att-val">"author"</span></span>
                                             <span class="xml-att">type=<span
                                                     class="xml-att-val">"tns:notEmptyString"</span></span>/&gt;</a>
                                         </div>&lt;/xs:sequence&gt;
                                     </div>&lt;/xs:complexType&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e34">&lt;xs:simpleType <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e68">&lt;xs:simpleType <span class="xml-att">name=<span
                                         class="xml-att-val">"ratingType"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e35">&lt;xs:restriction <span
+                                    <div class="xml-element"><a name="src.d215e69">&lt;xs:restriction <span
                                             class="xml-att">base=<span
                                             class="xml-att-val">"xs:int"</span></span>&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e36">&lt;xs:minInclusive <span
+                                        <div class="xml-element"><a name="src.d215e70">&lt;xs:minInclusive <span
                                                 class="xml-att">value=<span
                                                 class="xml-att-val">"1"</span></span>/&gt;</a></div>
-                                        <div class="xml-element"><a name="src.d108e37">&lt;xs:maxInclusive <span
+                                        <div class="xml-element"><a name="src.d215e71">&lt;xs:maxInclusive <span
                                                 class="xml-att">value=<span
                                                 class="xml-att-val">"5"</span></span>/&gt;</a></div>&lt;/xs:restriction&gt;
                                     </div>&lt;/xs:simpleType&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e38">&lt;xs:simpleType <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e72">&lt;xs:simpleType <span class="xml-att">name=<span
                                         class="xml-att-val">"notEmptyString"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e39">&lt;xs:restriction <span
+                                    <div class="xml-element"><a name="src.d215e73">&lt;xs:restriction <span
                                             class="xml-att">base=<span class="xml-att-val">"xs:string"</span></span>&gt;</a>
-                                        <div class="xml-element"><a name="src.d108e40">&lt;xs:minLength <span
+                                        <div class="xml-element"><a name="src.d215e74">&lt;xs:minLength <span
                                                 class="xml-att">value=<span
                                                 class="xml-att-val">"1"</span></span>/&gt;</a></div>&lt;/xs:restriction&gt;
                                     </div>&lt;/xs:simpleType&gt;
                                 </div>&lt;/xs:schema&gt;
                             </div>&lt;/wsdl:types&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e41">&lt;wsdl:message <span class="xml-att">name=<span
+                        <div class="xml-element"><a name="src.d215e75">&lt;wsdl:message <span class="xml-att">name=<span
                                 class="xml-att-val">"createCourseResponse"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e42" href="#src.d108e22">&lt;wsdl:part <span
+                            <div class="xml-element"><a name="src.d215e76" href="#src.d215e22">&lt;wsdl:part <span
                                     class="xml-att">element=<span class="xml-att-val">"tns:createCourseResponse"</span></span>
                                 <span class="xml-att">name=<span
                                         class="xml-att-val">"createCourseResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e43">&lt;wsdl:message <span class="xml-att">name=<span
+                        <div class="xml-element"><a name="src.d215e77">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"deleteCoursesResponse"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e78" href="#src.d215e46">&lt;wsdl:part <span
+                                    class="xml-att">element=<span class="xml-att-val">"tns:deleteCoursesResponse"</span></span>
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e79">&lt;wsdl:message <span class="xml-att">name=<span
                                 class="xml-att-val">"getCourseByIdResponse"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e44" href="#src.d108e14">&lt;wsdl:part <span
+                            <div class="xml-element"><a name="src.d215e80" href="#src.d215e14">&lt;wsdl:part <span
                                     class="xml-att">element=<span class="xml-att-val">"tns:getCourseByIdResponse"</span></span>
                                 <span class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e45">&lt;wsdl:message <span class="xml-att">name=<span
+                        <div class="xml-element"><a name="src.d215e81">&lt;wsdl:message <span class="xml-att">name=<span
                                 class="xml-att-val">"createCourseRequest"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e46" href="#src.d108e18">&lt;wsdl:part <span
+                            <div class="xml-element"><a name="src.d215e82" href="#src.d215e18">&lt;wsdl:part <span
                                     class="xml-att">element=<span
                                     class="xml-att-val">"tns:createCourseRequest"</span></span> <span class="xml-att">name=<span
                                     class="xml-att-val">"createCourseRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e47">&lt;wsdl:message <span class="xml-att">name=<span
+                        <div class="xml-element"><a name="src.d215e83">&lt;wsdl:message <span class="xml-att">name=<span
                                 class="xml-att-val">"getCourseByIdRequest"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e48" href="#src.d108e10">&lt;wsdl:part <span
+                            <div class="xml-element"><a name="src.d215e84" href="#src.d215e10">&lt;wsdl:part <span
                                     class="xml-att">element=<span class="xml-att-val">"tns:getCourseByIdRequest"</span></span>
                                 <span class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e49">&lt;wsdl:message <span class="xml-att">name=<span
+                        <div class="xml-element"><a name="src.d215e85">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"searchCoursesRequest"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e86" href="#src.d215e50">&lt;wsdl:part <span
+                                    class="xml-att">element=<span class="xml-att-val">"tns:searchCoursesRequest"</span></span>
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e87">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"updateCourseRequest"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e88" href="#src.d215e26">&lt;wsdl:part <span
+                                    class="xml-att">element=<span
+                                    class="xml-att-val">"tns:updateCourseRequest"</span></span> <span class="xml-att">name=<span
+                                    class="xml-att-val">"updateCourseRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e89">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"updateCourseResponse"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e90" href="#src.d215e31">&lt;wsdl:part <span
+                                    class="xml-att">element=<span class="xml-att-val">"tns:updateCourseResponse"</span></span>
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourseResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e91">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"deleteCourseByIdRequest"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e92" href="#src.d215e35">&lt;wsdl:part <span
+                                    class="xml-att">element=<span
+                                    class="xml-att-val">"tns:deleteCourseByIdRequest"</span></span> <span
+                                    class="xml-att">name=<span
+                                    class="xml-att-val">"deleteCourseByIdRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e93">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"deleteCourseByIdResponse"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e94" href="#src.d215e39">&lt;wsdl:part <span
+                                    class="xml-att">element=<span
+                                    class="xml-att-val">"tns:deleteCourseByIdResponse"</span></span> <span
+                                    class="xml-att">name=<span
+                                    class="xml-att-val">"deleteCourseByIdResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e96">&lt;wsdl:message <span class="xml-att">name=<span
+                                class="xml-att-val">"searchCoursesResponse"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e97" href="#src.d215e56">&lt;wsdl:part <span
+                                    class="xml-att">element=<span class="xml-att-val">"tns:searchCoursesResponse"</span></span>
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e98">&lt;wsdl:message <span class="xml-att">name=<span
                                 class="xml-att-val">"getAllCoursesRequest"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e50" href="#src.d108e4">&lt;wsdl:part <span
+                            <div class="xml-element"><a name="src.d215e99" href="#src.d215e4">&lt;wsdl:part <span
                                     class="xml-att">element=<span class="xml-att-val">"tns:getAllCoursesRequest"</span></span>
                                 <span class="xml-att">name=<span
                                         class="xml-att-val">"getAllCoursesRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e51">&lt;wsdl:message <span class="xml-att">name=<span
-                                class="xml-att-val">"getAllCoursesResponse"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e52" href="#src.d108e6">&lt;wsdl:part <span
+                        <div class="xml-element"><a name="src.d215e100">&lt;wsdl:message <span
+                                class="xml-att">name=<span class="xml-att-val">"getAllCoursesResponse"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e101" href="#src.d215e6">&lt;wsdl:part <span
                                     class="xml-att">element=<span class="xml-att-val">"tns:getAllCoursesResponse"</span></span>
                                 <span class="xml-att">name=<span
                                         class="xml-att-val">"getAllCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e53">&lt;wsdl:portType <span
+                        <div class="xml-element"><a name="src.d215e102">&lt;wsdl:message <span
+                                class="xml-att">name=<span class="xml-att-val">"deleteCoursesRequest"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e103" href="#src.d215e43">&lt;wsdl:part <span
+                                    class="xml-att">element=<span class="xml-att-val">"tns:deleteCoursesRequest"</span></span>
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCoursesRequest"</span></span>/&gt;</a></div>&lt;/wsdl:message&gt;
+                        </div>
+                        <div class="xml-element"><a name="src.d215e104">&lt;wsdl:portType <span
                                 class="xml-att">name=<span class="xml-att-val">"CoursesPort"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e54">&lt;wsdl:operation <span class="xml-att">name=<span
+                            <div class="xml-element"><a name="src.d215e105">&lt;wsdl:operation <span class="xml-att">name=<span
                                     class="xml-att-val">"createCourse"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e55" href="#src.d108e45">&lt;wsdl:input <span
+                                <div class="xml-element"><a name="src.d215e106" href="#src.d215e81">&lt;wsdl:input <span
                                         class="xml-att">message=<span
                                         class="xml-att-val">"tns:createCourseRequest"</span></span> <span
                                         class="xml-att">name=<span
                                         class="xml-att-val">"createCourseRequest"</span></span>/&gt;</a></div>
-                                <div class="xml-element"><a name="src.d108e56" href="#src.d108e41">&lt;wsdl:output <span
-                                        class="xml-att">message=<span
-                                        class="xml-att-val">"tns:createCourseResponse"</span></span> <span
-                                        class="xml-att">name=<span
-                                        class="xml-att-val">"createCourseResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
+                                <div class="xml-element"><a name="src.d215e107" href="#src.d215e75">&lt;wsdl:output
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:createCourseResponse"</span></span> <span
+                                            class="xml-att">name=<span class="xml-att-val">"createCourseResponse"</span></span>/&gt;</a>
+                                </div>&lt;/wsdl:operation&gt;
                             </div>
-                            <div class="xml-element"><a name="src.d108e57">&lt;wsdl:operation <span class="xml-att">name=<span
+                            <div class="xml-element"><a name="src.d215e108">&lt;wsdl:operation <span class="xml-att">name=<span
+                                    class="xml-att-val">"deleteCourses"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e109" href="#src.d215e102">&lt;wsdl:input
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:deleteCoursesRequest"</span></span> <span
+                                            class="xml-att">name=<span class="xml-att-val">"deleteCoursesRequest"</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e110" href="#src.d215e77">&lt;wsdl:output
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:deleteCoursesResponse"</span></span> <span
+                                            class="xml-att">name=<span
+                                            class="xml-att-val">"deleteCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e111">&lt;wsdl:operation <span class="xml-att">name=<span
                                     class="xml-att-val">"getCourseById"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e58" href="#src.d108e47">&lt;wsdl:input <span
+                                <div class="xml-element"><a name="src.d215e112" href="#src.d215e83">&lt;wsdl:input <span
                                         class="xml-att">message=<span
                                         class="xml-att-val">"tns:getCourseByIdRequest"</span></span> <span
                                         class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdRequest"</span></span>/&gt;</a></div>
-                                <div class="xml-element"><a name="src.d108e59" href="#src.d108e43">&lt;wsdl:output <span
-                                        class="xml-att">message=<span
-                                        class="xml-att-val">"tns:getCourseByIdResponse"</span></span> <span
-                                        class="xml-att">name=<span
-                                        class="xml-att-val">"getCourseByIdResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
+                                <div class="xml-element"><a name="src.d215e113" href="#src.d215e79">&lt;wsdl:output
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:getCourseByIdResponse"</span></span> <span
+                                            class="xml-att">name=<span
+                                            class="xml-att-val">"getCourseByIdResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
                             </div>
-                            <div class="xml-element"><a name="src.d108e60">&lt;wsdl:operation <span class="xml-att">name=<span
+                            <div class="xml-element"><a name="src.d215e114">&lt;wsdl:operation <span class="xml-att">name=<span
+                                    class="xml-att-val">"searchCourses"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e115" href="#src.d215e85">&lt;wsdl:input <span
+                                        class="xml-att">message=<span
+                                        class="xml-att-val">"tns:searchCoursesRequest"</span></span> <span
+                                        class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesRequest"</span></span>/&gt;</a></div>
+                                <div class="xml-element"><a name="src.d215e116" href="#src.d215e96">&lt;wsdl:output
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:searchCoursesResponse"</span></span> <span
+                                            class="xml-att">name=<span
+                                            class="xml-att-val">"searchCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e117">&lt;wsdl:operation <span class="xml-att">name=<span
+                                    class="xml-att-val">"updateCourse"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e118" href="#src.d215e87">&lt;wsdl:input <span
+                                        class="xml-att">message=<span
+                                        class="xml-att-val">"tns:updateCourseRequest"</span></span> <span
+                                        class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourseRequest"</span></span>/&gt;</a></div>
+                                <div class="xml-element"><a name="src.d215e119" href="#src.d215e89">&lt;wsdl:output
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:updateCourseResponse"</span></span> <span
+                                            class="xml-att">name=<span class="xml-att-val">"updateCourseResponse"</span></span>/&gt;</a>
+                                </div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e120">&lt;wsdl:operation <span class="xml-att">name=<span
+                                    class="xml-att-val">"deleteCourseById"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e121" href="#src.d215e91">&lt;wsdl:input <span
+                                        class="xml-att">message=<span
+                                        class="xml-att-val">"tns:deleteCourseByIdRequest"</span></span> <span
+                                        class="xml-att">name=<span class="xml-att-val">"deleteCourseByIdRequest"</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e122" href="#src.d215e93">&lt;wsdl:output
+                                    <span class="xml-att">message=<span class="xml-att-val">"tns:deleteCourseByIdResponse"</span></span>
+                                    <span class="xml-att">name=<span
+                                            class="xml-att-val">"deleteCourseByIdResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e123">&lt;wsdl:operation <span class="xml-att">name=<span
                                     class="xml-att-val">"getAllCourses"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e61" href="#src.d108e49">&lt;wsdl:input <span
+                                <div class="xml-element"><a name="src.d215e124" href="#src.d215e98">&lt;wsdl:input <span
                                         class="xml-att">message=<span
                                         class="xml-att-val">"tns:getAllCoursesRequest"</span></span> <span
                                         class="xml-att">name=<span
                                         class="xml-att-val">"getAllCoursesRequest"</span></span>/&gt;</a></div>
-                                <div class="xml-element"><a name="src.d108e62" href="#src.d108e51">&lt;wsdl:output <span
-                                        class="xml-att">message=<span
-                                        class="xml-att-val">"tns:getAllCoursesResponse"</span></span> <span
-                                        class="xml-att">name=<span
-                                        class="xml-att-val">"getAllCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
+                                <div class="xml-element"><a name="src.d215e125" href="#src.d215e100">&lt;wsdl:output
+                                    <span class="xml-att">message=<span
+                                            class="xml-att-val">"tns:getAllCoursesResponse"</span></span> <span
+                                            class="xml-att">name=<span
+                                            class="xml-att-val">"getAllCoursesResponse"</span></span>/&gt;</a></div>&lt;/wsdl:operation&gt;
                             </div>&lt;/wsdl:portType&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e63">&lt;wsdl:binding <span class="xml-att">name=<span
-                                class="xml-att-val">"CoursesPortSoap11"</span></span> <span class="xml-att">type=<span
-                                class="xml-att-val">"tns:CoursesPort"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e64">&lt;soap:binding <span class="xml-att">style=<span
+                        <div class="xml-element"><a name="src.d215e126">&lt;wsdl:binding <span
+                                class="xml-att">name=<span class="xml-att-val">"CoursesPortSoap11"</span></span> <span
+                                class="xml-att">type=<span class="xml-att-val">"tns:CoursesPort"</span></span>&gt;</a>
+                            <div class="xml-element"><a name="src.d215e127">&lt;soap:binding <span class="xml-att">style=<span
                                     class="xml-att-val">"document"</span></span> <span class="xml-att">transport=<span
                                     class="xml-att-val">"http://schemas.xmlsoap.org/soap/http"</span></span>/&gt;</a>
                             </div>
-                            <div class="xml-element"><a name="src.d108e65" href="#src.d108e54">&lt;wsdl:operation <span
-                                    class="xml-att">name=<span class="xml-att-val">"createCourse"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e66">&lt;soap:operation <span class="xml-att">soapAction=<span
-                                        class="xml-att-val">""</span></span>/&gt;</a></div>
-                                <div class="xml-element"><a name="src.d108e67">&lt;wsdl:input <span class="xml-att">name=<span
+                            <div class="xml-element"><a name="src.d215e128" href="#src.d215e105">&lt;wsdl:operation
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"createCourse"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e129">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e130">&lt;wsdl:input <span class="xml-att">name=<span
                                         class="xml-att-val">"createCourseRequest"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e68">&lt;soap:body <span class="xml-att">use=<span
+                                    <div class="xml-element"><a name="src.d215e131">&lt;soap:body <span class="xml-att">use=<span
                                             class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e69">&lt;wsdl:output <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e132">&lt;wsdl:output <span class="xml-att">name=<span
                                         class="xml-att-val">"createCourseResponse"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e70">&lt;soap:body <span class="xml-att">use=<span
+                                    <div class="xml-element"><a name="src.d215e133">&lt;soap:body <span class="xml-att">use=<span
                                             class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
                                 </div>&lt;/wsdl:operation&gt;
                             </div>
-                            <div class="xml-element"><a name="src.d108e71" href="#src.d108e57">&lt;wsdl:operation <span
-                                    class="xml-att">name=<span class="xml-att-val">"getCourseById"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e72">&lt;soap:operation <span class="xml-att">soapAction=<span
-                                        class="xml-att-val">""</span></span>/&gt;</a></div>
-                                <div class="xml-element"><a name="src.d108e73">&lt;wsdl:input <span class="xml-att">name=<span
+                            <div class="xml-element"><a name="src.d215e134" href="#src.d215e108">&lt;wsdl:operation
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCourses"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e135">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e136">&lt;wsdl:input <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCoursesRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e137">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e138">&lt;wsdl:output <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCoursesResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e139">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
+                                </div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e140" href="#src.d215e111">&lt;wsdl:operation
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"getCourseById"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e141">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e142">&lt;wsdl:input <span class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdRequest"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e74">&lt;soap:body <span class="xml-att">use=<span
+                                    <div class="xml-element"><a name="src.d215e143">&lt;soap:body <span class="xml-att">use=<span
                                             class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e75">&lt;wsdl:output <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e144">&lt;wsdl:output <span class="xml-att">name=<span
                                         class="xml-att-val">"getCourseByIdResponse"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e76">&lt;soap:body <span class="xml-att">use=<span
+                                    <div class="xml-element"><a name="src.d215e145">&lt;soap:body <span class="xml-att">use=<span
                                             class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
                                 </div>&lt;/wsdl:operation&gt;
                             </div>
-                            <div class="xml-element"><a name="src.d108e77" href="#src.d108e60">&lt;wsdl:operation <span
-                                    class="xml-att">name=<span class="xml-att-val">"getAllCourses"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e78">&lt;soap:operation <span class="xml-att">soapAction=<span
-                                        class="xml-att-val">""</span></span>/&gt;</a></div>
-                                <div class="xml-element"><a name="src.d108e79">&lt;wsdl:input <span class="xml-att">name=<span
-                                        class="xml-att-val">"getAllCoursesRequest"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e80">&lt;soap:body <span class="xml-att">use=<span
+                            <div class="xml-element"><a name="src.d215e146" href="#src.d215e114">&lt;wsdl:operation
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCourses"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e147">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e148">&lt;wsdl:input <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e149">&lt;soap:body <span class="xml-att">use=<span
                                             class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
                                 </div>
-                                <div class="xml-element"><a name="src.d108e81">&lt;wsdl:output <span class="xml-att">name=<span
+                                <div class="xml-element"><a name="src.d215e150">&lt;wsdl:output <span class="xml-att">name=<span
+                                        class="xml-att-val">"searchCoursesResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e151">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
+                                </div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e152" href="#src.d215e117">&lt;wsdl:operation
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourse"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e153">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e154">&lt;wsdl:input <span class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourseRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e155">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e156">&lt;wsdl:output <span class="xml-att">name=<span
+                                        class="xml-att-val">"updateCourseResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e157">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
+                                </div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e158" href="#src.d215e120">&lt;wsdl:operation
+                                <span class="xml-att">name=<span class="xml-att-val">"deleteCourseById"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e159">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e160">&lt;wsdl:input <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCourseByIdRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e161">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e162">&lt;wsdl:output <span class="xml-att">name=<span
+                                        class="xml-att-val">"deleteCourseByIdResponse"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e163">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
+                                </div>&lt;/wsdl:operation&gt;
+                            </div>
+                            <div class="xml-element"><a name="src.d215e164" href="#src.d215e123">&lt;wsdl:operation
+                                <span class="xml-att">name=<span
+                                        class="xml-att-val">"getAllCourses"</span></span>&gt;</a>
+                                <div class="xml-element"><a name="src.d215e165">&lt;soap:operation <span
+                                        class="xml-att">soapAction=<span class="xml-att-val">""</span></span>/&gt;</a>
+                                </div>
+                                <div class="xml-element"><a name="src.d215e166">&lt;wsdl:input <span class="xml-att">name=<span
+                                        class="xml-att-val">"getAllCoursesRequest"</span></span>&gt;</a>
+                                    <div class="xml-element"><a name="src.d215e167">&lt;soap:body <span class="xml-att">use=<span
+                                            class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:input&gt;
+                                </div>
+                                <div class="xml-element"><a name="src.d215e168">&lt;wsdl:output <span class="xml-att">name=<span
                                         class="xml-att-val">"getAllCoursesResponse"</span></span>&gt;</a>
-                                    <div class="xml-element"><a name="src.d108e82">&lt;soap:body <span class="xml-att">use=<span
+                                    <div class="xml-element"><a name="src.d215e169">&lt;soap:body <span class="xml-att">use=<span
                                             class="xml-att-val">"literal"</span></span>/&gt;</a></div>&lt;/wsdl:output&gt;
                                 </div>&lt;/wsdl:operation&gt;
                             </div>&lt;/wsdl:binding&gt;
                         </div>
-                        <div class="xml-element"><a name="src.d108e83">&lt;wsdl:service <span class="xml-att">name=<span
+                        <div class="xml-element"><a name="src.d215e170">&lt;wsdl:service <span
+                                class="xml-att">name=<span
                                 class="xml-att-val">"CoursesPortService"</span></span>&gt;</a>
-                            <div class="xml-element"><a name="src.d108e84" href="#src.d108e63">&lt;wsdl:port <span
+                            <div class="xml-element"><a name="src.d215e171" href="#src.d215e126">&lt;wsdl:port <span
                                     class="xml-att">binding=<span
                                     class="xml-att-val">"tns:CoursesPortSoap11"</span></span> <span class="xml-att">name=<span
                                     class="xml-att-val">"CoursesPortSoap11"</span></span>&gt;</a>
-                                <div class="xml-element"><a name="src.d108e85">&lt;soap:address <span class="xml-att">location=<span
+                                <div class="xml-element"><a name="src.d215e172">&lt;soap:address <span class="xml-att">location=<span
                                         class="xml-att-val">"http://localhost:8080/ws"</span></span>/&gt;</a></div>&lt;/wsdl:port&gt;
                             </div>&lt;/wsdl:service&gt;
                         </div>&lt;/wsdl:definitions&gt;

@@ -45,6 +45,66 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="updateCourseRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="courseId" type="xs:long"/>
+                <xs:element name="course" type="tns:CourseXml"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateCourseResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="course" type="tns:CourseXml"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteCourseByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="courseId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteCourseByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteCoursesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="deleteCoursesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="searchCoursesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="category" type="xs:string"/>
+                <xs:element name="rating" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="searchCoursesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="courses" type="tns:CourseXml" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
     <xs:complexType name="CourseXml">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>

@@ -10,7 +10,6 @@ package com.example.catalogue.backend.api.webservice.autogen;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
@@ -24,9 +23,6 @@ import jakarta.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="course" type="{http://www.example.com/catalogue}CourseXml"/&gt;
- *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -35,37 +31,9 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "course"
-})
-@XmlRootElement(name = "createCourseResponse")
-public class CreateCourseResponse {
+@XmlType(name = "")
+@XmlRootElement(name = "deleteCoursesRequest")
+public class DeleteCoursesRequest {
 
-    @XmlElement(required = true)
-    protected CourseXml course;
-
-    /**
-     * Gets the value of the course property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CourseXml }
-     *     
-     */
-    public CourseXml getCourse() {
-        return course;
-    }
-
-    /**
-     * Sets the value of the course property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CourseXml }
-     *     
-     */
-    public void setCourse(CourseXml value) {
-        this.course = value;
-    }
 
 }

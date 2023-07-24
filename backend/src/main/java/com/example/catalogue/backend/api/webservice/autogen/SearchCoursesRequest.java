@@ -11,25 +11,23 @@ package com.example.catalogue.backend.api.webservice.autogen;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for CourseXml complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="CourseXml"&gt;
+ * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *         &lt;element name="name" type="{http://www.example.com/catalogue}notEmptyString"/&gt;
- *         &lt;element name="category" type="{http://www.example.com/catalogue}notEmptyString"/&gt;
- *         &lt;element name="rating" type="{http://www.example.com/catalogue}ratingType"/&gt;
- *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="author" type="{http://www.example.com/catalogue}notEmptyString"/&gt;
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,41 +37,19 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CourseXml", propOrder = {
-    "id",
+@XmlType(name = "", propOrder = {
     "name",
     "category",
-    "rating",
-    "description",
-    "author"
+    "rating"
 })
-public class CourseXml {
+@XmlRootElement(name = "searchCoursesRequest")
+public class SearchCoursesRequest {
 
-    protected long id;
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
     protected String category;
     protected int rating;
-    protected String description;
-    @XmlElement(required = true)
-    protected String author;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(long value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the name property.
@@ -137,54 +113,6 @@ public class CourseXml {
      */
     public void setRating(int value) {
         this.rating = value;
-    }
-
-    /**
-     * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDescription(String value) {
-        this.description = value;
-    }
-
-    /**
-     * Gets the value of the author property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAuthor() {
-        return author;
-    }
-
-    /**
-     * Sets the value of the author property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAuthor(String value) {
-        this.author = value;
     }
 
 }

@@ -25,6 +25,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="courseId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *         &lt;element name="course" type="{http://www.example.com/catalogue}CourseXml"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -36,13 +37,31 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "courseId",
     "course"
 })
-@XmlRootElement(name = "createCourseResponse")
-public class CreateCourseResponse {
+@XmlRootElement(name = "updateCourseRequest")
+public class UpdateCourseRequest {
 
+    protected long courseId;
     @XmlElement(required = true)
     protected CourseXml course;
+
+    /**
+     * Gets the value of the courseId property.
+     * 
+     */
+    public long getCourseId() {
+        return courseId;
+    }
+
+    /**
+     * Sets the value of the courseId property.
+     * 
+     */
+    public void setCourseId(long value) {
+        this.courseId = value;
+    }
 
     /**
      * Gets the value of the course property.

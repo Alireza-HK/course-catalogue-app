@@ -25,7 +25,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="course" type="{http://www.example.com/catalogue}CourseXml"/&gt;
+ *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,36 +36,36 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "course"
+    "message"
 })
-@XmlRootElement(name = "createCourseResponse")
-public class CreateCourseResponse {
+@XmlRootElement(name = "deleteCourseByIdResponse")
+public class DeleteCourseByIdResponse {
 
     @XmlElement(required = true)
-    protected CourseXml course;
+    protected String message;
 
     /**
-     * Gets the value of the course property.
+     * Gets the value of the message property.
      * 
      * @return
      *     possible object is
-     *     {@link CourseXml }
+     *     {@link String }
      *     
      */
-    public CourseXml getCourse() {
-        return course;
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * Sets the value of the course property.
+     * Sets the value of the message property.
      * 
      * @param value
      *     allowed object is
-     *     {@link CourseXml }
+     *     {@link String }
      *     
      */
-    public void setCourse(CourseXml value) {
-        this.course = value;
+    public void setMessage(String value) {
+        this.message = value;
     }
 
 }

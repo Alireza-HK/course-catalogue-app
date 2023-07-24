@@ -39,8 +39,8 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "courses"
 })
-@XmlRootElement(name = "getAllCoursesResponse")
-public class GetAllCoursesResponse {
+@XmlRootElement(name = "searchCoursesResponse")
+public class SearchCoursesResponse {
 
     protected List<CourseXml> courses;
 
