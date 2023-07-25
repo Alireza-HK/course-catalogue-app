@@ -11,7 +11,7 @@
 
 	<groupId>com.example.catalogue</groupId>
 	<artifactId>course-catalogue</artifactId>
-	<version>1</version>
+	<version>0.1</version>
 	<name>course-catalogue</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>pom</packaging>
