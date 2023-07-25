@@ -11,7 +11,7 @@
 
 	<groupId>com.example.catalogue</groupId>
 	<artifactId>course-catalogue</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>course-catalogue</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>pom</packaging>
@@ -25,5 +25,14 @@
 		<module>backend</module>
 		<module>frontend</module>
 	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

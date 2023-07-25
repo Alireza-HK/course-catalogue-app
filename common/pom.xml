@@ -10,7 +10,8 @@
     </parent>
     <groupId>com.example.catalogue</groupId>
     <artifactId>common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1</version>
+    <packaging>jar</packaging>
     <name>common</name>
     <description>common</description>
     <properties>
