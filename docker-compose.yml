@@ -1,0 +1,46 @@
+services:
+  backend:
+    image: course-catalogue-backend:0.1
+    container_name: course-catalogue-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+    environment:
+      - spring.profiles.active=prod
+    depends_on:
+      - mysql
+
+  frontend:
+    image: course-catalogue-frontend:0.1
+    container_name: course-catalogue-frontend
+    restart: always
+    ports:
+      - "9090:9090"
+    environment:
+      - backend_name=backend
+      - backend_port=8080
+      - backend_address=http://localhost
+    networks:
+      - my_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: course-catalogue-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=course_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+volumes:
+  mysql_data:
+
+networks:
+  my_network:
