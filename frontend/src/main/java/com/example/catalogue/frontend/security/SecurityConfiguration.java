@@ -42,8 +42,6 @@ public class SecurityConfiguration {
                 .exceptionHandling((exceptionHandling) ->
                         exceptionHandling.accessDeniedHandler(accessDeniedHandler())
                 )
-                .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(withDefaults())
                 .build();
     }
 
