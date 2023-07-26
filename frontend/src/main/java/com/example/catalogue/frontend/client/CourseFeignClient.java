@@ -4,7 +4,7 @@ import com.example.catalogue.common.model.Course;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "courseFeignClient", url = "${backend.address}/courses", configuration = FeignClientConfiguration.class)
+@FeignClient(name = "courseFeignClient", url = "${backend.address}/courses")
 public interface CourseFeignClient {
 
     @GetMapping("/")
