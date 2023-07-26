@@ -12,8 +12,8 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
     @Query("""
             select c 
             from CourseEntity c 
-            where c.name like %:name% 
-            and c.category like %:category% 
+            where lower(c.name) like lower(concat('%', :name, '%'))
+            and lower(c.category) like lower(concat('%', :category, '%'))
             and c.rating >= :rating
             """)
     Iterable<CourseEntity> searchSimilarCourses(@Param("name") String name, @Param("category") String category, @Param("rating") int rating);
