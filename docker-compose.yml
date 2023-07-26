@@ -39,7 +39,7 @@ services:
       - my_network
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.25.1
     container_name: course-catalogue-nginx
     restart: always
     ports:
