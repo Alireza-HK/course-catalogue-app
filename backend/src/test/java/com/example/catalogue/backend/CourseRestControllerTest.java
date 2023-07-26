@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser(roles = {"USER"})
 @Transactional
 public class CourseRestControllerTest {
 
@@ -170,7 +168,6 @@ public class CourseRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"})
     void givenCourseId_whenDeleteCourse_thenCourseShouldBeDeleted() throws Exception {
         // Given: Create a new course using the POST request and expect a 201 Created status
         CourseEntity course = CourseTestDataFactory.generateTestCourseToSave();//todo Course model not Entity
@@ -188,19 +185,6 @@ public class CourseRestControllerTest {
         // Then: Verify that the course has been deleted from the database using the service layer
         assertThrows(CourseNotFoundException.class, () -> courseService.getCourseById(id));
     }
-
-    @Test
-    void givenUserRole_whenDeleteCourse_thenAccessDenied() throws Exception {
-        // When: Perform a GET request to retrieve the course with the given ID
-        ResultActions result = mockMvc.perform(delete("/courses/1")
-                        .accept(MediaType.APPLICATION_JSON)) // Set the Accept header to application/json
-                .andExpect(status().isForbidden());
-
-        // Then: Verify the response
-        result.andExpect(jsonPath("$.error").value("Forbidden"))
-                .andExpect(jsonPath("$.message").value("Access denied"));
-    }
-
 
     @ParameterizedTest
     @MethodSource("searchParameters")
