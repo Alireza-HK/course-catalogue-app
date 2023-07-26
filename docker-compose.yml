@@ -19,9 +19,8 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - backend_name=backend
-      - backend_port=8080
-      - backend_address=http://localhost
+      - spring.profiles.active=prod
+      - backend_address=http://backend:8080
     networks:
       - my_network
 
@@ -38,6 +37,20 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - my_network
+
+  nginx:
+    image: nginx:latest
+    container_name: course-catalogue-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - my_network
+    depends_on:
+      - backend
+      - frontend
 
 volumes:
   mysql_data:

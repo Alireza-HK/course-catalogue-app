@@ -41,13 +41,13 @@
                         <a class="nav-link" href="#" th:href="@{/search}">Search Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" target="_blank" th:href="${@environment.getProperty('url.apidoc')}">API Docs</a>
+                        <a class="nav-link" href="#" target="_blank" th:href="${@environment.getProperty('apidoc.ui.path')}">API Docs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" target="_blank" th:href="${@environment.getProperty('url.swagger')}">Swagger</a>
+                        <a class="nav-link" href="#" target="_blank" th:href="${@environment.getProperty('swagger.ui.path')}">Swagger</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" target="_blank" th:href="${@environment.getProperty('url.soapuidoc')}">SOAPUI-Doc</a>
+                        <a class="nav-link" href="#" target="_blank" th:href="${@environment.getProperty('soapui.ui.path')}">SOAPUI-Doc</a>
                     </li>
                     <li class="nav-item">
                         <form th:action="@{/logout}" method="post" id="logoutForm"></form>
