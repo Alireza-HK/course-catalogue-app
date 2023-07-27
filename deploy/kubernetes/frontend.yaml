@@ -1,0 +1,46 @@
+# frontend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: course-catalogue
+spec:
+  replicas: 1  # Set the desired number of frontend replicas
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: course-catalogue-frontend:0.1
+          ports:
+            - containerPort: 9090
+          env:
+            - name: spring.profiles.active
+              value: prod
+            - name: backend_address
+              value: http://backend:8080
+          # Add other environment variables if needed
+          # Add readiness and liveness probes if required
+          # Add volume mounts if necessary
+
+---
+# frontend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: course-catalogue
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+  # Add the desired type for the Service (ClusterIP, NodePort, or LoadBalancer)
+  type: ClusterIP

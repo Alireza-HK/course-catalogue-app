@@ -1,0 +1,5 @@
+# course-catalogue-course-catalogue-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: course-catalogue

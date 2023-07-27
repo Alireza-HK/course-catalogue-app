@@ -1,0 +1,135 @@
+# nginx-deployment-service-ingress.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: course-catalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25.1
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-configmap
+
+---
+# nginx-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap
+  namespace: course-catalogue
+data:
+  nginx.conf: |-
+    events {}
+
+    http {
+        upstream backend {
+            server backend:8080;
+        }
+        server {
+            listen 80;
+            
+            # Set common proxy headers
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    
+            location /v3/api-docs {
+                proxy_pass http://backend/v3/api-docs;
+            }
+            location /swagger-ui/ {
+                proxy_pass http://backend/swagger-ui/;
+            }
+            location /courses/ {
+                proxy_pass http://backend/courses/;
+            }
+            location /soapui-doc {
+                proxy_pass http://backend/soapui-doc;
+            }
+            location / {
+                proxy_pass http://frontend:9090;
+                proxy_redirect http://frontend:9090/ /;
+            }
+        }
+    }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: course-catalogue
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: course-catalogue
+spec:
+  rules:
+    - host: localhost  # Replace with your desired host
+      http:
+        paths:
+          - path: /v3/api-docs
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8080
+          - path: /swagger-ui/
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8080
+          - path: /courses/
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8080
+          - path: /soapui-doc
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 9090
