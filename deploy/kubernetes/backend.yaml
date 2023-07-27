@@ -25,6 +25,11 @@ spec:
           # Add other environment variables if needed
           # Add readiness and liveness probes if required
           # Add volume mounts if necessary
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox
+          command: [ 'sh', '-c', 'until nc -z -w 1 mysql 3306; do sleep 1; done;' ]
+
 
 ---
 # backend-service.yaml
