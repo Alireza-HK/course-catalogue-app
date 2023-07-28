@@ -28,6 +28,13 @@ spec:
         - name: nginx-config
           configMap:
             name: nginx-configmap
+      initContainers:
+        - name: wait-for-backend
+          image: busybox:latest
+          command: [ 'sh', '-c', 'until wget -qO- http://backend:8080/actuator/health/readiness; do echo "Backend not ready yet... waiting."; sleep 5; done;' ]
+        - name: wait-for-frontend
+          image: busybox:latest
+          command: [ 'sh', '-c', 'until wget -qO- http://frontend:9090/actuator/health/readiness; do echo "Frontend not ready yet... waiting."; sleep 5; done;' ]
 
 ---
 # nginx-configmap.yaml
@@ -46,7 +53,7 @@ data:
         }
         server {
             listen 80;
-            
+    
             # Set common proxy headers
             proxy_set_header Host $http_host;
             proxy_set_header X-Forwarded-Port $server_port;

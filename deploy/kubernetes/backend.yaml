@@ -22,9 +22,18 @@ spec:
           env:
             - name: spring.profiles.active
               value: prod
-          # Add other environment variables if needed
-          # Add readiness and liveness probes if required
-          # Add volume mounts if necessary
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
       initContainers:
         - name: wait-for-mysql
           image: busybox
