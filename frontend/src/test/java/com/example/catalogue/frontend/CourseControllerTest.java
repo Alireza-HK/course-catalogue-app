@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -92,6 +93,7 @@ class CourseControllerTest {
 
         // When
         var resultActions = mockMvc.perform(post("/addcourse")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", validCourse));
 
@@ -110,6 +112,7 @@ class CourseControllerTest {
 
         // When
         var resultActions = mockMvc.perform(post("/addcourse")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", invalidCourse));
 
@@ -150,6 +153,7 @@ class CourseControllerTest {
 
         // When
         var resultActions = mockMvc.perform(post("/update/{id}", courseToUpdate.getId())
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", courseToUpdate));
 
@@ -168,6 +172,7 @@ class CourseControllerTest {
 
         // When
         var resultActions = mockMvc.perform(post("/update/{id}", 1L)
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", invalidCourse));
 
@@ -218,6 +223,7 @@ class CourseControllerTest {
 
         // When
         var resultActions = mockMvc.perform(post("/search")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("course", searchModel));
 
@@ -261,7 +267,9 @@ class CourseControllerTest {
         var resultActions = mockMvc.perform(get(url));
 
         // Then
-        resultActions.andExpect(status().isUnauthorized());
+        resultActions
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
 
         verifyNoInteractions(restClient);
     }
