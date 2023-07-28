@@ -23,6 +23,8 @@ services:
       - backend_address=http://backend:8080
     networks:
       - my_network
+    depends_on:
+      - backend
 
   mysql:
     image: mysql:8.0
