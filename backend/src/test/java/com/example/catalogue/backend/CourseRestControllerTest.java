@@ -122,7 +122,7 @@ public class CourseRestControllerTest {
 
         // And: Verify the course in the database using the service
         CourseEntity retrievedCourse = courseService.getCourseById(id);
-        courseToSave.setId(id); // Set the generated ID for comparison
+        courseToSave.setId(id);
         Assertions.assertThat(retrievedCourse).usingRecursiveComparison().isEqualTo(courseToSave);
     }
 

@@ -17,7 +17,7 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Before("execution(* com.example.catalogue.service.*.*(..))")
+    @Before("execution(* com.example.catalogue.backend.service.*.*(..))")
     public void logBefore(JoinPoint joinPoint) {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
@@ -29,7 +29,7 @@ public class LoggingAspect {
         logger.info("Before {}.{}() - Parameters: {}", className, methodName, params);
     }
 
-    @AfterReturning(pointcut = "execution(* com.example.catalogue.service.*.*(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* com.example.catalogue.backend.service.*.*(..))", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
