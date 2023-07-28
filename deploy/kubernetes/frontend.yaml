@@ -1,11 +1,10 @@
-# frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
   namespace: course-catalogue
 spec:
-  replicas: 1  # Set the desired number of frontend replicas
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -38,7 +37,6 @@ spec:
             periodSeconds: 5
 
 ---
-# frontend-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -51,5 +49,4 @@ spec:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-  # Add the desired type for the Service (ClusterIP, NodePort, or LoadBalancer)
   type: ClusterIP

@@ -1,11 +1,10 @@
-# backend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
   namespace: course-catalogue
 spec:
-  replicas: 1  # Set the desired number of backend replicas
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -41,7 +40,6 @@ spec:
 
 
 ---
-# backend-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -54,5 +52,4 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-  # Add the desired type for the Service (ClusterIP, NodePort, or LoadBalancer)
   type: ClusterIP

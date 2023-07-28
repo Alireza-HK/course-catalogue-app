@@ -1,4 +1,3 @@
-# nginx-deployment-service-ingress.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,7 +36,6 @@ spec:
           command: [ 'sh', '-c', 'until wget -qO- http://frontend:9090/actuator/health/readiness; do echo "Frontend not ready yet... waiting."; sleep 5; done;' ]
 
 ---
-# nginx-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
