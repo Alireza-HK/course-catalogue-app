@@ -2,8 +2,7 @@ package com.example.catalogue.backend.config;
 
 import com.example.catalogue.backend.entity.CourseEntity;
 import com.example.catalogue.backend.repository.CourseRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
+@Slf4j
 class DatabaseInitializerConfig {
-
-    private static final Logger log = LoggerFactory.getLogger(DatabaseInitializerConfig.class);
 
     private static final List<CourseEntity> TEST_DATA = List.of(
             CourseEntity.builder()
